@@ -20,8 +20,10 @@ code such as:
     
     IVsHierarchy hierarchy;
     
-    bool match = hierarchy.[IsCapabilityMatch](http://msdn.microsoft.com/en-us/library/vstudio/hh443055.aspx)("SomeCapability");
-    
+    bool match = hierarchy.IsCapabilityMatch("SomeCapability");
+
+Where [IVsHierarchy.IsCapabilityMatch](http://msdn.microsoft.com/en-us/library/vstudio/hh443055.aspx)
+is an extension method.
 
 Project capability expressions can also be passed to the IsCapabilityMatch
 method in order to test for combinations of capabilities (including
