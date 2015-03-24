@@ -1,0 +1,5 @@
+Clipboard
+=========
+
+ICopyPackager / IPasteProvider
+
