@@ -7,10 +7,8 @@ Introduction
 Currently, only items in your project with recognized item types will appear
 in Solution Explorer or be available as project items via automation.
 
-
 This page describes how to add support for a new item type using the
 built-in "Project Item Type" project item template.
-
 
 Tutorial
 --------
@@ -56,13 +54,10 @@ Here are some things to notice about the newly added file:
 - If you open the project file, you will notice that the file was added to the project according to our definition, and that the custom property "MyProperty" was set for the current configuration to the value specified above. Here is how to do that:
   - Right click on the project node in Solution Explorer -> Unload Project (save changes)
   - Right click again on the project in Solution Explorer -> Edit ProjectType11.myproj
-    
-    <FooCompile Include="Test.foo">
 
-      <MyProperty Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">abc</MyProperty>
-
-    </FooCompile>
-
+        <FooCompile Include="Test.foo">
+            <MyProperty Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">abc</MyProperty>
+        </FooCompile>
 
 More details
 ------------

@@ -30,7 +30,6 @@ The object model is mutable and private, so clients that discover project
 system data always clone it into their own object models, resulting in
 project data replication and increased VM usage.
 
-
 ### Responsive Design
 
 In CPS, when code changes the project file, that's all it does. It's job
@@ -67,22 +66,22 @@ We have found that this design has some very unique pros and cons, the
 magnitude of some of them could not be appreciated until we'd implemented
 it.
 
-
 #### Advantages to Responsive Design:
 
-- The same code that performs project file changes is rehostable. It can work equally well in VS as in Napa, or other hosts, regardless of their requirements for specific eventing or threading models.
+1. The same code that performs project file changes is rehostable. It can work equally well in VS as in Napa, or other hosts, regardless of their requirements for specific eventing or threading models.
   - Project system extensions can be written that have no knowledge of or complexity from the rules that have to be followed based on the host.
-- Additional events can be defined and raised appropriately with changes only to a concentrated area of code rather than updating all locations that happen to mutate the project in a way that should raise the event.
-- Arbitrary changes to the project file can be consumed, and the right events get raised to update the IDE, which enables scenarios such as:
+2. Additional events can be defined and raised appropriately with changes only to a concentrated area of code rather than updating all locations that happen to mutate the project in a way that should raise the event.
+3. Arbitrary changes to the project file can be consumed, and the right events get raised to update the IDE, which enables scenarios such as:
   - The user editing the project file in the text editor while it is still open, and the project system responds to changes the user makes.
   - SCC operations such as Undo & Get Latest Version don't have to reload the project when the project file is changed.
-- Provides opportunity for concurrency and asynchronous execution, leaving the IDE responsive during background or long-running work.
-- Bulk changes can be made to the project file and only raise minimal events for the net changes that were applied to the project file.
-- Unpredictable side effects of project file changes are automatically accounted for, whereas traditional project systems will be unaware of them until a project reload, or (worse) in the middle of the project's lifetime resulting in misbehavior.
-- Project system clients can subscribe to project data and get exactly the events and change descriptions that they want, in snapshot form so they can have confidence they don't have to clone all the data into their own proprietary copy of the project object model.
+4. Provides opportunity for concurrency and asynchronous execution, leaving the IDE responsive during background or long-running work.
+5. Bulk changes can be made to the project file and only raise minimal events for the net changes that were applied to the project file.
+6. Unpredictable side effects of project file changes are automatically accounted for, whereas traditional project systems will be unaware of them until a project reload, or (worse) in the middle of the project's lifetime resulting in misbehavior.
+7. Project system clients can subscribe to project data and get exactly the events and change descriptions that they want, in snapshot form so they can have confidence they don't have to clone all the data into their own proprietary copy of the project object model.
+
 #### Disadvantages to Responsive Design:
 
-- Project snapshot diff's don't always capture important semantics of the original changes. For example, a rename is significantly different from a delete and an add in how the host expects to see events raised. Preserving these semantics sometimes requires extra code on the mutation side to tuck hints away for later discovery by the diffing system. We minimize this burden by adding these hints to shared code so that folks can still mutate the project simply, but the code is nevertheless in CPS, making the codebase non-traditional and a bit more complex.
-- The project tree data structure itself has a particularly tough job when accommodating project changes. The code in this area has very deep conditional branching and it's a lot of dev and testing work to have confidence that it covers the required scenarios. It's unlikely that, in its current form anyway, it could ever really handle any arbitrary project change, although it seems we can maintain a codebase that handles the subset of project changes that the IDE in practice actually performs.
-- Integration with the VS running document table has been a particularly buggy area historically.
-- Asynchronous, distributed responses to project changes are harder to predict and follow while developing or debugging code than the traditional imperative style where one method is responsible for everything and doesn't return until it's done.
+1. Project snapshot diff's don't always capture important semantics of the original changes. For example, a rename is significantly different from a delete and an add in how the host expects to see events raised. Preserving these semantics sometimes requires extra code on the mutation side to tuck hints away for later discovery by the diffing system. We minimize this burden by adding these hints to shared code so that folks can still mutate the project simply, but the code is nevertheless in CPS, making the codebase non-traditional and a bit more complex.
+2. The project tree data structure itself has a particularly tough job when accommodating project changes. The code in this area has very deep conditional branching and it's a lot of dev and testing work to have confidence that it covers the required scenarios. It's unlikely that, in its current form anyway, it could ever really handle any arbitrary project change, although it seems we can maintain a codebase that handles the subset of project changes that the IDE in practice actually performs.
+3. Integration with the VS running document table has been a particularly buggy area historically.
+4. Asynchronous, distributed responses to project changes are harder to predict and follow while developing or debugging code than the traditional imperative style where one method is responsible for everything and doesn't return until it's done.

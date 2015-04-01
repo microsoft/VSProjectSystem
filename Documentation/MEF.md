@@ -3,7 +3,6 @@ MEF
 
 ### Managed Extensibility Framework in the .NET framework
 
-
 The Managed Extensibility Framework (MEF) has been introduced in the .NET
 Framework 4 as a library for creating extensible applications.  It allows
 application developers to discover and use extensions based on pre-defined
@@ -12,9 +11,7 @@ technology to create an extensible project system, CPS utilizes it
 extensively and uses it as its foundation; therefore, creating a CPS based
 project system is basically providing a set of MEF components.
 
-
 The concept of MEF can be found in the MSDN document.
-
 
 Through MEF, writing an extension to create a CPS based project system
 becomes a straight task, which starts creating extension classes through
@@ -23,40 +20,23 @@ this:
 
 
     [Export(typeof(IProjectTreeModifier))]
-
     [AppliesTo("MyProjectType")]
-
     internal class ProjectTreeIconProvider : IProjectTreeModifier
-
     {
-
         /// <summary>
-
         /// Gets the tree factory.
-
         /// </summary>
-
         [Import]
-
-        protected Lazy<IProjectTreeFactory> TreeFactory { get; private
-set; }
-
- 
+        protected Lazy<IProjectTreeFactory> TreeFactory { get; private set; }
 
         /// <summary>
-
         /// Gets the unconfigured project.
-
         /// </summary>
-
         [Import]
-
         protected UnconfiguredProject UnconfiguredProject { get; set; }
 
-   …
-
+        // ...
     }
-
 
 This extension implements the IProjectTreeModifier.  Through the 'Export'
 attribute, the class above implements IProjectTreeModifier contract so that
@@ -65,9 +45,7 @@ Through the 'Import' attribute, the class declares what it wants from the
 system so that MEF will set the two properties with 'Import' attribute
 when it initializes the object.
 
-
 There are a few important things to remember:
-
 
 - The AppliesTo attribute declares that this component is only expected to be used in a project with certain capabilities.  In CPS, it is essential to ensure that the component is only used a targeted project.  More discussion on this topic will follow.
 - One must only import a contract that is implemented by an MEF component.  If a random type not implemented by an MEF component is imported, the MEF engine will not be able to resolve it, potentially bringing the entire project system down.  The VS MEF engine does provide some help in diagnosing the problem in such situation.
@@ -85,11 +63,8 @@ it could occasionally be out of sync with extensions. In this situation,
 running the following commands inside command line window will reset the
 cache:
 
-
-Devenv /UpdateConfiguration
-
-Devenv /ClearCache
-
+    Devenv /UpdateConfiguration
+    Devenv /ClearCache
 
 VS MEF provides a detailed error report when it finds errors inside MEF
 compositions.  It always tries to keep the rest of components working by
@@ -99,9 +74,7 @@ error report file will help to diagnose issues such as the reason why a
 certain component is never being loaded into VS.  The error report file
 can be found at 
 
-
-[User]\AppData\Local\Microsoft\VisualStudio\[Version]\ComponentModelCache\Microsoft.VisualStudio.Default.err.
-
+    [User]\AppData\Local\Microsoft\VisualStudio\[Version]\ComponentModelCache\Microsoft.VisualStudio.Default.err.
 
 Because an MEF error may cause chains of errors in other components, one
 should always start with investigating level 1 composition errors.
@@ -122,11 +95,9 @@ to implement the contract and in this case, importing a single component
 works.  But the same code may fail on a customer's machine, and therefore
 should be carefully prevented in the first place.
 
-
 VS MEF does not support certain advanced features such as dynamic composition
 changes or generic type contracts, but most developers do not use them
 anyway.
-
 
 ### CPS and MEF
 
@@ -140,7 +111,6 @@ to discussing how a project declares its capabilities.  It is through its
 capabilities that a JavaScript project becomes a JavaScript project and
 a device project becomes a device project.
 
-
 Most CPS extensions or its MEF components are designed to support certain
 types of projects.  For both function and performance, a component written
 for a certain project system (such as for a C++ project) should not be
@@ -152,8 +122,7 @@ important to use the correct appliesTo metadata when defining a component.
 supports; in the advanced scenario, AppliesTo metadata can be an expression
 like this --
 
-[AppliesTo("MyLanaguageProject & DeviceProject")]
-
+    [AppliesTo("MyLanaguageProject & DeviceProject")]
 
 Also, when a component exports additional properties or methods, the
 metadata should be declared wherever the export attribute is used.
@@ -165,44 +134,26 @@ should be used to filter out those components which don't match the
 context.  For example, a component in the unconfiguredProject that imports
 IVsHierarchy looks like this:
 
-
-[Export]
-
-Public class MyClass
-
-{
-
-    [ImportMany(ExportContractNames.VsTypes.IVsHierarchy)]
-    
-    private OrderPrecedenceImportCollection<IVsHierarchy> vsHierarchies;
-    
-    
-    Private IVsHierarchy VsHierarchy
-    
+    [Export]
+    public class MyClass
     {
-    
+        [ImportMany(ExportContractNames.VsTypes.IVsHierarchy)]
+        private OrderPrecedenceImportCollection<IVsHierarchy> vsHierarchies;
+
+        private IVsHierarchy VsHierarchy
+        {
             get { return this.vsHierarchies.First().Value; }
+        }
     
-    }
-    
-    
-    [ImportingConstructor]
-    
-    internal MyClass(UnconfiguredProject unconfiguredProject)
-    
-    {
-    
-                this.vsHierarchies = new OrderPrecedenceImportCollection<Shell.Interop.IVsHierarchy(
-    
-                                                     projectCapabilityCheckProvider:
-    unconfiguredProject);
-    
-    }
-    
-    …
-    
-}
+        [ImportingConstructor]
+        internal MyClass(UnconfiguredProject unconfiguredProject)
+        {
+            this.vsHierarchies = new OrderPrecedenceImportCollection<Shell.Interop.IVsHierarchy(
+                projectCapabilityCheckProvider: unconfiguredProject);
+        }
 
+        // ...
+    }
 
 In this case, the code expects that one and only one IVsHierarchy is
 implemented for the project  In other scenarios, the code might expect
@@ -211,15 +162,12 @@ at all in the collection.  OrderPrecedenceImportCollection uses the project
 capabilities in the project to filter the components found in MEF, keeping
 only those matching the capability of the project.
 
-
 For a component within the configured project scope, or in the project
 service scope, the UnconfiguredProject in the sample above should be
 replaced by ConfiguredProject or ProjectService.
-
 
 Components in the extensions can import a singleton service implemented by CPS
 without using the OrderPrecedenceImportCollection.  These singleton services
 are provided by CPS and cannot be replaced by extensions.  Such services
 include the ConfiguredProject, UnconfiguredProject,  IProjectLockService,
 etc.
-

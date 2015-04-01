@@ -27,8 +27,11 @@ CPS has these three context scopes as well. But they are known by the CPS
 concept names rather than their VS-specific equivalents. Here they are
 with their equivalents:
 
-**WARNING: There is a table here that must be manually transcribed!**
-
+| VS term       | CPS term            | MSBuild term                            |
+|---------------|---------------------|-----------------------------------------|
+| IVsSolution   | ProjectService      | ProjectCollection                       |
+| IVsProject    | UnconfiguredProject | ProjectRootElement (construction model) |
+| IVsProjectCfg | ConfiguredProject   | Project (evaluation model)              |
 
 Any code in VS may obtain the ProjectService or IVsSolution because there
 is just one in the process. 
@@ -46,7 +49,6 @@ Note that ProjectService scope is not equivalent to the VS default MEF container
 ProjectService is a scope beneath the default container and [must be obtained from the
 IProjectServiceAccessor](onenote:Documentation.one#Obtaining%20the%20ProjectService&section-id={768BD288-CDB5-4DCE-83D2-FC3994703CEA}&page-id={213C67CF-0707-470E-903D-1451517B2F73}&base-path=http://devdiv/sites/vspe/prjbld/OneNote/TeamInfo/CPS),
 which itself is defined in the VS default container.
-
 
 ### Scopes at odds
 
@@ -70,7 +72,6 @@ synchronizes with the VS concept of active project configuration so that
 CPS always uses the active ConfiguredProject as its source for data when
 it is queried for it at the UnconfiguredProject scope.
 
-
 ### Which scope should I operate at?
 
 The short answer is that if your code operates at the project level (that
@@ -82,12 +83,19 @@ it to the ConfiguredProject scope.
 
 ### Controlling the MEF scope your MEF part is exported to
 
-### MEF parts belong to the scope necessary to satisfy all of its imports. A MEF part that imports nothing belongs to the 'default' or global scope. A MEF part that imports anything from the ConfiguredProject scope belongs to the ConfiguredProject scope as well (unless it does so via the ActiveConfiguredProject<T> wrapper). A MEF part that imports anything from the ConfiguredProject 
+MEF parts belong to the scope necessary to satisfy all of its imports. A MEF
+part that imports nothing belongs to the 'default' or global scope. A MEF part
+that imports anything from the ConfiguredProject scope belongs to the
+ConfiguredProject scope as well (unless it does so via the
+ActiveConfiguredProject<T> wrapper). A MEF part that imports anything from
+the ConfiguredProject.
 
-
-**WARNING: There is a table here that must be manually transcribed!**
-
-
+| A part belongs to, the scope below, when it imports MEF parts in the columns to the right | VS default container | ProjectService | UnconfiguredProject | ConfiguredProject |
+|-------------------------------------------------------------------------------------------|----------------------|----------------|---------------------|-------------------|
+| VS default container                                                                      | Y/N                  | No             | No                  | No                |
+| CPS ProjectService                                                                        | Y/N                  | Yes            | No                  | No                |
+| CPS UnconfiguredProject                                                                   | Y/N                  | Y/N            | Yes                 | No                |
+| CPS ConfiguredProject                                                                     | Y/N                  | Y/N            | Y/N                 | Yes               |
 
 ### Importing ConfiguredProject MEF exports at the UnconfiguredProject level
 
@@ -100,7 +108,6 @@ the IProjectSubscriptionService, which is exported to the ConfiguredProject
 scope, you can instead get the IActiveConfiguredProjectSubscriptionService,
 which is available at the UnconfiguredProject scope.
 
-
 When you are defining a MEF part that is exported to the UnconfiguredProject
 scope, you may import ConfiguredProject-scoped services using the
 ActiveConfiguredProject<T> wrapper. This is a MEF open-generic export
@@ -111,53 +118,33 @@ import the IBuildProject service from the active configuration from your
 UnconfiguredProject MEF part, you can use this syntax:
 
     [Import]
-
     ActiveConfiguredProject<IBuildProject> BuildProject { get; set; }
-
 
 Note that the generic type argument can even be ConfiguredProject itself:
 
     [Import]
-
-    ActiveConfiguredProject<ConfiguredProject> ActiveConfiguredProject {
-get; set; }
-
+    ActiveConfiguredProject<ConfiguredProject> ActiveConfiguredProject { get; set; }
 
 Most commonly, it's useful to define your own private nested class that
 imports everything you need from the ConfiguredProject scope, and then
 import that:
 
-
     [Export]
-
     class MyUnconfiguredProjectPart {
-
         [Import]
-
         UnconfiguredProject Project { get; set; }
 
-
         [Import]
-
-        ActiveConfiguredProject<ConfiguredProjectHelper> ActiveConfigurationExports
-{ get; set; }
-
+        ActiveConfiguredProject<ConfiguredProjectHelper> ActiveConfigurationExports { get; set; }
 
         [Export]
-
         class ConfiguredProjectHelper {
-
             [Import]
-
             internal ConfiguredProject ConfiguredProject { get; set; }
 
-
             [Import]
-
             internal IBuildProject BuildProject { get; set; }
-
         }
-
     }
 
 Q: Is there a way to know which services belong to which scope (e.g. naming

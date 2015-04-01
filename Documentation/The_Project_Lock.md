@@ -14,14 +14,12 @@ This will cause CPS to recognize the several items being added as a single
 batch and CPS will not process the changes you make until you release the
 lock.
 
-
 ### Overview
 
 The project lock in CPS guards the MSBuild object model for thread-safe
 access. MSBuild by itself is not thread-safe, so it is vitally important
 that you possess a CPS project lock whenever you access or have references
 to MSBuild objects.
-
 
 #### Concurrency / Isolation
 
@@ -36,7 +34,6 @@ which point it reverts to an upgradeable read lock again.
 
 Nesting project locks is allowed. But remember that ordinary read locks
 are not upgradeable.
-
 
 #### Threading
 
@@ -64,7 +61,6 @@ any thread.
 
 See [Obtaining the MSBuild.Project from CPS](Obtaining_the_MSBuild.Project_from_CPS.md)
 for an example.
-
 
 ### DO's and DON'Ts
 
