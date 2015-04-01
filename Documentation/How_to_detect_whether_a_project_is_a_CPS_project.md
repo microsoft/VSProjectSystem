@@ -8,17 +8,10 @@ CPS-specific assemblies, and therefore has the advantage of not risking
 having breaks with subsequent versions of Visual Studio when CPS changes
 its unstable API.
 
+    using Microsoft.VisualStudio.Shell;
 
-using Microsoft.VisualStudio.Shell;
-
-
-internal static bool IsCpsProject(this IVsHierarchy hierarchy)
-
-{
-
-    Requires.NotNull(hierarchy, "hierarchy");
-    
-    return hierarchy.IsCapabilityMatch("CPS");
-    
-}
-
+    internal static bool IsCpsProject(this IVsHierarchy hierarchy)
+    {
+        Requires.NotNull(hierarchy, "hierarchy");
+        return hierarchy.IsCapabilityMatch("CPS");
+    }

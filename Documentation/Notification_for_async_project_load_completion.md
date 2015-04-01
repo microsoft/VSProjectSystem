@@ -11,39 +11,26 @@ collection if your query occurs before post-load population occurs.
 If you just want to be notified when population has completed so you can
 create your own snapshot of the project's contents, this code is appropriate:
 
-
     private class [TreeServiceImportHelper](http://index/Microsoft.LightSwitch.Design.Package/R/619dbd813d2268df.html)
-    
     {
-    
-        [[Import](http://index/System.ComponentModel.Composition/A.html#012ea65d2b06588e)("Microsoft.VisualStudio.ProjectSystem.PhysicalProjectTreeService")]
-    
-        internal [IProjectTreeService](http://index/Microsoft.VisualStudio.ProjectSystem.V12Only/A.html#3b84de0f37919a5c)
-    [TreeService](http://index/Microsoft.LightSwitch.Design.Package/R/5ccb72d93b96cc41.html)
-    { get; set; }
-    
+        [Import("Microsoft.VisualStudio.ProjectSystem.PhysicalProjectTreeService")]
+        internal IProjectTreeService TreeService { get; set; }
     }
-    
 
-    /// <summary>Returns a task that completes when the specified project
-    has populated its IVsHierarchy with items.</summary>
-    
-    /// <param name="unconfiguredProject">A value acquired using a technique
-    from [Finding CPS in a VS project](Finding_CPS_in_a_VS_project.md)</param>
-    
-    private async Task WaitForItemPopulationAsync(UnconfiguredProject
-    unconfiguredProject)
-    
+    /// <summary>
+    /// Returns a task that completes when the specified project has
+    /// populated its IVsHierarchy with items.
+    /// </summary>
+    /// <param name="unconfiguredProject">The project to wait for population.</param>
+    private async Task WaitForItemPopulationAsync(UnconfiguredProject unconfiguredProject)
     {
-    
         var helper = new TreeServiceImportHelper();
-        
         unconfiguredProject.SatisfyImportsOnce(helper);
-        
         await helper.TreeService.PublishAnyNonLoadingTreeAsync();
-        
     }
-    
+
+The `unconfiguredProject` argument may be aquired using a technique from
+[Finding CPS in a VS project](Finding_CPS_in_a_VS_project.md).
 
 Please note: do not call this method followed by .Wait() to synchronously
 block the UI thread till population has occurred or it will deadlock
@@ -54,17 +41,11 @@ for more on this warning and possible workarounds.
 
 One appropriate way to schedule work to occur after population:
 
-    private async Task CaptureItemsSnapshotAsync(UnconfiguredProject
-    unconfiguredProject)
-    
+    private async Task CaptureItemsSnapshotAsync(UnconfiguredProject unconfiguredProject)
     {
-    
         await WaitForItemPopulationAsync(unconfiguredProject);
-        
         // now acquire snapshot
-        
     }
-    
 
 ### Option 2
 
@@ -77,4 +58,3 @@ snapshots for both before and after, as well as a semantic diff describing
 what changed.
 
 See [Subscribe to project data](Subscribe_to_project_data.md)
-

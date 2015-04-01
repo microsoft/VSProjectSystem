@@ -11,81 +11,48 @@ broken in the next version of VS.](onenote:Design.one#How to detect whether a
 project is a CPS project without risking being broken in the next version of
 VS.&section-id={89E1E997-B6E7-4F3E-A523-20563FE2C7D4}&page-id={5FAF7DCD-81F8-4C12-BB1B-B770504694E1}&base-path=http://devdiv/sites/vspe/prjbld/OneNote/TeamInfo/CPS)
 
-
 Note: These instructions are intended for clients who are not MEF parts
-themselves.  MEF parts that need access to CPS APIs should simply [Import]
+themselves.  MEF parts that need access to CPS APIs should simply `[Import]`
 the services they require.
 
+    #ref Microsoft.VisualStudio.ProjectSystem.v14only.dll
+    #ref Microsoft.VisualStudio.ProjectSystem.VS.v14only.dll  // may be useful after acquiring CPS
+    #ref Microsoft.VisualStudio.ProjectSystem.Utilities.v14.0.dll // may be useful after acquiring CPS
 
-#ref Microsoft.VisualStudio.ProjectSystem.v14only.dll
+    using Microsoft.VisualStudio.ProjectSystem.Designers;
 
-#ref Microsoft.VisualStudio.ProjectSystem.VS.v14only.dll  // may be useful
-after acquiring CPS
-
-#ref Microsoft.VisualStudio.ProjectSystem.Utilities.v14.0.dll // may be
-useful after acquiring CPS
-
-
-using Microsoft.VisualStudio.ProjectSystem.Designers;
-
-private UnconfiguredProject GetUnconfiguredProject(IVsProject project) {
-
-    IVsBrowseObjectContext context = project as IVsBrowseObjectContext;
-
-    if (context == null) { // VC implements this on their DTE.Project.Object
-
-        IVsHierarchy hierarchy = project as IVsHierarchy;
-
-        if (hierarchy != null) {
-
-            object extObject;
-
-            if (ErrorHandler.Succeeded(hierarchy.GetProperty((uint)VSConstants.VSITEMID.Root,
-(int)__VSHPROPID.VSHPROPID_ExtObject, out extObject))) {
-
-                EnvDTE.Project dteProject = extObject as EnvDTE.Project;
-
-                if (dteProject != null) {
-
-                    context = dteProject.Object as IVsBrowseObjectContext;
-
+    private UnconfiguredProject GetUnconfiguredProject(IVsProject project) {
+        IVsBrowseObjectContext context = project as IVsBrowseObjectContext;
+        if (context == null) { // VC implements this on their DTE.Project.Object
+            IVsHierarchy hierarchy = project as IVsHierarchy;
+            if (hierarchy != null) {
+                object extObject;
+                if (ErrorHandler.Succeeded(hierarchy.GetProperty((uint)VSConstants.VSITEMID.Root, (int)__VSHPROPID.VSHPROPID_ExtObject, out extObject))) {
+                    EnvDTE.Project dteProject = extObject as EnvDTE.Project;
+                    if (dteProject != null) {
+                        context = dteProject.Object as IVsBrowseObjectContext;
+                    }
                 }
-
             }
-
         }
 
+        return context != null ? context.UnconfiguredProject : null;
     }
 
+    private UnconfiguredProject GetUnconfiguredProject(EnvDTE.Project project)
+    {
+        IVsBrowseObjectContext context = project as IVsBrowseObjectContext;
+        if (context == null && project != null) { // VC implements this on their DTE.Project.Object
+            context = project.Object as IVsBrowseObjectContext;
+        }
 
-    return context != null ? context.UnconfiguredProject : null;
-
-}
-
-private UnconfiguredProject GetUnconfiguredProject(EnvDTE.Project project)
-{
-
-    IVsBrowseObjectContext context = project as IVsBrowseObjectContext;
-
-    if (context == null && project != null) { // VC implements this on
-their DTE.Project.Object
-
-        context = project.Object as IVsBrowseObjectContext;
-
+        return context != null ? context.UnconfiguredProject : null;
     }
-
-
-    return context != null ? context.UnconfiguredProject : null;
-
-}
-
 
 #### To obtain the ConfiguredProject
 
-UnconfiguredProject unconfiguredProject; // obtained from above
-
-var configuredProject = await unconfiguredProject.GetSuggestedConfiguredProjectAsync()
-
+    UnconfiguredProject unconfiguredProject; // obtained from above
+    var configuredProject = await unconfiguredProject.GetSuggestedConfiguredProjectAsync()
 
 #### Obtain CPS services
 
@@ -94,14 +61,11 @@ ConfiguredProject instance is to use either of these interfaces' Services
 property, which provides access to the common CPS services for either of
 these scopes. 
 
-
 If the service you want isn't exposed on the Services property directly,
 you can obtain arbitrary exports using the Services.ExportProvider property:
 
     ConfiguredProject cp;
-    
     IOutputGroupsProvider ogp = cp.Services.ExportProvider.GetExportedValue<IOutputGroupsProvider>();
-    
 
 To test for whether a given project is a WWA project
 
@@ -109,14 +73,10 @@ Rather than using ProjectTypeGuid, please use the above method to detect
 CPS, then check the UnconfiguredProject.Capabilities property for the
 presence of the "Javascript" and "WindowsAppContainer" capabilities.
 
-
 To test for whether a given project is a Shared Code Master project
 
-using Microsoft.VisualStudio.Shell;
+    using Microsoft.VisualStudio.Shell;
 
-public static bool IsCodeSharingMaster(IVsHierarchy hierarchy) {
-
-    return hierarchy.IsCapabilityMatch("CodeSharingParentProject");
-
-}
-
+    public static bool IsCodeSharingMaster(IVsHierarchy hierarchy) {
+        return hierarchy.IsCapabilityMatch("CodeSharingParentProject");
+    }
