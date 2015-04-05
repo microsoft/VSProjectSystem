@@ -11,7 +11,7 @@ collection if your query occurs before post-load population occurs.
 If you just want to be notified when population has completed so you can
 create your own snapshot of the project's contents, this code is appropriate:
 
-    private class [TreeServiceImportHelper](http://index/Microsoft.LightSwitch.Design.Package/R/619dbd813d2268df.html)
+    private class TreeServiceImportHelper
     {
         [Import("Microsoft.VisualStudio.ProjectSystem.PhysicalProjectTreeService")]
         internal IProjectTreeService TreeService { get; set; }
@@ -34,9 +34,8 @@ The `unconfiguredProject` argument may be aquired using a technique from
 
 Please note: do not call this method followed by .Wait() to synchronously
 block the UI thread till population has occurred or it will deadlock
-when the tree has not already been populated. Please review [Threading
-Rules](onenote:..\VS%20Threading.one#Threading%20Rules&section-id={F67B08B3-2B6A-4472-A492-EEE6749BF8A3}&page-id={D0EEFAB9-99C0-4B8F-AA5F-4287DD69A38F}&end&base-path=http://devdiv/sites/vspe/prjbld/OneNote/TeamInfo) and
-[VS Scenarios](onenote:..\VS%20Threading.one#VS%20Scenarios&section-id={F67B08B3-2B6A-4472-A492-EEE6749BF8A3}&page-id={2C8E6F9B-46BF-448D-B0EE-142C1DCF3C10}&end&base-path=http://devdiv/sites/vspe/prjbld/OneNote/TeamInfo)
+when the tree has not already been populated. Please review 
+[Threading Rules](3_Threading_Rules.md) and [VS Scenarios](CookBook.md)
 for more on this warning and possible workarounds.
 
 One appropriate way to schedule work to occur after population:

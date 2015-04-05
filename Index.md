@@ -61,7 +61,7 @@ Documentation
   - [Block/Defer critical project operations](Documentation/BlockDefer_critical_project_operations.md)
   - [Analyze Hangs](Documentation/Analyze_Hangs.md)
     - [Who holds a project lock?](Documentation/Who_holds_a_project_lock.md)
-- [Early Drafts ](Documentation/Early_Drafts.md)
+- [Early Drafts](Documentation/Early_Drafts.md)
   - [How to create a new CPS-based project type](Documentation/How_to_create_a_new_CPSbased_project_type.md)
   - [Introduction to new project from wizard](Documentation/Introduction_to_new_project_from_wizard.md)
   - [External customer guidance](Documentation/External_customer_guidance.md)

@@ -1,15 +1,13 @@
 Finding CPS in a VS project
 ===========================
 
-Caution: CPS has no stable public API of its own. Any references to CPS
+**Caution: CPS has no stable public API of its own. Any references to CPS
 assemblies or types therein can be counted on to break with each successive
 release of Visual Studio until we can take time in our schedule to stabilize
-our API. Sorry.
+our API. Sorry.**
 
 [How to detect whether a project is a CPS project without risking being
-broken in the next version of VS.](onenote:Design.one#How to detect whether a
-project is a CPS project without risking being broken in the next version of
-VS.&section-id={89E1E997-B6E7-4F3E-A523-20563FE2C7D4}&page-id={5FAF7DCD-81F8-4C12-BB1B-B770504694E1}&base-path=http://devdiv/sites/vspe/prjbld/OneNote/TeamInfo/CPS)
+broken in the next version of VS.](How_to_detect_whether_a_project_is_a_CPS_project.md)
 
 Note: These instructions are intended for clients who are not MEF parts
 themselves.  MEF parts that need access to CPS APIs should simply `[Import]`
@@ -72,11 +70,3 @@ To test for whether a given project is a WWA project
 Rather than using ProjectTypeGuid, please use the above method to detect
 CPS, then check the UnconfiguredProject.Capabilities property for the
 presence of the "Javascript" and "WindowsAppContainer" capabilities.
-
-To test for whether a given project is a Shared Code Master project
-
-    using Microsoft.VisualStudio.Shell;
-
-    public static bool IsCodeSharingMaster(IVsHierarchy hierarchy) {
-        return hierarchy.IsCapabilityMatch("CodeSharingParentProject");
-    }

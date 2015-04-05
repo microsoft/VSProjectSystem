@@ -1,4 +1,4 @@
-CookBook
+Cookbook
 ========
 
 Important for CPS users: If you're in CPS or a CPS extension, please
@@ -6,201 +6,152 @@ replace all references to "ThreadHelper.JoinableTaskFactory" with
 "this.ThreadHandling.AsyncPump", where "this.ThreadHandling" is an [Import]
 IThreadHandling.
 
-
-
 Initial setup
 
 - Reference Microsoft.VisualStudio.Threading.dll
-- Add #using Microsoft.VisualStudio.Threading; to the start of any relevant C# source files.
+- Add `using Microsoft.VisualStudio.Threading;` to the start of any relevant C# source files.
 
-Block a thread while doing async w​ork
+Block a thread while doing async work
+---------------------
 
+    ThreadHelper.JoinableTaskFactory.Run(async delegate
+    {
+        // caller's thread
+        await SomeOperationAsync(...);
 
-ThreadHelper.JoinableTaskFactory.Run(async delegate {
+        // switch to main thread
+        await ThreadHelper.JoinableTaskFactory.SwitchToMainThreadAsync();
+        SomeUIThreadBoundWork();
 
-    // caller's thread
-
-    await SomeOperationAsync(...);
-
-
-    // switch to main thread
-
-    await ThreadHelper.JoinableTaskFactory.SwitchToMainThreadAsync();
-
-    SomeUIThreadBoundWork();
-
-
-    // switch to threadpool
-
-    await TaskScheduler.Default; // #using Microsoft.VisualStudio.Threading;
-
-    SomeWorkThatCanBeOnThreadpool();
-
-});
+        // switch to threadpool
+        await TaskScheduler.Default; // using Microsoft.VisualStudio.Threading;
+        SomeWorkThatCanBeOnThreadpool();
+    });
 
 
 If any of your async work should be on a background thread, you can switch
 explicitly:
 
+    // assuming we're on the UI thread already…
+    await Task.Run(async delegate
+    {
+        // we're on a background thread now
+    });
 
-// assuming we're on the UI thread already…
-
-await Task.Run(async delegate {
-
-    // we're on a background thread now
-    
-});
-
-// …now we're back on the UI thread.
+    // ...now we're back on the UI thread.
 
 
 Alternatively:
 
+// On some thread, but definitely want to be on the threadpool:
 
-// On some thread, but definitely want to be on the threadpool (requires
-using the Microsoft.VisualStudio.Threading namespace):
+	// using Microsoft.VisualStudio.Threading;
+    
+    await TaskScheduler.Default;
 
-await TaskScheduler.Default;
-
-
-// On some thread, but definitely want to be on the main thread:
-
-await ThreadHelper.JoinableTaskFactory.SwitchToMainThreadAsync();
-
+    // On some thread, but definitely want to be on the main thread:
+    await ThreadHelper.JoinableTaskFactory.SwitchToMainThreadAsync();
 
 How to switch to the UI thread
+-----------------
 
-In an async me​th​​od
+In an async method
 
-await ThreadHelper.JoinableTaskFactory.SwitchToMainThreadAsync();
+	await ThreadHelper.JoinableTaskFactory.SwitchToMainThreadAsync();
 
-In a sync metho​​d
+In a sync method
 
 First, consider carefully whether you can make your method async first
 and then follow the above pattern. If you must remain synchronous, you
 can switch to the UI thread like this:
 
-ThreadHelper.JoinableTaskFactory.Run(async delegate {
+    ThreadHelper.JoinableTaskFactory.Run(async delegate
+    {
+        await ThreadHelper.JoinableTaskFactory.SwitchToMainThreadAsync();
+        // You're now on the UI thread.
+    });
 
-    await ThreadHelper.JoinableTaskFactory.SwitchToMainThreadAsync();
+How to switch to the UI thread using a specific priority
+--------------------------------
 
-    // You're now on the UI thread.
-
-});
-
-
-How to switch to the UI thread using a specific priority​​​
-
-Simply call the JoinableTaskFactory.RunAsync extension method (defined in
-the Microsoft.VisualStudio.Shell namespace) passing in a priority as the
+Simply call the `JoinableTaskFactory.RunAsync` extension method (defined in
+the `Microsoft.VisualStudio.Shell` namespace) passing in a priority as the
 first parameter, like this:
 
-
     await ThreadHelper.JoinableTaskFactory.RunAsync(
-
         VsTaskRunContext.UIThreadBackgroundPriority,
-
         async delegate
-
         {
-
-            // On caller's thread. Switch to main thread (if we're not
-already there).
-
+            // On caller's thread. Switch to main thread (if we're not already there).
             await ThreadHelper.JoinableTaskFactory.SwitchToMainThreadAsync();
 
- 
-
             // Now on UI thread via background priority.
-
             await Task.Yield();
 
- 
-
-            // Resumed on UI thread, also via background priority.
-
+			// Resumed on UI thread, also via background priority.
         });
 
-
-How can I complet​​e asynchronously with respect to my caller while still
+How can I complete asynchronously with respect to my caller while still
 using the UI thread?
 
 If you need to complete work on the UI thread, and your caller is
-(usually) on the UI thread, but you want to return a Task<TResult> to
+(usually) on the UI thread, but you want to return a `Task<TResult>` to
 your caller and complete the work asynchronously, you should use the
 JoinableTaskFactory.RunAsync method, as described in the answer to: How
 do I switch to the UI thread using a specific priority?
 
-
-
-How can I await IVsTa​​sk?
+How can I await `IVsTask`?
+--------------
 
 Make sure you have these using directives at the top of your code file:
 
     using System.Threading.Tasks;
-    
     using Microsoft.VisualStudio.Shell;
-    
     using Task = System.Threading.Tasks.Task;
     
-That adds a [GetAwaiter extension
-method](http://index/#Microsoft.VisualStudio.Shell.14.0/VsTaskLibraryHelper.cs%2c6a2f5b2c93145a01%2creferences)
-to IVsTask that makes it awaitable. In fact just the Microsoft.VisualStudio.Shell
+That adds a [`GetAwaiter` extension
+method](https://msdn.microsoft.com/en-us/library/vstudio/hh598836(v=vs.110).aspx)
+to `IVsTask` that makes it awaitable. In fact just the `Microsoft.VisualStudio.Shell`
 namespace is required for that. But the first one is very useful. And since
 they both define Task classes they conflict making TPL Task difficult to
 use unless you add the third line.
 
+How can I return `IVsTask` from a C# async method?
+-----------------------------
 
-How can I return IVsTask​​ from a C# async method?
+The preferred way is to use the `JoinableTaskFactory.RunAsyncAsVsTask(Func<CancellationToken,
+Task>)` extension method. This gives you a CancellationToken that is tied
+to `IVsTask.Cancel()`.
 
-The preferred way is to use the JoinableTaskFactory.RunAsyncAsVsTask(Func<CancellationToken,
-Task>) extension method. This gives you a CancellationToken that is tied
-to IVsTask.Cancel().
+    public IVsTask DoAsync()
+    {
+        return ThreadHelper.JoinableTaskFactory.RunAsyncAsVsTask(
+            VsTaskRunContext.UIThreadNormalPriority, // (or lower UI thread priorities)
+            async cancellationToken =>
+            {
+                await SomethingAsync(cancellationToken);
+                await SomethingElseAsync();
+            });
+    }
 
-
-public IVsTask DoAsync() {
-
-    return ThreadHelper.JoinableTaskFactory.RunAsyncAsVsTask(
-
-        VsTaskRunContext.UIThreadNormalPriority, // (or lower UI thread
-priorities)
-
-        async cancellationToken => {
-
-            await SomethingAsync(cancellationToken);
-
-            await SomethingElseAsync();
-
-        });
-
-}
-
-
-private async Task SomethingAsync(CancellationToken cancellationToken) {
-
-                await Task.Yield();
-
-}
-
+	private async Task SomethingAsync(CancellationToken cancellationToken)
+    {
+    	await Task.Yield();
+	}
 
 Alternately, if you only have a JoinableTask, you can readily convert it
 to an IVsTask by calling the JoinableTask.AsVsTask() extension method.
 
-
-public IVsTask DoAsync() {
-
-    return ThreadHelper.JoinableTaskFactory.RunAsync(
-
-        async delegate {
-
-            await SomethingAsync();
-
-            await SomethingElseAsync();
-
-        }).AsVsTask();
-
-}
+    public IVsTask DoAsync()
+    {
+        return ThreadHelper.JoinableTaskFactory.RunAsync(
+            async delegate
+            {
+                await SomethingAsync();
+                await SomethingElseAsync();
+            }).AsVsTask();
+    }
 
 
-From <[https://microsoft.sharepoint.com/teams/DD_VSIDE/Visual%20Studio%20IDE%20Team%20Wiki/Threading%20Cookbook.aspx](https://microsoft.sharepoint.com/teams/DD_VSIDE/Visual%20Studio%20IDE%20Team%20Wiki/Threading%20Cookbook.aspx)>
+From the [VS Threading Cookbook](https://microsoft.sharepoint.com/teams/DD_VSIDE/Visual%20Studio%20IDE%20Team%20Wiki/Threading%20Cookbook.aspx)
 

@@ -5,7 +5,7 @@ Background on ItemIDs
 ---------------------
 
 In many other project systems, ItemIDs are actually raw memory pointers--opaque
-to the caller but meaningful within a project system, sort of like a VSCOOKIE.
+to the caller but meaningful within a project system, sort of like a `VSCOOKIE`.
 If someone held onto an itemid beyond its invalidation, and then passed
 that itemid into the project system, the project system might dereference
 it and end up crashing the product because of an access violation. It has
@@ -67,7 +67,7 @@ The above code is safe because:
 
 - Q: COM STA rules will marshal all my calls to the UI thread for me. 
      Why must I be on the UI thread if dealing with itemid's?
- **A**: If you're on a background thread, the call into IVsHierarchy will 
+  - A: If you're on a background thread, the call into IVsHierarchy will 
      only get marshaled to the UI thread if that particular project system
      implementation is a native COM STA object. Calls to a project system
      implemented in managed code will generally not marshal to the UI thread.
@@ -77,7 +77,7 @@ The above code is safe because:
      mutating the project. And if that's the case, then the ItemID that you
      just obtained may have been destroyed and you wouldn't know about it.
 - Q: What if I'm mutating the project? Could the ItemID be invalidated then?
- **A**: Yes. Obviously if you ask the project to delete a file represented
+  - A: Yes. Obviously if you ask the project to delete a file represented
      by that ItemID, that ItemID will likely be destroyed immediately. But
      even seemingly benign mutations could invalidate an ItemID. For example,
      setting a project property could cause ItemIDs to be destroyed (if the
@@ -102,7 +102,7 @@ will happen:
 - Q: Why doesn't the project system just offer a simple and safe way to check
      whether an ItemID is still valid so I don't have to deal with this event
      handler stuff?
- **A**: Even if there were a safe way to simply ask the project system if an
+  - A: Even if there were a safe way to simply ask the project system if an
      ItemID were valid before using it, that would be imprecise since a
      destroyed ItemID can be recycled to represent a different item in which
      case it would be valid, but not have the same significance that your code
@@ -112,7 +112,7 @@ will happen:
      represent foo.cs?" 
 - Q: Then how can store state regarding an item without dealing with event
      handlers?
- **A**: Instead of storing itemids, store the item moniker. Then whenever you
+  - A: Instead of storing itemids, store the item moniker. Then whenever you
      need the itemid you obtain it using the moniker:
 
         IVsHierarchy::GetCanonicalName(itemid, out moniker)

@@ -74,7 +74,7 @@ error report file will help to diagnose issues such as the reason why a
 certain component is never being loaded into VS.  The error report file
 can be found at 
 
-    [User]\AppData\Local\Microsoft\VisualStudio\[Version]\ComponentModelCache\Microsoft.VisualStudio.Default.err.
+    [User]\AppData\Local\Microsoft\VisualStudio\[Version]\ComponentModelCache\Microsoft.VisualStudio.Default.err
 
 Because an MEF error may cause chains of errors in other components, one
 should always start with investigating level 1 composition errors.
@@ -122,7 +122,7 @@ important to use the correct appliesTo metadata when defining a component.
 supports; in the advanced scenario, AppliesTo metadata can be an expression
 like this --
 
-    [AppliesTo("MyLanaguageProject & DeviceProject")]
+    [AppliesTo("MyLanaguageProject + DeviceProject")]
 
 Also, when a component exports additional properties or methods, the
 metadata should be declared wherever the export attribute is used.
@@ -148,7 +148,7 @@ IVsHierarchy looks like this:
         [ImportingConstructor]
         internal MyClass(UnconfiguredProject unconfiguredProject)
         {
-            this.vsHierarchies = new OrderPrecedenceImportCollection<Shell.Interop.IVsHierarchy(
+            this.vsHierarchies = new OrderPrecedenceImportCollection<IVsHierarchy>(
                 projectCapabilityCheckProvider: unconfiguredProject);
         }
 

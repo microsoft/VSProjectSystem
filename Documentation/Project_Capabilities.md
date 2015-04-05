@@ -38,7 +38,7 @@ property to false to suppress these capabilities.
 
 Please see this Excel spreadsheet for current and spec'd project capabilities
 
-[http://devdiv/sites/vsplat/vside/Shared%20Documents/Project%20and%20Build/CPS/Designs/Project%20Capability%20actuals.xlsx?web=1](http://devdiv/sites/vsplat/vside/Shared%20Documents/Project%20and%20Build/CPS/Designs/Project%20Capability%20actuals.xlsx?web=1)
+**TODO: convert the Excel spreadsheet to a MarkDown table**
 
 Important: please respect the formulas in this spreadsheet. Do not modify
 the Bugs or Actuals worksheets and do not add/delete/modify the rows or
