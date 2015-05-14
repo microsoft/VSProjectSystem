@@ -29,8 +29,7 @@ reasonably standard behavior.
 A project type template and several item templates can help you get started
 with your own project type and some common customizations. 
 
-- Install the [VS SDK][VSSDK] if you haven't already.
-- Install the [Project System Extensibility VSIX][VSIX]
+- Install the [prerequisites](PreReqs.md)
 - Launch Visual Studio 2015
 - Open the New Project Dialog
 - Set the target framework to .NET Framework 4.6
@@ -44,6 +43,3 @@ in the New Project dialog now.
 Now you can customize it. Notice the Add New Item dialog has several
 special templates for adding extensions that customize the behavior of
 your project type under the Extensibility category.
-
- [VSSDK]: http://www.microsoft.com/en-us/download/details.aspx?id=46850
- [VSIX]: 

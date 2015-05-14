@@ -3,6 +3,7 @@ VS Project System Documentation
 
 - [Introduction](Documentation/Introduction.md)
 - [Your obligations as a project system extender](Documentation/obligations.md)
+- [Prerequisites](Documentation/PreReqs.md)
 - [Define a new project type](Documentation/Define_a_new_project_type.md)
 - [Extend/flavor an existing project type](Documentation/Extend_an_existing_project_type.md)
 - [Overview](Documentation/Overview.md)
