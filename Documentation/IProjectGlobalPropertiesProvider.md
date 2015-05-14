@@ -16,8 +16,13 @@ are described below in terms of how they should be exported:
 | `[ExportBuildGlobalPropertiesProvider(designTimeBuildProperties: false)]` | No | No | Yes
 | `[ExportBuildGlobalPropertiesProvider(designTimeBuildProperties: true)]` | No | Yes | No
 
-If the global properties you want to set on projects never changes after your initial properties are determined, the simplest way to export global properties is by deriving from StaticGlobalPropertiesProviderBase:
-
+If the global properties you want to set on projects never changes after your
+initial properties are determined within the scope of your exported MEF part,
+the simplest way to export global properties is by deriving from
+`StaticGlobalPropertiesProviderBase`. Note that each instance of your
+class may return different properties even with this base class. By importing
+`UnconfiguredProject` into your class, for example, you'll have a unique
+instance per-project and each instance can return a different set of properties.
 
     [Export(typeof(IProjectGlobalPropertiesProvider))]
     [AppliesTo("YourUniqueCapability")]
