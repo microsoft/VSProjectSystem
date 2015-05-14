@@ -1,0 +1,4 @@
+IProjectCapabilitiesProvider
+====================
+
+TODO
