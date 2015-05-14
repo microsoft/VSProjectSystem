@@ -1,10 +1,10 @@
 VS Project System Documentation
 ===============================
 
-Documentation
--------------
-
-- [Introductory Note to CPS candidate users](Documentation/Introductory_Note_to_CPS_candidate_users.md)
+- [Introduction](Documentation/Introduction.md)
+- [Your obligations as a project system extender](Documentation/obligations.md)
+- [Define a new project type](Documentation/Define_a_new_project_type.md)
+- [Extend/flavor an existing project type](Documentation/Extend_an_existing_project_type.md)
 - [Overview](Documentation/Overview.md)
   - [CPS Core vs. CPS VS](Documentation/CPS_Core_vs._CPS_VS.md)
   - [MEF](Documentation/MEF.md)
@@ -33,6 +33,8 @@ Documentation
   - [Notification for async project load completion](Documentation/Notification_for_async_project_load_completion.md)
   - [Sync up shims to latest project model](Documentation/Sync_up_shims_to_latest_project_model.md)
   - [Add a source item with specific item type](Documentation/Add_a_source_item_with_specific_item_type.md)
+  - Behavioral differences between CPS and other project systems
+      - [GetMkDocument returns ">12" style strings](Documentation/GetMkDocument_returns_12_style_strings.md)
 - [Extensibility points](Documentation/Extensibility_points.md)
   - [Custom item types](Documentation/Custom_item_types.md)
   - [Custom reference types](Documentation/Custom_reference_types.md)
@@ -52,6 +54,7 @@ Documentation
   - [IProjectSourceItemProviderExtension](Documentation/IProjectSourceItemProviderExtension.md)
   - [IProjectPropertiesProvider](Documentation/IProjectPropertiesProvider.md)
   - [IFileSystemErrorMessageProvider](Documentation/IFileSystemErrorMessageProvider.md)
+  - [Property pages](Documentation/Property_pages.md)
 - [HOWTOs](Documentation/HOWTOs.md)
   - [Reference Manager](Documentation/Reference_Manager.md)
     - [Hide some of the tabs in the Reference Manager Dialog](Documentation/Hide_some_of_the_tabs_in_the_Reference_Manager_Dialog.md)
@@ -61,12 +64,4 @@ Documentation
   - [Block/Defer critical project operations](Documentation/BlockDefer_critical_project_operations.md)
   - [Analyze Hangs](Documentation/Analyze_Hangs.md)
     - [Who holds a project lock?](Documentation/Who_holds_a_project_lock.md)
-- [Early Drafts](Documentation/Early_Drafts.md)
-  - [How to create a new CPS-based project type](Documentation/How_to_create_a_new_CPSbased_project_type.md)
-  - [Introduction to new project from wizard](Documentation/Introduction_to_new_project_from_wizard.md)
-  - [External customer guidance](Documentation/External_customer_guidance.md)
-  - [WARNING to folks taking a CPS dependency](Documentation/WARNING_to_folks_taking_a_CPS_dependency.md)
-  - [Property pages](Documentation/Property_pages.md)
-  - [New capabilities for item templates](Documentation/New_capabilities_for_item_templates.md)
-  - [What is CPS?](Documentation/What_is_CPS.md)
-  - [GetMkDocument returns ">12" style strings](Documentation/GetMkDocument_returns_12_style_strings.md)
+- [Differences between Visual Studio 2013 and Visual Studio 2015](Documentation/VS2013_vs_VS2015.md)

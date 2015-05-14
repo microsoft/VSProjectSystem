@@ -1,5 +1,5 @@
-Introductory Note to CPS candidate users
-========================================
+Introductory Note to Project System Extensibility users
+=======================================================
 
 Introduction
 ------------
@@ -11,7 +11,6 @@ Azure web applications. It provides a rich, managed API that offers clients
 the ability to query and manipulate project data, as well as project type
 authors an extensible framework for customizing project behavior to suit
 their needs.
-
 
 ### Why CPS?
 
@@ -35,7 +34,6 @@ project system on CPS automatically gives it the promise of rehostability
 (Monaco, Azure), scalability and performance that customers demand for
 their large solutions.
 
-
 ### Is CPS right for me?
 
 We hope so. Some project systems may be recreateable on CPS in just a few
@@ -44,9 +42,8 @@ design principle behind CPS though is that when you build on CPS you focus
 on what makes your projects unique rather than spending 95% of your time
 implementing the same behaviors every other project system has.
 
-
-One word of caution we must make very clear however, is that the CPS
-API is not stable. Code you write that works on Visual Studio 2015 may
+One word of caution we must make very clear however, is that **the CPS
+API is not stable**. Code you write that works on Visual Studio 2015 may
 not work on v.Next AS IS. The migration path from VS2015 to v.Next will
 be documented so you can upgrade your code, and we anticipate it will
 be relatively straightforward but we cannot make guarantees about what
@@ -59,11 +56,9 @@ trying CPS in VS2015 so we can respond to it and address it in v.Next. So
 do please try it, ship your project type based on CPS it if it meets your
 requirements, and give us feedback (good and bad).
 
-
 That said, you should be aware going into it of some design limitations
 and other considerations as we have outlined below. Some we anticipate to
 be permanent and others are temporary. 
-
 
 #### Design limitations
 
