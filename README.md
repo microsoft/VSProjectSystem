@@ -4,7 +4,8 @@ existing ones. This repository contains the [documentation and best practices][1
 creating extensions that add new project types to Visual Studio. We welcome community input if you
 wish to contribute new topics or find any issues.
 
-To get started, install [Visual Studio 2015 RC][4] and the [Visual Studio Project System Extensiblity SDK][2].
+To get started, install [Visual Studio 2015 RC][4], the [Visual Studio 2015 SDK][VSSDK], and
+the [Visual Studio Project System Extensiblity SDK][2].
  
 For further information about extending Visual Studio in other ways please check out
 [ExtendVS][3].
@@ -13,3 +14,4 @@ For further information about extending Visual Studio in other ways please check
  [2]: http://aka.ms/vsprojectsystemextensibilityvsix
  [3]: http://microsoft.github.io/extendvs/
  [4]: https://www.visualstudio.com/en-us/downloads/visual-studio-2015-downloads-vs.aspx
+ [VSSDK]: http://go.microsoft.com/?linkid=9877247
