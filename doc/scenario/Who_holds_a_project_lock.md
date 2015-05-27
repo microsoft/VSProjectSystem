@@ -4,7 +4,7 @@ Who holds a project lock?
 The ProjectLockService.dgml file tells me I have several clients waiting
 on a lock, and one client holding an upgradeable read lock.
 
-![](Images/Fig_5.png)
+![](../Images/Fig_5.png)
 
 I know the lock is involved in the hang because the async state machine
 responsible for blocking the main thread is blocked because it can't get
