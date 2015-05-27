@@ -66,7 +66,7 @@ The following notable limitations are By Design and you should satisfy
 yourself that these are acceptable before deciding to build on CPS:
 
 - CPS projects cannot be flavored via COM aggregation. Instead, use MEF exports to tailor the experience of your projects to meet your requirements.
-- If we don't have an extensibility point where you need one, you're quite likely out of luck until we have a chance to update CPS to add the extensibility point you require. We have a bunch of [extensibility points](Extensibility_points.md) and we expect it will suit a broad set of requirements, and we will add new ones periodically based on business requirements and customer demand. You should evaluate whether the behaviors you want to change about CPS have existing extensibility points to allow your extensions before building on CPS.
+- If we don't have an extensibility point where you need one, you're quite likely out of luck until we have a chance to update CPS to add the extensibility point you require. We have a bunch of [extensibility points](../extensibility/index.md) and we expect it will suit a broad set of requirements, and we will add new ones periodically based on business requirements and customer demand. You should evaluate whether the behaviors you want to change about CPS have existing extensibility points to allow your extensions before building on CPS.
 
 #### Limitations in current implementation
 
@@ -74,7 +74,7 @@ The following notable limitations are simply because we haven't gotten
 to implementing/fixing them yet. We hope to reduce the size of this list
 with each release.
 
-- Only items in your project with recognized item types will appear in Solution Explorer or be available as project items via automation. You can [define new content types](Custom_item_types.md) to describe your proprietary item types so that they appear in Solution Explorer.
+- Only items in your project with recognized item types will appear in Solution Explorer or be available as project items via automation. You can [define new content types](../extensibility/Custom_item_types.md) to describe your proprietary item types so that they appear in Solution Explorer.
 - The performance of some scenarios are not yet at parity with C# and some other project systems.
 - No (or very limited) app designer support. Project properties are typically accessed via the Property Pages dialog instead.
 
@@ -88,5 +88,5 @@ other project systems that may impact you or your customers.
 Overview
 --------
 
-Please visit our [Overview](Overview.md) page.
+Please visit our [Overview](index.md) page.
 

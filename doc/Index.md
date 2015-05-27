@@ -1,11 +1,11 @@
 VS Project System Documentation
 ===============================
 
-- [Introduction](Introduction.md)
-- [Your obligations as a project system extender](obligations.md)
-- [Prerequisites](PreReqs.md)
-- [Define a new project type](Define_a_new_project_type.md)
-- [Extend/flavor an existing project type](Extend_an_existing_project_type.md)
+- [Introduction](overview/intro.md)
+- [Your obligations as a project system extender](overview/obligations.md)
+- [Prerequisites](overview/PreReqs.md)
+- [Define a new project type](overview/Define_a_new_project_type.md)
+- [Extend/flavor an existing project type](overview/Extend_an_existing_project_type.md)
 - [Overview](overview/index.md)
   - [CPS Core vs. CPS VS](overview/CPS_Core_vs._CPS_VS.md)
   - [MEF](overview/MEF.md)
@@ -18,10 +18,9 @@ VS Project System Documentation
   - [Content/item types](overview/Contentitem_types.md)
   - [ItemIDs](overview/ItemIDs.md)
   - [Responsive design](overview/Responsive_design.md)
-- [Threading model](Threading_model.md)
-  - [3 Threading Rules](3_Threading_Rules.md)
-  - [CookBook](CookBook.md)
-  - [Async hang debugging](Async_hang_debugging.md)
+- [Threading model](overview/Threading_model.md)
+  - [3 Threading Rules](overview/3_Threading_Rules.md)
+  - [CookBook](overview/CookBook.md)
 - Clients / Automation
   - [How to detect whether a project is a CPS project](automation/How_to_detect_whether_a_project_is_a_CPS_project.md)
   - [Finding CPS in a VS project](automation/Finding_CPS_in_a_VS_project.md)

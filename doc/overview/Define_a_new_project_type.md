@@ -10,7 +10,7 @@ extension. This may be appropriate when any of the following are true:
 2. The project will compile a new language.
 
 You usually should *not* define a new project type when you only intend
-to [modify, enhance, or "flavor" an existing project type](extend_an_existing_project_type.md).
+to [modify, enhance, or "flavor" an existing project type](Extend_an_existing_project_type.md).
 
 ## How to define a new project type
 
