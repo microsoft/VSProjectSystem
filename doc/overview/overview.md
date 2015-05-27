@@ -2,7 +2,7 @@ Overview
 ========
 
 
-![](Images/Fig.png)
+![](../Images/Fig.png)
 
 - Read [CPS Core vs. CPS VS](CPS_Core_vs._CPS_VS.md) for more details
 - Please familiarize with MEF at [MEF](MEF.md)
