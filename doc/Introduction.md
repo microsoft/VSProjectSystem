@@ -56,6 +56,8 @@ trying CPS in VS2015 so we can respond to it and address it in v.Next. So
 do please try it, ship your project type based on CPS it if it meets your
 requirements, and give us feedback (good and bad).
 
+Also consider [your obligations as a project system extender](obligations.md).
+
 That said, you should be aware going into it of some design limitations
 and other considerations as we have outlined below. Some we anticipate to
 be permanent and others are temporary. 
