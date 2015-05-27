@@ -6,7 +6,7 @@ VS Project System Documentation
 - [Prerequisites](PreReqs.md)
 - [Define a new project type](Define_a_new_project_type.md)
 - [Extend/flavor an existing project type](Extend_an_existing_project_type.md)
-- [Overview](overview/overview.md)
+- [Overview](overview/index.md)
   - [CPS Core vs. CPS VS](overview/CPS_Core_vs._CPS_VS.md)
   - [MEF](overview/MEF.md)
   - [Scopes](overview/Scopes.md)
@@ -22,7 +22,7 @@ VS Project System Documentation
   - [3 Threading Rules](3_Threading_Rules.md)
   - [CookBook](CookBook.md)
   - [Async hang debugging](Async_hang_debugging.md)
-- [Clients / Automation](automation/overview.md)
+- Clients / Automation
   - [How to detect whether a project is a CPS project](automation/How_to_detect_whether_a_project_is_a_CPS_project.md)
   - [Finding CPS in a VS project](automation/Finding_CPS_in_a_VS_project.md)
   - [Obtaining the ProjectService](automation/Obtaining_the_ProjectService.md)
@@ -36,7 +36,7 @@ VS Project System Documentation
   - [Add a source item with specific item type](automation/Add_a_source_item_with_specific_item_type.md)
   - Behavioral differences between CPS and other project systems
       - [GetMkDocument returns ">12" style strings](automation/GetMkDocument_returns_12_style_strings.md)
-- [Extensibility points](extensibility/overview.md)
+- [Extensibility points](extensibility/index.md)
   - [Custom item types](extensibility/Custom_item_types.md)
   - [Custom reference types](extensibility/Custom_reference_types.md)
   - [Custom Debugger](extensibility/Custom_Debugger.md)
