@@ -7,7 +7,7 @@ General guidance for extension authors
 Understand the threading model
 
 CPS extensions are expected to conform to the [CPS/VS threading
-model](Threading_model.md). Please become familiar with it before writing
+model](../Threading_model.md). Please become familiar with it before writing
 CPS extensions. This will help avoid responsiveness issues, deadlocks,
 and non-deterministic hangs in your scenarios.
 
@@ -21,12 +21,12 @@ we can help catch common mistakes.
 
 ### [AppliesToAttribute](http://index/Microsoft.VisualStudio.ProjectSystem.Utilities.v14.0/R/a40aabc698b937e1.html)
 
-Every extension based on MEF exports must include an [AppliesTo("…")]
+Every extension based on MEF exports must include an `[AppliesTo("...")]`
 attribute on the exported type or member. The string argument is
 an expression that evaluates to a boolean value, as [documented
 here](http://msdn.microsoft.com/en-us/library/microsoft.visualstudio.shell.interop.ivsbooleansymbolexpressionevaluator.evaluateexpression.aspx).
 The terms that may be used are [project
-capabilities](onenote:Documentation.one#Project%20Capabilities&section-id={768BD288-CDB5-4DCE-83D2-FC3994703CEA}&page-id={6345DC31-A083-4A4B-BBD9-38F17BE3EF62}&base-path=http://devdiv/sites/vspe/prjbld/OneNote/TeamInfo/CPS).
+capabilities](../Project_Capabilities.md).
 
 Take care to write the appropriate AppliesTo expression so that your
 extension applies exactly to the set of projects you mean to impact. Remember
@@ -48,7 +48,7 @@ loading when it does not apply to a given project.
 When more than one extension applies to a given project, CPS may pick the
 "most preferred" extension to fulfill some requirement, or it may loop
 through all extensions to allow each to participate. The preference order,
-or the order of that loop, can be influenced by adding an [OrderPrecedence]
+or the order of that loop, can be influenced by adding an `[OrderPrecedence]`
 attribute to your export.
 
 Lacking any such attribute on an export, the sort order value is effectively
@@ -81,7 +81,7 @@ doesn't get invoked when you expect it to:
 
 - Verify that the assembly containing your extension is included in the VS MEF catalog.
   - Is your assembly referenced from an extension.vsixmanifest file that is found in the VS install directory in a location that VS searches for extensions?
-- Does your extension have an [Export(typeof(IExtension))] attribute or another Export-ish attribute as documented for the extensibility point?
-- Verify that your export defines an [AppliesTo] attribute on the same type or ember that the [Export] attribute is found on, and with an expression that is appropriate for the project type(s) you are targeting. In some cases this may mean you have an [AppliesTo] attribute that appears both on the type (that is exported) and a method (that is also exported).
+- Does your extension have an `[Export(typeof(IExtension))]` attribute or another Export-ish attribute as documented for the extensibility point?
+- Verify that your export defines an `[AppliesTo]` attribute on the same type or ember that the [Export] attribute is found on, and with an expression that is appropriate for the project type(s) you are targeting. In some cases this may mean you have an [AppliesTo] attribute that appears both on the type (that is exported) and a method (that is also exported).
 - Verify that your MEF part isn't rejected due to some authoring error by scanning for it in this file:
 %localappdata%\microsoft\VisualStudio\14.0\ComponentModelCache\Microsoft.VisualStudio.Default.err
