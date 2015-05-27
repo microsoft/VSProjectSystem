@@ -18,25 +18,26 @@ becomes a straight task, which starts creating extension classes through
 templates provided in the CPS SDK.  A typical CPS component looks like
 this:
 
+```csharp
+[Export(typeof(IProjectTreeModifier))]
+[AppliesTo("MyProjectType")]
+internal class ProjectTreeIconProvider : IProjectTreeModifier
+{
+    /// <summary>
+    /// Gets the tree factory.
+    /// </summary>
+    [Import]
+    protected Lazy<IProjectTreeFactory> TreeFactory { get; private set; }
 
-    [Export(typeof(IProjectTreeModifier))]
-    [AppliesTo("MyProjectType")]
-    internal class ProjectTreeIconProvider : IProjectTreeModifier
-    {
-        /// <summary>
-        /// Gets the tree factory.
-        /// </summary>
-        [Import]
-        protected Lazy<IProjectTreeFactory> TreeFactory { get; private set; }
+    /// <summary>
+    /// Gets the unconfigured project.
+    /// </summary>
+    [Import]
+    protected UnconfiguredProject UnconfiguredProject { get; set; }
 
-        /// <summary>
-        /// Gets the unconfigured project.
-        /// </summary>
-        [Import]
-        protected UnconfiguredProject UnconfiguredProject { get; set; }
-
-        // ...
-    }
+    // ...
+}
+```
 
 This extension implements the IProjectTreeModifier.  Through the 'Export'
 attribute, the class above implements IProjectTreeModifier contract so that
@@ -122,7 +123,9 @@ important to use the correct appliesTo metadata when defining a component.
 supports; in the advanced scenario, AppliesTo metadata can be an expression
 like this --
 
-    [AppliesTo("MyLanaguageProject + DeviceProject")]
+```csharp
+[AppliesTo("MyLanaguageProject + DeviceProject")]
+```
 
 Also, when a component exports additional properties or methods, the
 metadata should be declared wherever the export attribute is used.
@@ -134,26 +137,28 @@ should be used to filter out those components which don't match the
 context.  For example, a component in the unconfiguredProject that imports
 IVsHierarchy looks like this:
 
-    [Export]
-    public class MyClass
+```csharp
+[Export]
+public class MyClass
+{
+    [ImportMany(ExportContractNames.VsTypes.IVsHierarchy)]
+    private OrderPrecedenceImportCollection<IVsHierarchy> vsHierarchies;
+
+    private IVsHierarchy VsHierarchy
     {
-        [ImportMany(ExportContractNames.VsTypes.IVsHierarchy)]
-        private OrderPrecedenceImportCollection<IVsHierarchy> vsHierarchies;
-
-        private IVsHierarchy VsHierarchy
-        {
-            get { return this.vsHierarchies.First().Value; }
-        }
-    
-        [ImportingConstructor]
-        internal MyClass(UnconfiguredProject unconfiguredProject)
-        {
-            this.vsHierarchies = new OrderPrecedenceImportCollection<IVsHierarchy>(
-                projectCapabilityCheckProvider: unconfiguredProject);
-        }
-
-        // ...
+        get { return this.vsHierarchies.First().Value; }
     }
+
+    [ImportingConstructor]
+    internal MyClass(UnconfiguredProject unconfiguredProject)
+    {
+        this.vsHierarchies = new OrderPrecedenceImportCollection<IVsHierarchy>(
+            projectCapabilityCheckProvider: unconfiguredProject);
+    }
+
+    // ...
+}
+```
 
 In this case, the code expects that one and only one IVsHierarchy is
 implemented for the project  In other scenarios, the code might expect
