@@ -36,7 +36,7 @@ Be sure to review that file if capabilities are defined that you do not wish
 to be defined. You may find that you need to set the DefineCommonCapabilities
 property to false to suppress these capabilities.
 
-
+Review a [description of all documented project capabilities](project_capabilities.md).
 
 ### How do I define my own project capabilities?
 
