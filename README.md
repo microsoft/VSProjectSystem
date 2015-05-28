@@ -6,6 +6,9 @@ wish to contribute new topics or find any issues.
 
 To get started, read the [introduction][intro] while you're waiting for the [pre-requisites][prereq] to install.
  
+Please file any product bugs you find on [Microsoft Connect][connect]. 
+You may file doc bugs [here][docbugs].
+ 
 For further information about extending Visual Studio in other ways please check out
 [ExtendVS][3].
 
@@ -16,3 +19,5 @@ For further information about extending Visual Studio in other ways please check
  [VSSDK]: http://go.microsoft.com/?linkid=9877247
  [prereq]: doc/overview/PreReqs.md
  [intro]: doc/overview/intro.md
+ [connect]: https://connect.microsoft.com/VisualStudio
+ [docbugs]: https://github.com/Microsoft/VSProjectSystem/issues
