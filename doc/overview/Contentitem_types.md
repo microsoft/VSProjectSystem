@@ -26,7 +26,7 @@ a new file that has the extension ".foo".
 - Important: Follow the additional instructions included in the file to update ProjectItemsSchema.xaml and CustomProjectCs.targets with the provided code snippets
 - Done!
     
-![](Images/Fig_2.png)
+![](../Images/Fig_2.png)
     
 ### Using the new item type
 
@@ -48,9 +48,9 @@ Here are some things to notice about the newly added file:
 - Select "Test.foo" in the Solution Explorer
 - Look at the Properties Window -> you should notice that a custom property "My Property" gets displayed for "Test.foo". That property was defined in the Rules file that was included above
 - Set some value for "My Property" e.g. "abc" and press enter
-![](Images/Fig_3.png)
+![](../Images/Fig_3.png)
 - In a similar way, press the "Property Pages" button in the Properties Window - this will open the Property Pages dialog, that should show the property and its value
-![](Images/Fig_4.png)
+![](../Images/Fig_4.png)
 - If you open the project file, you will notice that the file was added to the project according to our definition, and that the custom property "MyProperty" was set for the current configuration to the value specified above. Here is how to do that:
   - Right click on the project node in Solution Explorer -> Unload Project (save changes)
   - Right click again on the project in Solution Explorer -> Edit ProjectType11.myproj

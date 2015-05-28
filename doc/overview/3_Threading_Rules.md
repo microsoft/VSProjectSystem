@@ -7,7 +7,7 @@ rules to avoid deadlocks, unwanted reentrancy, and keep an easier to maintain
 codebase.  We do this by comprehensively applying just three rules, as outlined
 below. In each case, the instance of JoinableTaskFactory used in the samples
 comes from ThreadHelper.JoinableTaskFactory ([except for code in CPS and its
-extensions](Cookbook.md)).
+extensions](CookBook.md)).
 
 1. If a method has certain thread apartment requirements (STA or MTA) it must either:
    - Have an asynchronous signature, and asynchronously marshal to the appropriate

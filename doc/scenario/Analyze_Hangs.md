@@ -1,5 +1,7 @@
-Async hang debugging
+Analyze hangs
 ====================
+
+## Async hang debugging
 
 This prints out ALL async methods that are on the heap, whether they
 are completed or not. 
