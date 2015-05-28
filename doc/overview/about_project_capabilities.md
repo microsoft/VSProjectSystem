@@ -36,20 +36,7 @@ Be sure to review that file if capabilities are defined that you do not wish
 to be defined. You may find that you need to set the DefineCommonCapabilities
 property to false to suppress these capabilities.
 
-Please see this Excel spreadsheet for current and spec'd project capabilities
 
-**TODO: convert the Excel spreadsheet to a MarkDown table**
-
-Important: please respect the formulas in this spreadsheet. Do not modify
-the Bugs or Actuals worksheets and do not add/delete/modify the rows or
-columns. Just modify the content of the middle cells in Expected, and add
-project capabilities to the bottom or project types to the right.
-
-| Legend |                                                                                        |
-|:------:|----------------------------------------------------------------------------------------|
-|   U    | Unconfigured Project scope (capabilities appear in Unconfigured and Configured scopes) |
-|   C    | Configured Project scope only                                                          |
-|  Bold  | already shipped                                                                        |
 
 ### How do I define my own project capabilities?
 
