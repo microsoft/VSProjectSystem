@@ -10,7 +10,7 @@ VS Project System Documentation
   - [CPS Core vs. CPS VS](overview/CPS_Core_vs._CPS_VS.md)
   - [MEF](overview/MEF.md)
   - [Scopes](overview/Scopes.md)
-  - [Project Capabilities](overview/Project_Capabilities.md)
+  - [Project Capabilities](overview/about_project_capabilities.md)
   - [Interfaces defined on IVsProject object](overview/Interfaces_defined_on_IVsProject_object.md)
   - [Interfaces NOT defined on IVsProject object](overview/Interfaces_NOT_defined_on_IVsProject_object.md)
   - [The Project Lock](overview/The_Project_Lock.md)

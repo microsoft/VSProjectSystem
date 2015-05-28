@@ -26,7 +26,7 @@ attribute on the exported type or member. The string argument is
 an expression that evaluates to a boolean value, as [documented
 here](http://msdn.microsoft.com/en-us/library/microsoft.visualstudio.shell.interop.ivsbooleansymbolexpressionevaluator.evaluateexpression.aspx).
 The terms that may be used are [project
-capabilities](../overview/Project_Capabilities.md).
+capabilities](../overview/about_project_capabilities.md).
 
 Take care to write the appropriate AppliesTo expression so that your
 extension applies exactly to the set of projects you mean to impact. Remember
