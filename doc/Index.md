@@ -65,4 +65,4 @@ VS Project System Documentation
   - [Block/Defer critical project operations](scenario/BlockDefer_critical_project_operations.md)
   - [Analyze Hangs](scenario/Analyze_Hangs.md)
      - [Who holds a project lock?](scenario/Who_holds_a_project_lock.md)
-- [Differences between Visual Studio 2013 and Visual Studio 2015](VS2013_vs_VS2015.md)
+- [Differences between Visual Studio 2013 and Visual Studio 2015](overview/VS2013_vs_VS2015.md)
