@@ -70,7 +70,6 @@ Here are some things to notice about the newly added file:
     (save changes)
   - Right click again on the project in Solution Explorer -> Edit ProjectType11.myproj
 
-<!--- Could not figure out how to get the line breaks to work below -->
 ```
 <FooCompile Include="Test.foo">
     <MyProperty Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">abc</MyProperty>
