@@ -31,6 +31,4 @@ CPS VS contains such assemblies as:
   - This assembly contains CPS VS contracts including contracts of components provided by the CPS VS layer and those expected to be provided by extensions and consumed by this layer. Contracts defined here may depend on other VS contracts.
     
 - Microsoft.VisualStudio.ProjectSystem.VS.Implementation
-  - This assembly is the CPS VS layer's implementation. It contains the implementation of CPS VS MEF components and objects required by VS. It is exposed to VS as a Visual Studio Package so it can be loaded and bootstrap the entire CPS system inside VS.
-    
-    It is not expected to be referenced by an extension directly.
+  - This assembly is the CPS VS layer's implementation. It contains the implementation of CPS VS MEF components and objects required by VS. It is exposed to VS as a Visual Studio Package so it can be loaded and bootstrap the entire CPS system inside VS. It is not expected to be referenced by an extension directly.
