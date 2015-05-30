@@ -1,7 +1,7 @@
 MEF
 ===
 
-### Managed Extensibility Framework in the .NET framework
+### Managed Extensibility Framework in the .NET Framework
 
 The Managed Extensibility Framework (MEF) has been introduced in the .NET
 Framework 4 as a library for creating extensible applications. It allows
@@ -175,7 +175,7 @@ implemented for the project. In other scenarios, the code might expect
 multiple implementations (such as a debugger provider) or no implementation
 at all in the collection. `OrderPrecedenceImportCollection` uses the project
 capabilities in the project to filter the components found in MEF, keeping
-only those matching the capability of the project.
+only those matching the capabilities of the project.
 
 For a component within the configured project scope, or in the project
 service scope, the `UnconfiguredProject` in the sample above should be
