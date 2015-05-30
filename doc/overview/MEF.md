@@ -99,7 +99,7 @@ Some common MEF errors include:
   provided by the system, which should not be implemented again inside any 
   extension); 
 - Importing a component in a wrong scope (e.g., `IProjectTreeModifier` 
-  is expected to be in the `unconfiguredProject` scope; therefore, the 
+  is expected to be in the `UnconfiguredProject` scope; therefore, the 
   implementation of the `IProjectTreeModifier` should never import a 
   `ConfiguredProject` directly).
 
