@@ -9,7 +9,7 @@ When building on the APIs under the Microsoft.VisualStudio.ProjectSystem namespa
 to keep your own scenarios running smoothly and those other scenarios that are
 important to your customers, it is imperative that you:
 
-- Respect [project capabilities](Project_Capabilities.md). Define them exactly
+- Respect [project capabilities](about_project_capabilities.md). Define them exactly
   when appropriate (no more, no less). This means your team will not punt bugs
   filed against your project type that describe inappropriately defined project
   capabilities. These bugs may not cause problems in your scenarios -- but 
