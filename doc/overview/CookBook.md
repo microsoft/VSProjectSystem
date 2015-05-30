@@ -2,14 +2,16 @@ Cookbook
 ========
 
 Important for CPS users: If you're in CPS or a CPS extension, please
-replace all references to "ThreadHelper.JoinableTaskFactory" with
-"this.ThreadHandling.AsyncPump", where "this.ThreadHandling" is an [Import]
-IThreadHandling.
+replace all references to `ThreadHelper.JoinableTaskFactory` with
+`this.ThreadHandling.AsyncPump`, where `this.ThreadHandling` is an `[Import]
+IThreadHandling`.
 
 Initial setup
+---
 
 - Reference Microsoft.VisualStudio.Threading.dll
-- Add `using Microsoft.VisualStudio.Threading;` to the start of any relevant C# source files.
+- Add `using Microsoft.VisualStudio.Threading;` to the start of any relevant 
+  C# source files.
 
 Block a thread while doing async work
 ---------------------
@@ -28,7 +30,6 @@ Block a thread while doing async work
         SomeWorkThatCanBeOnThreadpool();
     });
 
-
 If any of your async work should be on a background thread, you can switch
 explicitly:
 
@@ -40,10 +41,9 @@ explicitly:
 
     // ...now we're back on the UI thread.
 
-
 Alternatively:
 
-// On some thread, but definitely want to be on the threadpool:
+    // On some thread, but definitely want to be on the threadpool:
 
 	// using Microsoft.VisualStudio.Threading;
     
@@ -97,7 +97,7 @@ using the UI thread?
 If you need to complete work on the UI thread, and your caller is
 (usually) on the UI thread, but you want to return a `Task<TResult>` to
 your caller and complete the work asynchronously, you should use the
-JoinableTaskFactory.RunAsync method, as described in the answer to: How
+`JoinableTaskFactory.RunAsync` method, as described in the answer to: How
 do I switch to the UI thread using a specific priority?
 
 How can I await `IVsTask`?
@@ -112,7 +112,7 @@ Make sure you have these using directives at the top of your code file:
 That adds a [`GetAwaiter` extension
 method](https://msdn.microsoft.com/en-us/library/vstudio/hh598836(v=vs.110).aspx)
 to `IVsTask` that makes it awaitable. In fact just the `Microsoft.VisualStudio.Shell`
-namespace is required for that. But the first one is very useful. And since
+namespace is required for that, but the first one is very useful. And since
 they both define Task classes they conflict making TPL Task difficult to
 use unless you add the third line.
 
@@ -120,7 +120,7 @@ How can I return `IVsTask` from a C# async method?
 -----------------------------
 
 The preferred way is to use the `JoinableTaskFactory.RunAsyncAsVsTask(Func<CancellationToken,
-Task>)` extension method. This gives you a CancellationToken that is tied
+Task>)` extension method. This gives you a `CancellationToken` that is tied
 to `IVsTask.Cancel()`.
 
     public IVsTask DoAsync()
@@ -139,8 +139,8 @@ to `IVsTask.Cancel()`.
     	await Task.Yield();
 	}
 
-Alternately, if you only have a JoinableTask, you can readily convert it
-to an IVsTask by calling the JoinableTask.AsVsTask() extension method.
+Alternately, if you only have a `JoinableTask`, you can readily convert it
+to an `IVsTask` by calling the `JoinableTask.AsVsTask()` extension method.
 
     public IVsTask DoAsync()
     {
@@ -151,7 +151,3 @@ to an IVsTask by calling the JoinableTask.AsVsTask() extension method.
                 await SomethingElseAsync();
             }).AsVsTask();
     }
-
-
-From the [VS Threading Cookbook](https://microsoft.sharepoint.com/teams/DD_VSIDE/Visual%20Studio%20IDE%20Team%20Wiki/Threading%20Cookbook.aspx)
-
