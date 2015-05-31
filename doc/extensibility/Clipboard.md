@@ -1,5 +1,5 @@
 Clipboard
 =========
 
-ICopyPackager / IPasteProvider
+`ICopyPackager` / `IPasteProvider`
 
