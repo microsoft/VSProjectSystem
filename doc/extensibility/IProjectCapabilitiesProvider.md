@@ -1,4 +1,4 @@
-IProjectCapabilitiesProvider
-====================
+`IProjectCapabilitiesProvider`
+==============================
 
 TODO
