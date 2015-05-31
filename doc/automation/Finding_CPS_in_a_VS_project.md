@@ -47,26 +47,26 @@ the services they require.
         return context != null ? context.UnconfiguredProject : null;
     }
 
-#### To obtain the ConfiguredProject
+#### To obtain the `ConfiguredProject`
 
     UnconfiguredProject unconfiguredProject; // obtained from above
     var configuredProject = await unconfiguredProject.GetSuggestedConfiguredProjectAsync()
 
 #### Obtain CPS services
 
-The easiest way to obtain CPS services from an UnconfiguredProject or a
-ConfiguredProject instance is to use either of these interfaces' Services
+The easiest way to obtain CPS services from an `UnconfiguredProject` or a
+`ConfiguredProject` instance is to use either of these interfaces' Services
 property, which provides access to the common CPS services for either of
 these scopes. 
 
-If the service you want isn't exposed on the Services property directly,
-you can obtain arbitrary exports using the Services.ExportProvider property:
+If the service you want isn't exposed on the `Services` property directly,
+you can obtain arbitrary exports using the `Services.ExportProvider` property:
 
     ConfiguredProject cp;
     IOutputGroupsProvider ogp = cp.Services.ExportProvider.GetExportedValue<IOutputGroupsProvider>();
 
 To test for whether a given project is a WWA project
 
-Rather than using ProjectTypeGuid, please use the above method to detect
-CPS, then check the UnconfiguredProject.Capabilities property for the
-presence of the "Javascript" and "WindowsAppContainer" capabilities.
+Rather than using `ProjectTypeGuid`, please use the above method to detect
+CPS, then check the `UnconfiguredProject.Capabilities` property for the
+presence of the `Javascript` and `WindowsAppContainer` capabilities.
