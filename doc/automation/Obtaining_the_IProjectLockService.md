@@ -11,13 +11,13 @@ multithread-related IDE crashes, even if you're just reading the project.
 
 Note that importing any CPS related service moves your MEF part from the
 VS default MEF catalog into a CPS catalog "sub-scope". Import properties
-are only 'satisfied' when MEF activated your type (not simply by "new"ing
+are only 'satisfied' when MEF activated your type (not simply by `new`ing
 up an instance of your object).
 
     [Import]
     IProjectLockService ProjectLockService { get; set; }
 
-### From MEF via an imperative GetService query
+### From MEF via an imperative `GetService` query
 
     ProjectService projectService;
     IProjectLockService projectLockService = projectService.Services.ProjectLockService;
