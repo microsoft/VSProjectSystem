@@ -13,8 +13,9 @@ think should be there, it's because your project declares that it supports
 that type of reference. Remove the project capability and that tab will
 disappear.
 
-1. Open CustomProject.targets
-2. Remove the capabilities that correspond to the tabs you would like to remove (e.g. WinRTReferences)
+1. Open `CustomProject.targets`
+2. Remove the capabilities that correspond to the tabs you would like 
+   to remove (e.g., `WinRTReferences`)
 
         <ProjectCapability Include="
             AssemblyReferences;

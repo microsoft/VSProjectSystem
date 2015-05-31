@@ -1,26 +1,28 @@
-Obtaining the IThreadHandling service
+Obtaining the `IThreadHandling` service
 =====================================
 
 ### From MEF via import
 
 Note that importing any CPS related service moves your MEF part from the
 VS default MEF catalog into a CPS catalog "sub-scope". Import properties
-are only 'satisfied' when MEF activated your type (not simply by "new"ing
+are only 'satisfied' when MEF activated your type (not simply by `new`ing
 up an instance of your object).
 
     [Import]
     IThreadHandling ThreadHandling { get; set; }
 
-### From MEF via an imperative GetService query
+### From MEF via an imperative `GetService` query
 
     ProjectService projectService;
     IThreadHandling threadHandling = projectService.Services.ThreadingPolicy;
 
-Where `projectService` is obtained as described in [Obtaining the ProjectService](Obtaining_the_ProjectService.md).
+Where `projectService` is obtained as described in 
+[Obtaining the `ProjectService`](Obtaining_the_ProjectService.md).
 
 ### From a loaded project
 
     IVsBrowseObjectContext context;
     IThreadHandling threadHandling = context.UnconfiguredProject.ProjectService.Services.ThreadingPolicy;
 
-Where `context` is obtained as described in [Finding CPS in a VS project](Finding_CPS_in_a_VS_project.md).
+Where `context` is obtained as described in [Finding CPS in a VS 
+project](Finding_CPS_in_a_VS_project.md).

@@ -49,5 +49,4 @@ in CPS this is extensible by the customer):
 
 TODO
 
-
-TODO: talk about the various source blocks (including ProjectBuildRuleBlock)
+TODO: talk about the various source blocks (including `ProjectBuildRuleBlock`)

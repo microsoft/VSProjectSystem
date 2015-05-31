@@ -4,12 +4,11 @@ Analyze hangs
 ## Async hang debugging
 
 This prints out ALL async methods that are on the heap, whether they
-are completed or not. 
-The way to ensure that you only see incompleted async methods is to be
-sure to execute a GC prior to running this script.
+are completed or not. The way to ensure that you only see incompleted 
+async methods is to be sure to execute a GC prior to running this script.
 
 This formatted loop is here for readability and maintenance.  But the
-actual string to copy into windbg is the ugly one-liner below.
+actual string to copy into WinDBG is the ugly one-liner below.
 
     .foreach /pS 7 /ps 1000 (mt {!name2ee
     mscorlib.dll!System.Runtime.CompilerServices.AsyncMethodBuilderCore+MoveNextRunner})
@@ -30,7 +29,6 @@ This is the one-liner you have to actually use to keep WinDBG happy:
 
     .foreach /pS 7 /ps 1000 (mt {!name2ee mscorlib.dll!System.Runtime.CompilerServices.AsyncMethodBuilderCore+MoveNextRunner})  {  	.foreach (movenext { !dumpheap -short -mt ${mt} })  	{  		.foreach /pS 1 (method { dd ${movenext}+8 l1 })  		{  			.foreach /pS 1 /ps 1000 (methodName { !do -nofields ${method} })  			{  				.echo ${method} ${methodName}  			}  		}  	}  }  
 
-
 Or, when SOS and CLR versions are mismatched:
 
     .foreach /pS 2a /ps 1000 (mt {!name2ee mscorlib.dll!System.Runtime.CompilerServices.AsyncMethodBuilderCore+MoveNextRunner})  {  	.foreach /pS 23 (movenext { !dumpheap -short -mt ${mt} })  	{  		.foreach /pS 1 (method { dd ${movenext}+8 l1 })  		{  			.foreach /pS 24 /ps 1000 (methodName { !do -nofields ${method} })  			{  				.echo ${method} ${methodName}  			}  		}  	}  }  
@@ -38,7 +36,6 @@ Or, when SOS and CLR versions are mismatched:
 or for debugging a 64-bit process: (untested, but reportedly useful)
 
     .foreach /pS 7 /ps 10 (mt {!name2ee mscorlib.dll!System.Runtime.CompilerServices.AsyncMethodBuilderCore+MoveNextRunner}) {.foreach (moveNextRunner {!DumpHeap -MT ${mt} -short}) {!do poi(${moveNextRunner}+10)}}
-
 
 Sample output from this command: (shows the addresses of the async methods
 that give more information, and the name of the async method)
@@ -80,5 +77,3 @@ that give more information, and the name of the async method)
     18824e2c Microsoft.VisualStudio.ProjectSystem.VS.Implementation.Package.ProjectNode+<AddItemWithSpecificAsync>d__24f
     18825064 Microsoft.VisualStudio.ProjectSystem.VS.Implementation.Package.ProjectNode+<>c__DisplayClasscd+<<AddItem>b__cc>d__cf
     188251c8 Microsoft.VisualStudio.ProjectSystem.VS.Implementation.Package.ProjectNode+<>c__DisplayClass1b7+<<HrInvoke>b__1b5>d__1ba
-
-

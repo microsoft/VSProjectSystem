@@ -3,15 +3,14 @@ Custom Debugger
 
 [WARNING to folks taking a CPS dependency](WARNING_to_folks_taking_a_CPS_dependency.md)
 
-There are different extensions for each version of VS.
-Downloading the extension and creating a project from its project template
-will pop up a README that explains how to use it.
+There are different extensions for each version of VS. Downloading the 
+extension and creating a project from its project template will pop up 
+a README file that explains how to use it.
 
 - [Visual C++ 2015 Debugger Launch Extension][1]
 - [Visual C++ 2013 Debugger Launch Extension][2]
 - [Visual C++ 2012 Debugger Launch Extension][3]
 - [Visual C++ 2010 Debugger Launch Extension][4]
-
 
 TODO (andarno): explain how it works. :)
     

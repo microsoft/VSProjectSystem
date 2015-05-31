@@ -1,4 +1,4 @@
-IsDocumentInProject extensibility
+`IsDocumentInProject` extensibility
 =================================
 
 The `IDeployedProjectItemMappingProvider` interface may be implemented

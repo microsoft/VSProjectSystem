@@ -1,7 +1,7 @@
 Who holds a project lock?
 =========================
 
-The ProjectLockService.dgml file tells me I have several clients waiting
+The `ProjectLockService.dgml` file tells me I have several clients waiting
 on a lock, and one client holding an upgradeable read lock.
 
 ![](../Images/Fig_5.png)
@@ -678,7 +678,7 @@ answer.
     71896038  400004c       2d       System.Boolean  1 instance        0
     explicitlyInvalidatedUnderWriteLock
 
-And we see from code inspection that for ConfiguredProjectCacheOptions,
-a value of 2 means ValueFactoryRequiresUpgradeableRead. 
+And we see from code inspection that for `ConfiguredProjectCacheOptions`,
+a value of `2` means `ValueFactoryRequiresUpgradeableRead`. 
 
 Q.E.D. we have identified the holder of the upgradeable read lock.
