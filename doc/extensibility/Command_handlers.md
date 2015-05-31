@@ -16,8 +16,7 @@ appropriately implemented as an async method. You can change which interface
 you export on an existing command handler without backward breaking changes
 and handle the same commands as before.
 
-When you export the interface you should use the
-`ExportCommandGroup`
+When you export the interface you should use the `ExportCommandGroup`
 attribute which allows you to specify the command group GUID your extension
 handles commands for. The GUID comes from the vsct file that defines the
 Visual Studio command(s) you will handle. While your extension can handle
@@ -32,11 +31,11 @@ Explorer that were selected when the command was invoked will be passed
 to your extension. 
 
 When your handler is invoked, you can inspect the inputs and decide whether
-you want to handle the command or return a NotHandled result. CPS will daisy
+you want to handle the command or return a `NotHandled` result. CPS will daisy
 chain in each command handler in [priority order](Extensibility_points.md)
 till one of them indicate that they have fully handled the command.
 
-To add a command handler to a Javascript project for example, you might
+To add a command handler to a JavaScript project for example, you might
 code up something like this:
 
     [ExportCommandGroup("some-guid-here")]
