@@ -1,7 +1,7 @@
-IFileSystemErrorMessageProvider
-===============================
+`IFileSystemErrorMessageProvider`
+=================================
 
-This interface may be exported to the UnconfiguredProject scope to supply
+This interface may be exported to the `UnconfiguredProject` scope to supply
 alternative messages to display to the user in the event of certain file
 I/O errors.
 
