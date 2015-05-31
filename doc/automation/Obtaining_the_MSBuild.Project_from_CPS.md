@@ -1,9 +1,9 @@
 Obtaining the MSBuild.Project from CPS
 ======================================
 
-1. Acquire the [IProjectLockService](Obtaining_the_IProjectLockService.md)
-2. [Obtain a ConfiguredProject](Finding_CPS_in_a_VS_project.md) for which you want 
-   to get the MSBuild Project object.
+1. Acquire the [`IProjectLockService`](Obtaining_the_IProjectLockService.md)
+2. [Obtain a `ConfiguredProject`](Finding_CPS_in_a_VS_project.md) for which 
+   you want to get the MSBuild project object.
 3. Acquire a read, upgradeable read or write lock, as appropriate, and 
    use the MSBuild Project object exclusively within the lock:
    
@@ -18,10 +18,10 @@ Obtaining the MSBuild.Project from CPS
             await access.CheckoutAsync(configuredProject.UnconfiguredProject.FullPath);
         }
 
-
 Note that it's important that you use `await`. Do not use `Task.Result` or
 `Task.Wait()` on these async methods or your code will malfunction and/or hang.
-If you must do this within a synchronous method, see [threading rule #2](3_Threading_Rules.md).
+If you must do this within a synchronous method, see [threading 
+rule #2](3_Threading_Rules.md).
 
 **Please observe CPS [project locking rules](The_Project_Lock.md) by not
 retaining any references to MSBuild objects beyond the scope of the lock and
