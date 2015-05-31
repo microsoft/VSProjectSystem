@@ -5,7 +5,6 @@ CPS project types load asynchronously, which means if you query them via
 COM interfaces to discover items or references, you may get back an empty
 collection if your query occurs before post-load population occurs. 
 
-
 ### Option 1
 
 If you just want to be notified when population has completed so you can
@@ -29,10 +28,10 @@ create your own snapshot of the project's contents, this code is appropriate:
         await helper.TreeService.PublishAnyNonLoadingTreeAsync();
     }
 
-The `unconfiguredProject` argument may be aquired using a technique from
+The `unconfiguredProject` argument may be acquired using a technique from
 [Finding CPS in a VS project](Finding_CPS_in_a_VS_project.md).
 
-Please note: do not call this method followed by .Wait() to synchronously
+Please note: do not call this method followed by `.Wait()` to synchronously
 block the UI thread till population has occurred or it will deadlock
 when the tree has not already been populated. Please review 
 [Threading Rules](3_Threading_Rules.md) and [VS Scenarios](CookBook.md)
@@ -50,7 +49,7 @@ One appropriate way to schedule work to occur after population:
 
 If you're really interested in subscribing to project data (you want the
 data as it is now, and you want to receive updates as it changes), then
-you should definitely consider the IProjectSubscriptionService. This will
+you should definitely consider the `IProjectSubscriptionService`. This will
 give you the initial snapshot of items as soon as they're available and
 whenever the data you subscribed to changes, you'll also be notified with
 snapshots for both before and after, as well as a semantic diff describing
