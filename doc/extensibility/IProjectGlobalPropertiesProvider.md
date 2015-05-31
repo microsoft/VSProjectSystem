@@ -1,11 +1,11 @@
-IProjectCapabilitiesProvider
+`IProjectCapabilitiesProvider`
 ============================
 
 Caution: Do **NOT** ever set global properties directly on the MSBuild Project
-object or its ProjectCollection.
+object or its `ProjectCollection`.
 
 To add global properties to a project, export an 
-`IProjectGlobalPropertiesProvider` to the UnconfiguredProject scope. 
+`IProjectGlobalPropertiesProvider` to the `UnconfiguredProject` scope. 
 There are a few distinct contract names by which this interface may be 
 exported in order to apply to different scenarios. These distinct contracts
 are described below in terms of how they should be exported:
@@ -43,7 +43,8 @@ instance per-project and each instance can return a different set of properties.
         }
      }
 
-Otherwise if your global properties may change over time, you'll need to derive from a different base class and implement more members.
+Otherwise if your global properties may change over time, you'll need to 
+derive from a different base class and implement more members.
 
     [Export(typeof(IProjectGlobalPropertiesProvider))]
     [AppliesTo("YourUniqueCapability")]
