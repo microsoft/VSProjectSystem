@@ -6,6 +6,7 @@ VS Project System Documentation
 - [Prerequisites](overview/PreReqs.md)
 - [Define a new project type](overview/Define_a_new_project_type.md)
 - [Extend/flavor an existing project type](overview/Extend_an_existing_project_type.md)
+- [Reference implementations](overview/reference_implementations.md)
 - [Overview](overview/index.md)
   - [CPS Core vs. CPS VS](overview/CPS_Core_vs._CPS_VS.md)
   - [MEF](overview/MEF.md)
