@@ -3,16 +3,16 @@ Your obligations as a project system extender
 
 **WARNING**: The project system extensibility APIs are not stable. 
 Any dependency you take on them means you will have to recompile 
-(and possibly change source code) for each major release of VS.
+(and possibly change source code) for each major release of Visual Studio.
 
-When building on the APIs under the Microsoft.VisualStudio.ProjectSystem namespace,
-to keep your own scenarios running smoothly and those other scenarios that are
-important to your customers, it is imperative that you:
+When building on the APIs under the `Microsoft.VisualStudio.ProjectSystem` 
+namespace, to keep your own scenarios running smoothly and those other 
+scenarios that are important to your customers, it is imperative that you:
 
 - Respect [project capabilities](about_project_capabilities.md). Define them exactly
   when appropriate (no more, no less). This means your team will not punt bugs
   filed against your project type that describe inappropriately defined project
-  capabilities. These bugs may not cause problems in your scenarios -- but 
+  capabilities. These bugs may not cause problems in your scenarios, but 
   project capabilities are part of your public surface area and are very
   important to get right to avoid regressions in other teams' scenarios, and
   to ensure confidence to 3rd parties who use project capabilities as their
