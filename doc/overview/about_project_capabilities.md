@@ -71,10 +71,13 @@ It's very important that project capabilities you define fit this criteria:
   - Bad: `VB`
 - May include a version number, when necessary, but is usually discouraged.
     
-Please email [vscpsfte@microsoft.com][mail] before defining your own new project
-capabilities so we can help review for compliance with the above guidelines
+To define your own project capability, please [Create a new issue][NewIssue]
+beginning with the title "Project capability proposal: [capability-name]"
+and state the description of the capability. This way we and the community
+can help review the proposal for compliance with the above guidelines
 and help you define/consume these in the best way for your requirements.
-[mail]:mailto:vscpsfte@microsoft.com
+We may even be able to redirect you to an existing project capability
+that may suit your needs.
 
-Note that the link is not publicly accessible
-
+ [NewIssue]: https://github.com/Microsoft/VSProjectSystem/issues/new
+ 
