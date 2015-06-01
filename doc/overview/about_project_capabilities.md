@@ -39,11 +39,14 @@ property to `false` to suppress these capabilities.
 Review a [description of all documented project capabilities](project_capabilities.md).
 
 ### How do I define my own project capabilities?
-
-Project capabilities can be defined in several ways, the easiest of which
-being to add this MSBuild item to your .targets file:
-
-    <ProjectCapability Include="MyOwnCapability" />
+    
+To define your own project capability, please [Create a new issue][NewIssue]
+beginning with the title "Project capability proposal: [capability-name]"
+and state the description of the capability. This way we and the community
+can help review the proposal for compliance with the above guidelines
+and help you define/consume these in the best way for your requirements.
+We may even be able to redirect you to an existing project capability
+that may suit your needs.
 
 It's very important that project capabilities you define fit this criteria:
 
@@ -70,14 +73,11 @@ It's very important that project capabilities you define fit this criteria:
   - Good: `CSharp`
   - Bad: `VB`
 - May include a version number, when necessary, but is usually discouraged.
-    
-To define your own project capability, please [Create a new issue][NewIssue]
-beginning with the title "Project capability proposal: [capability-name]"
-and state the description of the capability. This way we and the community
-can help review the proposal for compliance with the above guidelines
-and help you define/consume these in the best way for your requirements.
-We may even be able to redirect you to an existing project capability
-that may suit your needs.
+
+Project capabilities can be declared in several ways, the easiest of which
+being to add this MSBuild item to your .targets file:
+
+    <ProjectCapability Include="MyOwnCapability" />
 
  [NewIssue]: https://github.com/Microsoft/VSProjectSystem/issues/new
  
