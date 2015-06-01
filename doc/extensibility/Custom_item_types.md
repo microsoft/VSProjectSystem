@@ -4,7 +4,7 @@ Custom item types
 This page explains how to manually create a custom item type.
 
 Initially, it may be easier to follow the tutorial documented in [Content/item
-types](Contentitem_types.md)
+types](../overview/Contentitem_types.md)
 
 This page's contents apply to all CPS projects (VC++ and JavaScript).
 
