@@ -17,7 +17,7 @@ interface.
 
 As a part of this step, you should also define a new `.xaml` rule file
 for the item type representing your custom reference. You can follow the
-steps in [Custom item types](Custom_item_types.md) except do not add your
+steps in [Custom item types](custom_item_types.md) except do not add your
 new rule to the `ProjectItemsSchema.xaml` file as your reference does not
 represent a source item.
 

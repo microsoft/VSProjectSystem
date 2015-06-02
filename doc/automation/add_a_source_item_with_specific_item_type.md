@@ -5,7 +5,7 @@ Visual Studio project systems like an `IVs`* interface for adding items
 with explicitly specified item types. Normally this is sufficient because
 the project system can pick reasonable defaults for item types based
 on file extension or expected project behavior. These defaults [can be
-augmented](Custom_item_types.md). If you still need to explicitly 
+augmented](custom_item_types.md). If you still need to explicitly 
 specify an item type for a project item, follow these steps:
 
     ConfiguredProject configuredProject;
@@ -18,7 +18,7 @@ When using this approach to add source files to the project, CPS *will*:
    directory.
 2. Automatically add the item to Solution Explorer, DTE, and raise other
    appropriate events if indeed the item you're adding has an item type that
-   belongs to [the set of source item types](Custom_item_types.md).
+   belongs to [the set of source item types](custom_item_types.md).
 
 CPS will *not*:
 

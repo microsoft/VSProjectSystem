@@ -86,7 +86,7 @@ with each release.
 
 - Only items in your project with recognized item types will appear in 
   the Solution Explorer or be available as project items via automation. 
-  You can [define new content types](../extensibility/Custom_item_types.md) 
+  You can [define new content types](../extensibility/custom_item_types.md) 
   to describe your proprietary item types so that they appear in the 
   Solution Explorer.
 - The performance of some scenarios is not yet at parity with C# and some 
