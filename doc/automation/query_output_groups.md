@@ -1,7 +1,7 @@
 Query output groups
 ===================
 
-Having [obtained a `ConfiguredProject`](Finding_CPS_in_a_VS_project.md),
+Having [obtained a `ConfiguredProject`](finding_CPS_in_a_VS_project.md),
 obtain the reference to the `IOutputGroupsService`:
 
     IOutputGroupsService outputGroupsService = configuredProject.Services.OutputGroups;

@@ -17,7 +17,7 @@ up an instance of your object).
     IThreadHandling threadHandling = projectService.Services.ThreadingPolicy;
 
 Where `projectService` is obtained as described in 
-[Obtaining the `ProjectService`](Obtaining_the_ProjectService.md).
+[Obtaining the `ProjectService`](obtaining_the_ProjectService.md).
 
 ### From a loaded project
 
@@ -25,4 +25,4 @@ Where `projectService` is obtained as described in
     IThreadHandling threadHandling = context.UnconfiguredProject.ProjectService.Services.ThreadingPolicy;
 
 Where `context` is obtained as described in [Finding CPS in a VS 
-project](Finding_CPS_in_a_VS_project.md).
+project](finding_CPS_in_a_VS_project.md).

@@ -57,7 +57,7 @@ any thread.
 
 ### How to obtain a project lock
 
-See [Obtaining the MSBuild.Project from CPS](../automation/Obtaining_the_MSBuild.Project_from_CPS.md)
+See [Obtaining the MSBuild.Project from CPS](../automation/obtaining_the_MSBuild.Project_from_CPS.md)
 for an example.
 
 ### DO's and DON'Ts

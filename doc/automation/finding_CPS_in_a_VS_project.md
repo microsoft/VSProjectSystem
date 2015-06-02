@@ -7,7 +7,7 @@ release of Visual Studio until we can take time in our schedule to stabilize
 our API. Sorry.**
 
 [How to detect whether a project is a CPS project without risking being
-broken in the next version of VS.](How_to_detect_whether_a_project_is_a_CPS_project.md)
+broken in the next version of VS.](detect_whether_a_project_is_a_CPS_project.md)
 
 Note: These instructions are intended for clients who are not MEF parts
 themselves.  MEF parts that need access to CPS APIs should simply `[Import]`

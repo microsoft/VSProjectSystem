@@ -22,12 +22,12 @@ up an instance of your object).
     ProjectService projectService;
     IProjectLockService projectLockService = projectService.Services.ProjectLockService;
 
-Initialize the `projectService` variable [as described here](Obtaining_the_ProjectService.md).
+Initialize the `projectService` variable [as described here](obtaining_the_ProjectService.md).
 
 ### From a loaded project
 
     IVsBrowseObjectContext context;
     IProjectLockService projectLockService = context.UnconfiguredProject.ProjectService.Services.ProjectLockService;
 
-Initialize the `context` variable [as described here](Finding_CPS_in_a_VS_project.md).
+Initialize the `context` variable [as described here](finding_CPS_in_a_VS_project.md).
 

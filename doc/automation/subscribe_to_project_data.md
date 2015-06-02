@@ -42,7 +42,7 @@ IDisposable disposeToUnsubscribe = SubscribeToProjectData(unconfiguredProject, P
 ```
 
 The `unconfiguredProject` variable above can be initialized as
-[described here](Finding_CPS_in_a_VS_project.md).
+[described here](finding_CPS_in_a_VS_project.md).
 
 To subscribe to the entire set of source items (which is an open set, as
 in CPS this is extensible by the customer):

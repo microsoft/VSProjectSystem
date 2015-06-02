@@ -1,8 +1,8 @@
 Obtaining the MSBuild.Project from CPS
 ======================================
 
-1. Acquire the [`IProjectLockService`](Obtaining_the_IProjectLockService.md)
-2. [Obtain a `ConfiguredProject`](Finding_CPS_in_a_VS_project.md) for which 
+1. Acquire the [`IProjectLockService`](obtaining_the_IProjectLockService.md)
+2. [Obtain a `ConfiguredProject`](finding_CPS_in_a_VS_project.md) for which 
    you want to get the MSBuild project object.
 3. Acquire a read, upgradeable read or write lock, as appropriate, and 
    use the MSBuild Project object exclusively within the lock:

@@ -29,7 +29,7 @@ create your own snapshot of the project's contents, this code is appropriate:
     }
 
 The `unconfiguredProject` argument may be acquired using a technique from
-[Finding CPS in a VS project](Finding_CPS_in_a_VS_project.md).
+[Finding CPS in a VS project](finding_CPS_in_a_VS_project.md).
 
 Please note: do not call this method followed by `.Wait()` to synchronously
 block the UI thread till population has occurred or it will deadlock
@@ -55,4 +55,4 @@ whenever the data you subscribed to changes, you'll also be notified with
 snapshots for both before and after, as well as a semantic diff describing
 what changed.
 
-See [Subscribe to project data](Subscribe_to_project_data.md)
+See [Subscribe to project data](subscribe_to_project_data.md)
