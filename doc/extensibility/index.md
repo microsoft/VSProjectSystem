@@ -7,7 +7,7 @@ General guidance for extension authors
 ##### Understand the threading model
 
 CPS extensions are expected to conform to the [CPS/VS threading
-model](../overview/Threading_model.md). Please become familiar with it 
+model](../overview/threading_model.md). Please become familiar with it 
 before writing CPS extensions. This will help avoid responsiveness 
 issues, deadlocks, and non-deterministic hangs in your scenarios.
 

@@ -2,12 +2,12 @@ Threading model
 ===============
 
 CPS requires strict adherence to the rules and guidelines at [3 Threading
-Rules](3_Threading_Rules.md)
+Rules](3_threading_rules.md)
 
 Important: 
 
     Do not call Task.Wait() or Task.Result in your code because these
-    violate [threading rule #2](3_Threading_Rules.md) and will often lead
+    violate [threading rule #2](3_threading_rules.md) and will often lead
     to deadlocks.
    
 

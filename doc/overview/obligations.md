@@ -20,4 +20,4 @@ scenarios that are important to your customers, it is imperative that you:
 - Focus your `[AppliesTo]` exports to exactly the set of scenarios you intend
   to impact. Remember if you understate the restrictions that you can impact
   partner's or customer's scenarios in adverse ways.
-- Follow the [VS threading rules](3_Threading_Rules.md)
+- Follow the [VS threading rules](3_threading_rules.md)

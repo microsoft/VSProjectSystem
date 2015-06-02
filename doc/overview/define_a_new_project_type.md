@@ -10,7 +10,7 @@ extension. This may be appropriate when any of the following are true:
 2. The project will compile a new language.
 
 You usually should *not* define a new project type when you only intend
-to [modify, enhance, or "flavor" an existing project type](Extend_an_existing_project_type.md).
+to [modify, enhance, or "flavor" an existing project type](extend_an_existing_project_type.md).
 
 ## How to define a new project type
 
@@ -29,7 +29,7 @@ reasonably standard behavior.
 A project type template and several item templates can help you get started
 with your own project type and some common customizations. 
 
-- Install the [prerequisites](PreReqs.md)
+- Install the [prerequisites](prereqs.md)
 - Launch Visual Studio 2015
 - Open the New Project dialog
 - Set the target framework to .NET Framework 4.6

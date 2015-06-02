@@ -34,7 +34,7 @@ The `unconfiguredProject` argument may be acquired using a technique from
 Please note: do not call this method followed by `.Wait()` to synchronously
 block the UI thread till population has occurred or it will deadlock
 when the tree has not already been populated. Please review 
-[Threading Rules](3_Threading_Rules.md) and [VS Scenarios](CookBook.md)
+[Threading Rules](3_threading_rules.md) and [VS Scenarios](cookbook.md)
 for more on this warning and possible workarounds.
 
 One appropriate way to schedule work to occur after population:

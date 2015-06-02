@@ -1,7 +1,7 @@
 Obtaining the IProjectLockService
 =================================
 
-Please observe CPS [project locking rules](The_Project_Lock.md)
+Please observe CPS [project locking rules](project_lock.md)
 by not retaining any references to MSBuild objects beyond the scope of the
 lock and only using these objects while not on the UI thread.  Violating
 this exposes your code and other project-related code to the risk of

@@ -17,7 +17,7 @@ For further information about extending Visual Studio in other ways please check
  [3]: http://microsoft.github.io/extendvs/
  [4]: https://www.visualstudio.com/en-us/downloads/visual-studio-2015-downloads-vs.aspx
  [VSSDK]: http://go.microsoft.com/?linkid=9877247
- [prereq]: doc/overview/PreReqs.md
+ [prereq]: doc/overview/prereqs.md
  [intro]: doc/overview/intro.md
  [connect]: https://connect.microsoft.com/VisualStudio
  [docbugs]: https://github.com/Microsoft/VSProjectSystem/issues
