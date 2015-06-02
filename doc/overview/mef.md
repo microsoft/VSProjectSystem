@@ -154,15 +154,25 @@ context. For example, a component in the `unconfiguredProject` that imports
 `IVsHierarchy` looks like this:
 
 ```csharp
-[Export]
-public class MyClass
-{
-    [ImportMany(ExportContractNames.VsTypes.IVsHierarchy)]
-    private OrderPrecedenceImportCollection<IVsHierarchy> vsHierarchies;
-
-    private IVsHierarchy VsHierarchy
+    [Export]
+    public class MyClass
     {
-        get { return this.vsHierarchies.First().Value; }
+        [ImportMany(ExportContractNames.VsTypes.IVsHierarchy)]
+        private OrderPrecedenceImportCollection<IVsHierarchy> vsHierarchies;
+
+        private IVsHierarchy VsHierarchy
+        {
+            get { return this.vsHierarchies.First().Value; }
+        }
+    
+        [ImportingConstructor]
+        internal MyClass(UnconfiguredProject unconfiguredProject)
+        {
+            this.vsHierarchies = new OrderPrecedenceImportCollection<IVsHierarchy>(
+                projectCapabilityCheckProvider: unconfiguredProject);
+        }
+
+        // ...
     }
 ```
 
