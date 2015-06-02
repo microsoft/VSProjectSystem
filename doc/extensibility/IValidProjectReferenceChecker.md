@@ -1,0 +1,4 @@
+`IValidProjectReferenceChecker`
+===============================
+
+TODO
