@@ -14,6 +14,7 @@ disappear.
 1. Open CustomProject.targets
 2. Remove the capabilities that correspond to the tabs you would like to remove (e.g. WinRTReferences)
 
+```xml
         <ProjectCapability Include="
             AssemblyReferences;
             COMReferences;
@@ -21,3 +22,4 @@ disappear.
             WinRTReferences;
             SDKReferences;
             " />
+```

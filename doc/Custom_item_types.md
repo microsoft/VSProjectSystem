@@ -32,6 +32,7 @@ item type and some other metadata.
 Create a XAML file, often called ProjectItemsSchema.xaml, with content
 such as:
 
+```xml
     <ProjectSchemaDefinitions xmlns="http://schemas.microsoft.com/build/2009/properties">
         <ContentType
             Name="XppSourceFile" 
@@ -41,6 +42,7 @@ such as:
             Name="XppCompile" 
             DisplayName="X++ source file"/>
     </ProjectSchemaDefinitions>
+```
 
 ### Associating a content type with a file extension
 
@@ -48,9 +50,11 @@ To have files automatically assigned to your content type (and thus your
 item type) when added to the project based on file extension, you may add
 this tag within your ProjectSchemaDefinitions tag:
 
+```xml
     <FileExtension 
         Name=".xpp" 
         ContentType="XppSourceFile" />
+```
 
 Your project must point to this XAML file so that CPS will find it and
 include it in its aggregate content types map. This is commonly done by
@@ -58,7 +62,9 @@ adding a PropertyPageSchema tag to a .targets file that is imported into
 your project files such as is shown below. Be sure to give an absolute or
 project-relative path to your xaml file so that CPS can find it.
 
+```xml
     <PropertyPageSchema Include="$(MSBuildThisFileDirectory)ProjectItemsSchema.xaml" />
+```
 
 ### CPS native "FileNameAndExtension" property
 
@@ -68,6 +74,7 @@ supported directly by MsBuild.
 
 To add it for a custom type, add the following property -
 
+```xml
     <StringProperty
         Name="FileNameAndExtension"
         DisplayName="File Name"
@@ -78,3 +85,4 @@ To add it for a custom type, add the following property -
             <DataSource Persistence="Intrinsic" ItemType="None" PersistedName="FileNameAndExtension" />
         </StringProperty.DataSource>
     </StringProperty>
+```

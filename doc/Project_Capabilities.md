@@ -58,8 +58,9 @@ project capabilities to the bottom or project types to the right.
 Project capabilities can be defined in several ways, the easiest of which
 being to add this MSBuild item to your .targets file:
 
+```xml
     <ProjectCapability Include="MyOwnCapability" />
-
+```
 
 It's very important that project capabilities you define fit this criteria:
 
