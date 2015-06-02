@@ -69,14 +69,16 @@ strategy to read the project configurations from the project.Json file.
 - Choose a distinguished capability name for the new strategy. e.x.
  'ProjectConfigurationsFromProjectJson'
 - Implement and export IProjectConfigurationsServiceInternal with the
-  AppiesTo() being set to that capability.
+  AppliesTo() being set to that capability.
     For example:
-    
+
+```csharp
         [Export(typeof(IProjectConfigurationsService))]
         [AppliesTo("ProjectConfigurationsFromProjectJson")]
         internal class ProjectJsonConfigurationsService : IProjectConfigurationsServiceInternal
         {
         }
+```
         
 - Include that capability in the common targets file.
     For example:

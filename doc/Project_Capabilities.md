@@ -1,4 +1,4 @@
-Project Capabilities
+﻿Project Capabilities
 ====================
 
 Project capabilities are the recommended way to determine the type, platform,
@@ -13,10 +13,12 @@ JS projects? Project capability checks are the answer.
 The presence of some capability can be detected on a given project with
 code such as:
 
+```csharp
     using Microsoft.VisualStudio.Shell; // imports the extension method
 
     IVsHierarchy hierarchy;
     bool match = hierarchy.IsCapabilityMatch("SomeCapability");
+```
 
 Where [IVsHierarchy.IsCapabilityMatch](http://msdn.microsoft.com/en-us/library/vstudio/hh443055.aspx)
 is an extension method.

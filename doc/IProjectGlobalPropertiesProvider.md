@@ -24,6 +24,7 @@ class may return different properties even with this base class. By importing
 `UnconfiguredProject` into your class, for example, you'll have a unique
 instance per-project and each instance can return a different set of properties.
 
+```csharp
     [Export(typeof(IProjectGlobalPropertiesProvider))]
     [AppliesTo("YourUniqueCapability")]
     internal class BuildPropertiesProvider : StaticGlobalPropertiesProviderBase
@@ -42,13 +43,15 @@ instance per-project and each instance can return a different set of properties.
             return Task.FromResult<IImmutableDictionary<string, string>>(properties);
         }
      }
+```
 
 Otherwise if your global properties may change over time, you'll need to derive from a different base class and implement more members.
 
+```csharp
     [Export(typeof(IProjectGlobalPropertiesProvider))]
     [AppliesTo("YourUniqueCapability")]
     internal class GlobalProjectCollectionWatcher :
         ProjectValueDataSourceBase<IImmutableDictionary<string, string>>,
         IProjectGlobalPropertiesProvider
-  
+```  
 

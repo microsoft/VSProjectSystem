@@ -13,9 +13,11 @@ interface under an AppliesTo expression that evaluates to true when the
 
 For example:
 
+```csharp
     [Export(typeof(IProjectSourceItemProviderExtension))]
     [AppliesTo("YourUniqueCapability")]
     public class YourProjectSourceItemProviderExtension : IProjectSourceItemProviderExtension
     {
         // implement interface here
     }
+```

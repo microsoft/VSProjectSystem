@@ -1,4 +1,4 @@
-Cookbook
+﻿Cookbook
 ========
 
 Important for CPS users: If you're in CPS or a CPS extension, please
@@ -14,6 +14,7 @@ Initial setup
 Block a thread while doing async work
 ---------------------
 
+```csharp
     ThreadHelper.JoinableTaskFactory.Run(async delegate
     {
         // caller's thread
@@ -27,11 +28,12 @@ Block a thread while doing async work
         await TaskScheduler.Default; // using Microsoft.VisualStudio.Threading;
         SomeWorkThatCanBeOnThreadpool();
     });
-
+```
 
 If any of your async work should be on a background thread, you can switch
 explicitly:
 
+```csharp
     // assuming we're on the UI thread already…
     await Task.Run(async delegate
     {
@@ -39,10 +41,11 @@ explicitly:
     });
 
     // ...now we're back on the UI thread.
-
+```
 
 Alternatively:
 
+```csharp
 // On some thread, but definitely want to be on the threadpool:
 
 	// using Microsoft.VisualStudio.Threading;
@@ -51,13 +54,16 @@ Alternatively:
 
     // On some thread, but definitely want to be on the main thread:
     await ThreadHelper.JoinableTaskFactory.SwitchToMainThreadAsync();
+```
 
 How to switch to the UI thread
 -----------------
 
 In an async method
 
+```csharp
 	await ThreadHelper.JoinableTaskFactory.SwitchToMainThreadAsync();
+```
 
 In a sync method
 
@@ -65,11 +71,13 @@ First, consider carefully whether you can make your method async first
 and then follow the above pattern. If you must remain synchronous, you
 can switch to the UI thread like this:
 
+```csharp
     ThreadHelper.JoinableTaskFactory.Run(async delegate
     {
         await ThreadHelper.JoinableTaskFactory.SwitchToMainThreadAsync();
         // You're now on the UI thread.
     });
+```
 
 How to switch to the UI thread using a specific priority
 --------------------------------
@@ -78,6 +86,7 @@ Simply call the `JoinableTaskFactory.RunAsync` extension method (defined in
 the `Microsoft.VisualStudio.Shell` namespace) passing in a priority as the
 first parameter, like this:
 
+```csharp
     await ThreadHelper.JoinableTaskFactory.RunAsync(
         VsTaskRunContext.UIThreadBackgroundPriority,
         async delegate
@@ -90,6 +99,7 @@ first parameter, like this:
 
 			// Resumed on UI thread, also via background priority.
         });
+```
 
 How can I complete asynchronously with respect to my caller while still
 using the UI thread?
@@ -105,10 +115,12 @@ How can I await `IVsTask`?
 
 Make sure you have these using directives at the top of your code file:
 
+```csharp
     using System.Threading.Tasks;
     using Microsoft.VisualStudio.Shell;
     using Task = System.Threading.Tasks.Task;
-    
+```
+
 That adds a [`GetAwaiter` extension
 method](https://msdn.microsoft.com/en-us/library/vstudio/hh598836(v=vs.110).aspx)
 to `IVsTask` that makes it awaitable. In fact just the `Microsoft.VisualStudio.Shell`
@@ -123,6 +135,7 @@ The preferred way is to use the `JoinableTaskFactory.RunAsyncAsVsTask(Func<Cance
 Task>)` extension method. This gives you a CancellationToken that is tied
 to `IVsTask.Cancel()`.
 
+```csharp
     public IVsTask DoAsync()
     {
         return ThreadHelper.JoinableTaskFactory.RunAsyncAsVsTask(
@@ -137,11 +150,13 @@ to `IVsTask.Cancel()`.
 	private async Task SomethingAsync(CancellationToken cancellationToken)
     {
     	await Task.Yield();
-	}
+    }
+```
 
 Alternately, if you only have a JoinableTask, you can readily convert it
 to an IVsTask by calling the JoinableTask.AsVsTask() extension method.
 
+```csharp
     public IVsTask DoAsync()
     {
         return ThreadHelper.JoinableTaskFactory.RunAsync(
@@ -151,7 +166,7 @@ to an IVsTask by calling the JoinableTask.AsVsTask() extension method.
                 await SomethingElseAsync();
             }).AsVsTask();
     }
-
+```
 
 From the [VS Threading Cookbook](https://microsoft.sharepoint.com/teams/DD_VSIDE/Visual%20Studio%20IDE%20Team%20Wiki/Threading%20Cookbook.aspx)
 

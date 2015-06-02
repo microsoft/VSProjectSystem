@@ -8,6 +8,7 @@ CPS-specific assemblies, and therefore has the advantage of not risking
 having breaks with subsequent versions of Visual Studio when CPS changes
 its unstable API.
 
+```csharp
     using Microsoft.VisualStudio.Shell;
 
     internal static bool IsCpsProject(this IVsHierarchy hierarchy)
@@ -15,3 +16,4 @@ its unstable API.
         Requires.NotNull(hierarchy, "hierarchy");
         return hierarchy.IsCapabilityMatch("CPS");
     }
+```

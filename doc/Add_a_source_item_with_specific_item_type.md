@@ -9,9 +9,11 @@ augmented](Custom_item_types.md).
 If you still need to explicitly specify an item type for a project item,
 follow these steps:
 
+```csharp
     ConfiguredProject configuredProject;
     IProjectItemProvider sourceItems = configuredProject.Services.SourceItems;
     await sourceItems.AddAsync("CustomItemType", "projectRelativePath\ToYourFile.xpp");
+```
 
 When using this approach to add source files to the project, CPS *will*:
 

@@ -7,8 +7,10 @@ IProjectAsynchronousTasksService
 
 RegisterAsycTask() with a ProjectCriticalOperation flag is provided
 to support this:
-    
-    void RegisterAsyncTask(JoinableTask joinableTask, ProjectCriticalOperation operationFlags, bool registerFaultHandler = false)
+
+```csharp    
+void RegisterAsyncTask(JoinableTask joinableTask, ProjectCriticalOperation operationFlags, bool registerFaultHandler = false)
+```
 
 e.g. if you want to defer the build, you can register your tasks that you
 want to wait on for build by passing in ProjectCriticalOperation.Build as

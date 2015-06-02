@@ -1,4 +1,4 @@
-ItemIDs
+﻿ItemIDs
 =======
 
 Background on ItemIDs
@@ -38,6 +38,7 @@ The simplest way is to never store them, and always obtain them on the UI
 thread. For example, this code is always safe (when executed on the main
 thread):
 
+```csharp
     int rootFirstChildItemId;
 
     ErrorHandler.ThrowOnFailure(hierarchy.GetProperty(
@@ -53,7 +54,7 @@ thread):
         out nextSiblingItemId));
 
     // ...
-
+```
 
 The above code is safe because:
 
@@ -115,8 +116,10 @@ will happen:
   - A: Instead of storing itemids, store the item moniker. Then whenever you
      need the itemid you obtain it using the moniker:
 
+```csharp
         IVsHierarchy::GetCanonicalName(itemid, out moniker)
         IVsHierarchY::ParseCanonicalName(moniker, out itemid)
+```
 
 What is unique about CPS and ItemIDs? 
 --------------------------------------

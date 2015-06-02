@@ -6,7 +6,8 @@ Obtaining the MSBuild.Project from CPS
    to get the MSBuild Project object.
 3. Acquire a read, upgradeable read or write lock, as appropriate, and 
    use the MSBuild Project object exclusively within the lock:
-   
+
+```csharp
         using (var access = await projectLockService.WriteLockAsync())
         {
             MSBuild.Project project = await access.GetProjectAsync(configuredProject);
@@ -17,7 +18,7 @@ Obtaining the MSBuild.Project from CPS
             // check it out from SCC first:
             await access.CheckoutAsync(configuredProject.UnconfiguredProject.FullPath);
         }
-
+```
 
 Note that it's important that you use `await`. Do not use `Task.Result` or
 `Task.Wait()` on these async methods or your code will malfunction and/or hang.
