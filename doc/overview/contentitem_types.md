@@ -70,7 +70,7 @@ Here are some things to notice about the newly added file:
     (save changes)
   - Right click again on the project in Solution Explorer -> Edit ProjectType11.myproj
 
-```
+```xml
 <FooCompile Include="Test.foo">
     <MyProperty Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">abc</MyProperty>
 </FooCompile>

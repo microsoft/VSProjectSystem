@@ -14,20 +14,26 @@ VS default MEF catalog into a CPS catalog "sub-scope". Import properties
 are only 'satisfied' when MEF activated your type (not simply by `new`ing
 up an instance of your object).
 
+```csharp
     [Import]
     IProjectLockService ProjectLockService { get; set; }
+```
 
 ### From MEF via an imperative `GetService` query
 
+```csharp
     ProjectService projectService;
     IProjectLockService projectLockService = projectService.Services.ProjectLockService;
+```
 
 Initialize the `projectService` variable [as described here](obtaining_the_ProjectService.md).
 
 ### From a loaded project
 
+```csharp
     IVsBrowseObjectContext context;
     IProjectLockService projectLockService = context.UnconfiguredProject.ProjectService.Services.ProjectLockService;
+```
 
 Initialize the `context` variable [as described here](finding_CPS_in_a_VS_project.md).
 

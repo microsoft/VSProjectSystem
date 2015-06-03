@@ -1,4 +1,4 @@
-3 Threading Rules
+﻿3 Threading Rules
 =================
 
 In Dev12, we consolidated all our lessons learned from writing a complex,
@@ -14,7 +14,9 @@ extensions](cookbook.md)).
      thread if it isn't originally invoked on a compatible thread. The recommended 
      means of switching to the main thread is:
 
-            await joinableTaskFactoryInstance.SwitchToMainThreadAsync();
+```csharp
+        await joinableTaskFactoryInstance.SwitchToMainThreadAsync();
+```
 
     OR
     
@@ -28,29 +30,37 @@ extensions](cookbook.md)).
    asynchronous code and block for its completion, it must do so by 
    following this simple pattern:
 
+```csharp
         joinableTaskFactoryInstance.Run(async delegate
         {
             await SomeOperationAsync(...);
         });
+```
         
 3. If ever awaiting work that was started earlier, that work must be *joined*. 
    For example, one service kicks off some asynchronous work that may later 
    become synchronously blocking:
 
+```csharp
         JoinableTask longRunningAsyncWork = joinableTaskFactoryInstance.RunAsync(
             async delegate
             {
                 await SomeOperationAsync(...);
             });
-        
+```
+
     then later that async work becomes blocking:
-    
+
+```csharp    
         longRunningAsyncWork.Join();
-        
+```
+
     or perhaps 
-    
+
+```csharp    
         await longRunningAsyncWork;
-        
+```
+
     Note however that this extra step is not necessary when awaiting is
     done immediately after kicking off an asynchronous operation.
     
@@ -191,7 +201,9 @@ effectively send a `PostMessage` to the UI thread, which will not re-enter
 the main thread when it is in a filtered message pump (i.e. a synchronously
 blocking `Wait`). When you use this line in particular:
 
+```csharp
     await joinableTaskFactoryInstance.SwitchToMainThreadAsync();
+```
 
 It not only posts a message to the UI thread but also communicates with
 the rest of the threading framework to avoid deadlocks in the event that

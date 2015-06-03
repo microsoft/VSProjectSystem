@@ -19,6 +19,7 @@ becomes a straightforward task, which starts creating extension classes
 through templates provided in the CPS SDK.  A typical CPS component looks 
 like this:
 
+```csharp
     [Export(typeof(IProjectTreeModifier))]
     [AppliesTo("MyProjectType")]
     internal class ProjectTreeIconProvider : IProjectTreeModifier
@@ -37,6 +38,7 @@ like this:
 
         // ...
     }
+```
 
 This extension implements the `IProjectTreeModifier` interface. Through the 
 `Export` attribute, the class above implements `IProjectTreeModifier` contract 
@@ -138,7 +140,9 @@ Normally, the `AppliesTo` metadata is the new project type the component
 supports; in the advanced scenario, `AppliesTo` metadata can be an expression
 like this --
 
-    [AppliesTo("MyLanaguageProject + DeviceProject")]
+```csharp
+[AppliesTo("MyLanaguageProject + DeviceProject")]
+```
 
 Also, when a component exports additional properties or methods, the
 metadata should be declared wherever the export attribute is used.
@@ -149,6 +153,7 @@ should be used to filter out those components which don't match the
 context. For example, a component in the `unconfiguredProject` that imports
 `IVsHierarchy` looks like this:
 
+```csharp
     [Export]
     public class MyClass
     {
@@ -169,6 +174,7 @@ context. For example, a component in the `unconfiguredProject` that imports
 
         // ...
     }
+```
 
 In this case, the code expects that one and only one `IVsHierarchy` is
 implemented for the project. In other scenarios, the code might expect

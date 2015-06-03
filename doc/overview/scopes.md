@@ -120,18 +120,23 @@ with the default MEF contract name for `T`.  So for example, if you want to
 import the `IBuildProject` service from the active configuration from your
 `UnconfiguredProject` MEF part, you can use this syntax:
 
+```csharp
     [Import]
     ActiveConfiguredProject<IBuildProject> BuildProject { get; set; }
+```
 
 Note that the generic type argument can even be `ConfiguredProject` itself:
 
+```csharp
     [Import]
     ActiveConfiguredProject<ConfiguredProject> ActiveConfiguredProject { get; set; }
+```
 
 Most commonly, it's useful to define your own private nested class that
 imports everything you need from the `ConfiguredProject` scope, and then
 import that:
 
+```csharp
     [Export]
     class MyUnconfiguredProjectPart {
         [Import]
@@ -149,6 +154,7 @@ import that:
             internal IBuildProject BuildProject { get; set; }
         }
     }
+```
 
 Q: Is there a way to know which services belong to which scope (e.g., naming
 convention)?

@@ -13,6 +13,7 @@ Note: These instructions are intended for clients who are not MEF parts
 themselves.  MEF parts that need access to CPS APIs should simply `[Import]`
 the services they require.
 
+```csharp
     #ref Microsoft.VisualStudio.ProjectSystem.v14only.dll
     #ref Microsoft.VisualStudio.ProjectSystem.VS.v14only.dll  // may be useful after acquiring CPS
     #ref Microsoft.VisualStudio.ProjectSystem.Utilities.v14.0.dll // may be useful after acquiring CPS
@@ -46,11 +47,14 @@ the services they require.
 
         return context != null ? context.UnconfiguredProject : null;
     }
+```
 
 #### To obtain the `ConfiguredProject`
 
+```csharp
     UnconfiguredProject unconfiguredProject; // obtained from above
     var configuredProject = await unconfiguredProject.GetSuggestedConfiguredProjectAsync()
+```
 
 #### Obtain CPS services
 
@@ -62,8 +66,10 @@ these scopes.
 If the service you want isn't exposed on the `Services` property directly,
 you can obtain arbitrary exports using the `Services.ExportProvider` property:
 
+```csharp
     ConfiguredProject cp;
     IOutputGroupsProvider ogp = cp.Services.ExportProvider.GetExportedValue<IOutputGroupsProvider>();
+```
 
 To test for whether a given project is a WWA project
 

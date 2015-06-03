@@ -1,4 +1,4 @@
-Project Capabilities
+﻿Project Capabilities
 ====================
 
 Project capabilities are the recommended way to determine the type, platform,
@@ -13,10 +13,12 @@ JS projects? Project capability checks are the answer.
 The presence of some capability can be detected on a given project with
 code such as:
 
+```csharp
     using Microsoft.VisualStudio.Shell; // imports the extension method
 
     IVsHierarchy hierarchy;
     bool match = hierarchy.IsCapabilityMatch("SomeCapability");
+```
 
 Where [`IVsHierarchy.IsCapabilityMatch`][l01] is an extension method.
 [l01]:http://msdn.microsoft.com/en-us/library/vstudio/hh443055.aspx
@@ -77,7 +79,9 @@ It's very important that project capabilities you define fit this criteria:
 Project capabilities can be declared in several ways, the easiest of which
 being to add this MSBuild item to your .targets file:
 
+```xml
     <ProjectCapability Include="MyOwnCapability" />
+```
 
  [NewIssue]: https://github.com/Microsoft/VSProjectSystem/issues/new
  

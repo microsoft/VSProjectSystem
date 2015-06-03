@@ -10,6 +10,7 @@ collection if your query occurs before post-load population occurs.
 If you just want to be notified when population has completed so you can
 create your own snapshot of the project's contents, this code is appropriate:
 
+```csharp
     private class TreeServiceImportHelper
     {
         [Import("Microsoft.VisualStudio.ProjectSystem.PhysicalProjectTreeService")]
@@ -27,6 +28,7 @@ create your own snapshot of the project's contents, this code is appropriate:
         unconfiguredProject.SatisfyImportsOnce(helper);
         await helper.TreeService.PublishAnyNonLoadingTreeAsync();
     }
+```
 
 The `unconfiguredProject` argument may be acquired using a technique from
 [Finding CPS in a VS project](finding_CPS_in_a_VS_project.md).
@@ -39,11 +41,13 @@ for more on this warning and possible workarounds.
 
 One appropriate way to schedule work to occur after population:
 
+```csharp
     private async Task CaptureItemsSnapshotAsync(UnconfiguredProject unconfiguredProject)
     {
         await WaitForItemPopulationAsync(unconfiguredProject);
         // now acquire snapshot
     }
+```
 
 ### Option 2
 

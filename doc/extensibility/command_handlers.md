@@ -38,6 +38,7 @@ till one of them indicate that they have fully handled the command.
 To add a command handler to a JavaScript project for example, you might
 code up something like this:
 
+```csharp
     [ExportCommandGroup("some-guid-here")]
     [AppliesTo("your appliesTo expression")]
     internal class MyOwnCommands : ICommandGroupHandler
@@ -45,4 +46,4 @@ code up something like this:
         public CommandStatusResult GetCommandStatus(...) { }
         public bool TryHandleCommand(...) { }
     }
-
+```

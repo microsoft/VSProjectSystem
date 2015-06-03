@@ -1,4 +1,4 @@
-Automatic `DependentUpon` wire-up
+﻿Automatic `DependentUpon` wire-up
 ===============================
 
 CPS can automatically add the necessary `<DependentUpon>` metadata to your
@@ -22,20 +22,24 @@ extension’ to ‘content type’. They could be added into the existing
 `ProjectItemsSchema.xaml` file, or a new xaml file being included in project
 system specific `.targets` file.
 
+```xml
     <ProjectSchemaDefinitions xmlns="http://schemas.microsoft.com/build/2009/properties">
         <ContentType Name="PageXaml" DisplayName="XAML Page" ItemType="Page" />
       <FileExtension Name=".xaml" ContentType="PageXaml" />
     </ProjectSchemaDefinitions>
-    
+```
+
 Then when CPS handles a `.xaml` file, it could map it to a content type
 and retrieve more metadata from the content type. Next, we need to
 hint CPS the ‘dependent file extension’ of `.xaml` via adding metadata
 `DependentFileExtensions` into the content type. Multiple dependent file
 extensions are allowed and must be separated by `;` (semicolon).
 
+```xml
     <ContentType Name="PageXaml" DisplayName="XAML Page" ItemType="Page">
         <NameValuePair Name="DependentFileExtensions" Value=".cs" />
     </ContentType>
+```
     
 Once the XAML rules are authored, CPS would fix up `DependentUpon` metadata
 for the child file when the parent file or child file is being added into

@@ -9,6 +9,7 @@ Make sure you have `[AppliesTo("xxx")]` attribute on your exported type where
 
 Sample code below:
 
+```csharp
     [Export(typeof(IPublishProvider))]
     [AppliesTo("MyProjectType")]
     internal class MyPublishProvider : IPublishProvider
@@ -31,4 +32,4 @@ Sample code below:
             return Task.FromResult(false);
         }
     }
-
+```

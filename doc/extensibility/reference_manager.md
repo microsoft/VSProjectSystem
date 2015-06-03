@@ -17,6 +17,7 @@ disappear.
 2. Remove the capabilities that correspond to the tabs you would like 
    to remove (e.g., `WinRTReferences`)
 
+```xml
         <ProjectCapability Include="
             AssemblyReferences;
             COMReferences;
@@ -24,6 +25,7 @@ disappear.
             WinRTReferences;
             SDKReferences;
             " />
+```
 
 ## Add custom tabs to the Reference Manager
 
@@ -33,3 +35,4 @@ Define new class
 
 - Implements `IVsReferenceManagerUserAsync`
 - tagged with the `ExportIVsReferenceManagerUserAsync` attribute
+

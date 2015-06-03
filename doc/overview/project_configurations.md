@@ -22,6 +22,7 @@ items should be grouped and put into one `ItemGroup` element with the label
 
 For example:
 
+```xml
     <ItemGroup Label="ProjectConfigurations">
       <ProjectConfiguration Include="Debug|AnyCPU">
         <Configuration>Debug</Configuration>
@@ -32,6 +33,7 @@ For example:
         <Platform>ARM</Platform>
       </ProjectConfiguration>
     </ItemGroup>
+```
 
 If the project has the capability named `ProjectConfigurationsInferredFromUsage`,
 CPS will crawl the project file and imports and gather the project
@@ -39,6 +41,7 @@ configuration through the usages in conditions.
 
 For example:
 
+```xml
     <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU'">
       <DebugSymbols>true</DebugSymbols>
       <DebugType>full</DebugType>
@@ -57,6 +60,7 @@ For example:
       <ErrorReport>prompt</ErrorReport>
       <WarningLevel>4</WarningLevel>
     </PropertyGroup>
+```
 
 Surely a new project type based on CPS could define a 3rd capability to
 implement yet another strategy to figure out the project configurations.
@@ -68,19 +72,23 @@ strategy to read the project configurations from the project.json file.
 - Choose a distinguished capability name for the new strategy. e.g.,
   `ProjectConfigurationsFromProjectJson`
 - Implement and export `IProjectConfigurationsServiceInternal` with the
-  `AppiesTo()` being set to that capability. For example:
-    
+  `AppliesTo()` being set to that capability. For example:
+
+```csharp    
         [Export(typeof(IProjectConfigurationsService))]
         [AppliesTo("ProjectConfigurationsFromProjectJson")]
         internal class ProjectJsonConfigurationsService : IProjectConfigurationsServiceInternal
         {
         }
+```
         
 - Include that capability in the common targets file. For example:
 
+```xml
         <ItemGroup>
           <ProjectCapability Include="ProjectConfigurationsFromProjectJson" />
         </ItemGroup>
+```
     
 - Ensure the two built-in capabilities `ProjectConfigurationsDeclaredAsItems` 
   and `ProjectConfigurationsInferredFromUsage` are not defined in the common 
