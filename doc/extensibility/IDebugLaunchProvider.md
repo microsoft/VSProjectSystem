@@ -1,7 +1,18 @@
-Custom Debugger
+IDebugLaunchProvider
 ===============
 
-[WARNING to folks taking a CPS dependency](WARNING_to_folks_taking_a_CPS_dependency.md)
+To add a debugger to a project you should export an `IDebugLaunchProvider`.
+The simplest way to do this for Visual Studio 2015 is by using the item template
+for that purpose:
+
+1. Project -> Add New Item
+2. C# -> Extensibility -> Project System
+3. Pick the "Custom Debugger Extension" template
+4. Follow the instructions on screen.
+
+## Support for older versions of Visual Studio
+
+This particular extensibility point also exists as far back as Visual C++ 2010.
 
 There are different extensions for each version of VS. Downloading the 
 extension and creating a project from its project template will pop up 
@@ -12,8 +23,6 @@ a README file that explains how to use it.
 - [Visual C++ 2012 Debugger Launch Extension][3]
 - [Visual C++ 2010 Debugger Launch Extension][4]
 
-TODO (andarno): explain how it works. :)
-    
 Consider renaming debugger class (or rule file) so they don't collide
 (namespace is the only distinguisher)
     
