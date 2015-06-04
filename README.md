@@ -1,4 +1,6 @@
 # Visual Studio Project System Extensibility Documentation
+
+[![Join the chat at https://gitter.im/Microsoft/VSProjectSystem](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/Microsoft/VSProjectSystem?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 Visual Studio can be extended in many ways, including adding new types of projects and augmenting
 existing ones. This repository contains the [documentation and best practices][1] for
 creating extensions that add new project types to Visual Studio. We welcome community input if you
