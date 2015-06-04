@@ -9,7 +9,7 @@ below. In each case, the instance of `JoinableTaskFactory` used in the samples
 comes from `ThreadHelper.JoinableTaskFactory` ([except for code in CPS and its
 extensions](cookbook.md)).
 
-1. If a method has certain thread apartment requirements (STA or MTA) it must either:
+### 1. If a method has certain thread apartment requirements (STA or MTA) it must either:
    - Have an asynchronous signature, and asynchronously marshal to the appropriate
      thread if it isn't originally invoked on a compatible thread. The recommended 
      means of switching to the main thread is:
@@ -26,7 +26,7 @@ extensions](cookbook.md)).
    another thread (blocking while that work is done). Synchronous blocks
    in general are to be avoided whenever possible.
     
-2. When an implementation of an already-shipped public API must call 
+### 2. When an implementation of an already-shipped public API must call 
    asynchronous code and block for its completion, it must do so by 
    following this simple pattern:
 
@@ -37,7 +37,7 @@ extensions](cookbook.md)).
         });
 ```
         
-3. If ever awaiting work that was started earlier, that work must be *joined*. 
+### 3. If ever awaiting work that was started earlier, that work must be *joined*. 
    For example, one service kicks off some asynchronous work that may later 
    become synchronously blocking:
 
@@ -67,7 +67,7 @@ extensions](cookbook.md)).
     In particular, no method should call `Task.Wait()` or `Task.Result` on 
     an incomplete `Task`.
     
-Additional "honorable mention" rules: (Not JTF related)
+### Additional "honorable mention" rules: (Not JTF related)
 
 4. Never define `async void` methods. Make the methods return `Task` instead.
    - Exceptions thrown from `async void` methods always crash the process.
