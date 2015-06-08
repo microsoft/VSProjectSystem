@@ -20,7 +20,7 @@ When using this approach to add source files to the project, CPS *will*:
    directory.
 2. Automatically add the item to Solution Explorer, DTE, and raise other
    appropriate events if indeed the item you're adding has an item type that
-   belongs to [the set of source item types](custom_item_types.md).
+   belongs to [the set of source item types](../extensibility/custom_item_types.md).
 
 CPS will *not*:
 
