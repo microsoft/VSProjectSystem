@@ -5,7 +5,7 @@ Visual Studio project systems like an `IVs`* interface for adding items
 with explicitly specified item types. Normally this is sufficient because
 the project system can pick reasonable defaults for item types based
 on file extension or expected project behavior. These defaults [can be
-augmented](custom_item_types.md). If you still need to explicitly 
+augmented](../extensibility/custom_item_types.md). If you still need to explicitly 
 specify an item type for a project item, follow these steps:
 
 ```csharp
