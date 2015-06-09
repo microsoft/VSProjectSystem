@@ -32,7 +32,7 @@ to your extension.
 
 When your handler is invoked, you can inspect the inputs and decide whether
 you want to handle the command or return a `NotHandled` result. CPS will daisy
-chain in each command handler in [priority order](Extensibility_points.md)
+chain in each command handler in [priority order](index.md#orderprecedenceattribute)
 till one of them indicate that they have fully handled the command.
 
 To add a command handler to a JavaScript project for example, you might
