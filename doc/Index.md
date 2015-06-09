@@ -40,6 +40,7 @@ VS Project System Documentation
   - [Custom item types](extensibility/custom_item_types.md)
   - [Custom reference types](extensibility/custom_reference_types.md)
   - [IDebugLaunchProvider](extensibility/IDebugLaunchProvider.md)
+  - [IDeployProvider](extensibility/IDeployProvider.md)
   - [Property value editors](extensibility/property_value_editors.md)
   - [IBuildUpToDateCheckProvider](extensibility/IBuildUpToDateCheckProvider.md)
   - [IsDocumentInProject](extensibility/IsDocumentInProject.md)
