@@ -91,6 +91,3 @@ doesn't get invoked when you expect it to:
   by scanning for it in this file:
 
         %localappdata%\microsoft\VisualStudio\14.0\ComponentModelCache\Microsoft.VisualStudio.Default.err
-
-### TODO
-Clean up references to internal DLs.
