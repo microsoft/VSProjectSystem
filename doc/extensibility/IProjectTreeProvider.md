@@ -18,4 +18,4 @@ specific contract name, as shown here:
 ```
 
 For the capability expression, please see
-[Extensibility Points](Extensibility_points.md).
+[Extensibility Points](index.md).
