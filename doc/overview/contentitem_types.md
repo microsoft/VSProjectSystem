@@ -78,7 +78,7 @@ Here are some things to notice about the newly added file:
 
 More details
 ------------
-- See also [Custom item types](custom_item_types.md)
+- See also [Custom item types](../extensibility/custom_item_types.md)
 - More documentation about defining a .xaml rule file for your item type:
   - [http://blogs.msdn.com/b/vsproject/archive/2009/06/10/platform-extensibility-part-1.aspx](http://blogs.msdn.com/b/vsproject/archive/2009/06/10/platform-extensibility-part-1.aspx)    
   - [http://blogs.msdn.com/b/vsproject/archive/2009/06/18/platform-extensibility-part-2.aspx](http://blogs.msdn.com/b/vsproject/archive/2009/06/18/platform-extensibility-part-2.aspx)
