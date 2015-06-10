@@ -242,7 +242,7 @@ almost nothing to do but fix the code bug.
 In the meantime, the most useful technique for analyzing async hangs is to
 attach WinDBG to the process and dump out incomplete async methods' states.
 This can be tedious, but we have a script in this file that you can use
-to make it much easier: [Async hang debugging](Async_hang_debugging.md)
+to make it much easier: [Async hang debugging](../scenario/analyze_hangs.md)
 
 ##### What is threadpool exhaustion, and why is it bad?
 
