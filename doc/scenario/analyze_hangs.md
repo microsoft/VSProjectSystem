@@ -18,7 +18,7 @@ of execution and their likelihood of producing useful results:
 
 1. Check background threads for any that are blocked on an STA COM call that's waiting to marshal to the UI thread. 
 2. If the hang shows a JoinableTaskFactory.WaitSynchronously frame near the top of the callstack on the UI thread:
-   1. No background threads will be able to rely on a COM STA marshal to succeed. If this is what's happening, the fix is to explicitly switch to the UI thread before making the COM call. Look for background threads callstacks that are trying to marshal to the UI thread using COM RPC calls. This would be a violation of [rule #1][Rule1].
+   1. No background threads will be able to rely on a COM STA marshal to succeed. If this is what's happening, the fix is to [explicitly switch to the UI thread][SwitchToMainThreadAsync] before making the COM call. Look for background threads callstacks that are trying to marshal to the UI thread using COM RPC calls. This would be a violation of [rule #1][Rule1].
    2. there is probably a DGML file on the disk of the repro machine that contains a hang report that shows you what went wrong. That way you may be able to avoid any WinDBG heap scouring manual investigation. Look for directories with this pattern: "%temp%\CPS.*" where * is a random GUID.
    3. If you don't have access to the TEMP directory, you can also get the hang report from the dump file itself:
  ```
@@ -125,3 +125,5 @@ that give more information, and the name of the async method)
     188251c8 Microsoft.VisualStudio.ProjectSystem.VS.Implementation.Package.ProjectNode+<>c__DisplayClass1b7+<<HrInvoke>b__1b5>d__1ba
 
  [Rule1]: https://github.com/Microsoft/VSProjectSystem/blob/master/doc/overview/3_threading_rules.md#1-if-a-method-has-certain-thread-apartment-requirements-sta-or-mta-it-must-either
+ [SwitchToMainThreadAsync]: https://github.com/Microsoft/VSProjectSystem/blob/async-hang-debugging/doc/overview/cookbook.md#how-to-switch-to-the-ui-thread
+ 
