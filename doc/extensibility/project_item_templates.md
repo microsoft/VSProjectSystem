@@ -7,7 +7,7 @@ They can be easily added to your project by using Add New Item. They are located
 
 Item Template | Description | More Info
 ------------ | ------------- | -------------
-Project Item Type | Defines new types of items that can be added to your project | [Custom Item Types](custom_item_types.md)
+Project Item Type | Defines new types of items that can be added to your project | [Custom Item Types](custom_item_types.md), [Tutorial](../overview/contentitem_types.md)
 Build Up-To-Date Check extension | Provides a hint as to whether the project's outputs are up to date | [IBuildUpToDateCheckProvider](IBuildUpToDateCheckProvider.md)
 Project Capabilities Provider extension | Export that can declare capabilities on behalf of a project | [IProjectCapabilitiesProvider](IProjectCapabilitiesProvider.md)
 Project Deploy extension | Export that define the deploy step for a project | [IDeployProvider](IDeployProvider.md)
