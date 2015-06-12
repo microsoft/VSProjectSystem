@@ -1,6 +1,8 @@
 Property pages
 ==============
 
+**[Item template:](project_item_templates.md)** Xaml Rule
+
 You can define your own custom property pages that can be displayed by
 Visual Studio for Projects, Project items, Debuggers, Compiler options,
 etc.

@@ -1,6 +1,8 @@
 IDeployProvider
 ===============
 
+**[Item template:](project_item_templates.md)** Project Deploy extension
+
 To give a project a deploy action during a solution build, export an
 `IDeployProvider` extension.
 An item template exists for easier creation of this extension.

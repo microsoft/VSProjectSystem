@@ -1,6 +1,8 @@
 Content/item types
 ==================
 
+**[Item template:](../extensibility/project_item_templates.md)** Project Item Type
+
 Introduction
 ------------
 
@@ -8,7 +10,7 @@ Currently, only items in your project with recognized item types will appear
 in Solution Explorer or be available as project items via automation.
 
 This page describes how to add support for a new item type using the
-built-in "Project Item Type" project item template.
+built-in "Project Item Type" project [item template](../extensibility/project_item_templates.md).
 
 Tutorial
 --------

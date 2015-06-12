@@ -1,10 +1,8 @@
 Custom item types
 =================
+**[Item template:](project_item_templates.md)** Project Item Type
 
-This page explains how to manually create a custom item type.
-
-Initially, it may be easier to follow the tutorial documented in [Content/item
-types](../overview/contentitem_types.md)
+**Tutorial:** - [Content/item types](../overview/contentitem_types.md)
 
 This page's contents apply to all CPS projects (VC++ and JavaScript).
 

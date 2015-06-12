@@ -37,6 +37,7 @@ VS Project System Documentation
   - Behavioral differences between CPS and other project systems
       - [GetMkDocument returns ">12" style strings](automation/GetMkDocument_returns_12_style_strings.md)
 - [Extensibility points](extensibility/index.md)
+  - [Item Templates](extensibility/project_item_templates.md)
   - [Custom item types](extensibility/custom_item_types.md)
   - [Custom reference types](extensibility/custom_reference_types.md)
   - [IDebugLaunchProvider](extensibility/IDebugLaunchProvider.md)

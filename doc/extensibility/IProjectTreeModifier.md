@@ -1,6 +1,8 @@
 `IProjectTreeModifier`
 ======================
 
+**[Item template:](project_item_templates.md)** Project Tree Modifier extension
+
 The `IProjectTreeModifier` interface can be exported into the 
 `ConfiguredProject` scope to apply cosmetic changes to a project tree 
 or one of its nodes. This allows you to, for example, set the icon on 

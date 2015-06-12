@@ -1,8 +1,11 @@
 IDebugLaunchProvider
 ===============
 
+**[Item template:](project_item_templates.md)** Custom Debugger extension
+
+## Tutorial
 To add a debugger to a project you should export an `IDebugLaunchProvider`.
-The simplest way to do this for Visual Studio 2015 is by using the item template
+The simplest way to do this for Visual Studio 2015 is by using the [item template](project_item_templates.md)
 for that purpose:
 
 1. Project -> Add New Item
