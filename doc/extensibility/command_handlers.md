@@ -1,6 +1,8 @@
 Command handlers
 ================
 
+**[Item template:](project_item_templates.md)** Command Group Handler extension
+
 Visual Studio command routing is a complex system. Some commands get routed
 to a project, and when that occurs you may want to handle that command on
 behalf of a project. This document describes how to do that.
