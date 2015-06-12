@@ -1,6 +1,6 @@
 Custom item types
 =================
-**[Item template:](project_item_emplates.md)** Project Item Type
+**[Item template:](project_item_templates.md)** Project Item Type
 
 **Tutorial:** - [Content/item types](../overview/contentitem_types.md)
 
