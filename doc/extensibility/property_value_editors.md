@@ -6,11 +6,12 @@ Property value editors
 In some cases, you may want to expand the set of editors to provide a richer experience. For example, you may want to provide a file picker editor to select a file, or a color editor to pick a color.
 
 This can be done by implementing a custom value editor. For that, you will need to:
-### 1. Export the `IPropertyPageUIValueEditor` interface to provide a custom value editor
 
-Use the `ExportMetadata` attribute to associate a `Name` with the custom editor. This value will be used for consuming the editor in the xaml rule.
+1. Export the `IPropertyPageUIValueEditor` interface to provide a custom value editor
 
-```csharp
+  Use the `ExportMetadata` attribute to associate a `Name` with the custom editor. This value will be used for consuming the editor in the xaml rule.
+
+  ```csharp
     [Export(typeof(IPropertyPageUIValueEditor))]
     [ExportMetadata("Name", "MyValueEditor")]
     [AppliesTo(MyUnconfiguredProject.UniqueCapability)]
@@ -38,16 +39,16 @@ Use the `ExportMetadata` attribute to associate a `Name` with the custom editor.
         }
 
     }
-```
+  ```
 
-### 2. Specify which properties should use the custom editor in the Xaml rule
+2. Specify which properties should use the custom editor in the Xaml rule
 
-```xml
+  ```xml
     <StringProperty Name="MyProperty" DisplayName="My Property" Visible="True" Description="Sample property">
         <StringProperty.ValueEditors>
             <ValueEditor EditorType="MyValueEditor" DisplayName="&lt;MyValueEditor...&gt;" />
         </StringProperty.ValueEditors>
     </StringProperty>
-```
+  ```
 
-You should now be able to invoke your custom editor by using the arrow next to the text input field for your property and choosing `<MyValueEditor...>` from the list.
+  You should now be able to invoke your custom editor by using the arrow next to the text input field for your property and choosing `<MyValueEditor...>` from the list.
