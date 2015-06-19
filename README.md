@@ -12,7 +12,7 @@ You may file doc bugs [here][docbugs].
 
 [![Join the chat at https://gitter.im/Microsoft/VSProjectSystem](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/Microsoft/VSProjectSystem?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
-For the latest features take a look at the [Change Log][changelog].
+For the latest features take a look at [Changes][changes].
 
 For further information about extending Visual Studio in other ways please check out
 [ExtendVS][3].
@@ -24,7 +24,7 @@ For further information about extending Visual Studio in other ways please check
  [VSSDK]: http://go.microsoft.com/?linkid=9877247
  [prereq]: doc/overview/prereqs.md
  [intro]: doc/overview/intro.md
- [changelog]: doc/changelog.md
+ [changes]: CHANGES.md
  [connect]: https://connect.microsoft.com/VisualStudio
  [docbugs]: https://github.com/Microsoft/VSProjectSystem/issues
  

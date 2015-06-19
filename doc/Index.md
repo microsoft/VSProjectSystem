@@ -2,7 +2,6 @@ VS Project System Documentation
 ===============================
 
 - [Introduction](overview/intro.md)
-- [Change log](changelog.md)
 - [Your obligations as a project system extender](overview/obligations.md)
 - [Prerequisites](overview/prereqs.md)
 - [Define a new project type](overview/define_a_new_project_type.md)
@@ -69,3 +68,4 @@ VS Project System Documentation
   - [Analyze Hangs](scenario/analyze_hangs.md)
      - [Who holds a project lock?](scenario/who_holds_a_project_lock.md)
 - [Differences between Visual Studio 2013 and Visual Studio 2015](overview/VS2013_vs_VS2015.md)
+- [Changes](../CHANGES.md)
