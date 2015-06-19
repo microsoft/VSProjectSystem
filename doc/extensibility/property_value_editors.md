@@ -26,7 +26,7 @@ Use the `ExportMetadata` attribute to associate a `Name` with the custom editor.
         public async Task<object> EditValueAsync(IServiceProvider serviceProvider, IProperty ruleProperty, object currentValue)
         {
             // TODO: Provide your own editor implementation
-            await TaskScheduler.Default;
+            await Task.Yield();
             string currentString = currentValue as string;
 
             // For exemplification purposes, using a simple editor that reverts the original string
@@ -50,4 +50,4 @@ Use the `ExportMetadata` attribute to associate a `Name` with the custom editor.
     </StringProperty>
 ```
 
-You should now be able to invoke your custom editor by using the arrow next to the text input field for your property and choosing "<MyValueEditor...>" from the list.
+You should now be able to invoke your custom editor by using the arrow next to the text input field for your property and choosing `<MyValueEditor...>` from the list.
