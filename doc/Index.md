@@ -2,6 +2,7 @@ VS Project System Documentation
 ===============================
 
 - [Introduction](overview/intro.md)
+- [Change log](changelog.md)
 - [Your obligations as a project system extender](overview/obligations.md)
 - [Prerequisites](overview/prereqs.md)
 - [Define a new project type](overview/define_a_new_project_type.md)
