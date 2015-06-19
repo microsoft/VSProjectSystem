@@ -37,7 +37,6 @@ This can be done by implementing a custom value editor. For that, you will need 
 
             return newString;
         }
-
     }
   ```
 
