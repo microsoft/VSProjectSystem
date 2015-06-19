@@ -16,8 +16,9 @@ Project Tree Modifier extension | Export that can tweak the appearance of your p
 Special Files Provider extension | Export than can identify certain well-known files in a project | [ISpecialFileProvider](ISpecialFileProvider.md)
 Xaml Rule | Creates an empty xaml rule | [Property Pages](property_pages.md)
 Custom Debugger extension | Export that defines the debug step for a project | [IDebugLaunchProvider](IDebugLaunchProvider.md)
+Command Group Handler extension | Export that defines command handling for a group of commands | [Command Handlers](command_handlers.md)
 
 ### Future Item Templates
 Item Template | Description | More Info
 ------------ | ------------- | -------------
-Command Group Handler extension | Export that defines command handling for a group of commands | [Command Handlers](command_handlers.md)
+
