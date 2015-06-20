@@ -21,4 +21,4 @@ Command Group Handler extension | Export that defines command handling for a gro
 ### Future Item Templates
 Item Template | Description | More Info
 ------------ | ------------- | -------------
-
+Property Page Value Editor extension | Export that provides a custom property value editor. | [Property value editors](property_value_editors.md)
