@@ -15,8 +15,9 @@ In order to add custom icons to your project, you need to follow these steps:
     - Note that `Include in VSIX` is set to true
   - Generates a new class (`Images1Monikers.cs`) that exposes a property to easily access the new image
 3. Update the file generated at step 2 to consume the ImageMoniker exposed at step 1
+
   ```csharp
-tree = tree.SetIcon(Images1Monikers.ProjectIconImageMoniker.ToProjectSystemType());
+  tree = tree.SetIcon(Images1Monikers.ProjectIconImageMoniker.ToProjectSystemType());
   ```
 
 ##Adding an image manifest manually
