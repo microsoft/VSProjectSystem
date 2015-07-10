@@ -22,7 +22,7 @@ In order to add custom icons to your project, you need to follow these steps:
 
 ##Adding an image manifest manually
 1. Image manifest
-  1. Create a new xml file, name it to .imagemanifest (e.g. Images1.imagemanifest)
+  1. Create a new xml file, name it to .imagemanifest (e.g. `Images1.imagemanifest`)
   
     ```xml
     <?xml version="1.0" encoding="utf-8"?>
