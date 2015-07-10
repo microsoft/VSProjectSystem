@@ -51,28 +51,28 @@ tree = tree.SetIcon(Images1Monikers.ProjectIconImageMoniker.ToProjectSystemType(
     - `Include in VSIX` to `True`
 2. Image Monikers
   1. Create a new `Images1Monikers.cs` file
-  ```csharp
-  using System;
-  using Microsoft.VisualStudio.Imaging.Interop;
-  
-  namespace <namespace>
-  {
-      public static class Images1Monikers
-      {
-          private static readonly Guid ManifestGuid = new Guid("<GUID>");
-  
-          private const int ProjectIcon = 0;
-  
-          public static ImageMoniker ProjectIconImageMoniker
-          {
-              get
-              {
-                  return new ImageMoniker { Guid = ManifestGuid, Id = ProjectIcon };
-              }
-          }
-      }
-  }
-  ```
+    ```csharp
+    using System;
+    using Microsoft.VisualStudio.Imaging.Interop;
+    
+    namespace <namespace>
+    {
+        public static class Images1Monikers
+        {
+            private static readonly Guid ManifestGuid = new Guid("<GUID>");
+    
+            private const int ProjectIcon = 0;
+    
+            public static ImageMoniker ProjectIconImageMoniker
+            {
+                get
+                {
+                    return new ImageMoniker { Guid = ManifestGuid, Id = ProjectIcon };
+                }
+            }
+        }
+    }
+    ```
   2. Replace `<GUID>` with the same value used in the image manifest
   3. Replace `<namespace>` with your namespace
 3. Add images
