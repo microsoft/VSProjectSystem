@@ -77,8 +77,8 @@ In order to add custom icons to your project, you need to follow these steps:
   2. Replace `<GUID>` with the same value used in the image manifest
   3. Replace `<namespace>` with your namespace
 3. Add images
-  1. Add the the following images to your project
+  1. Add the the following images to your project under an `Images` folder
     - Images/Images1ProjectIcon.png
-    - Images1ProjectIcon.xaml
+    - Images/Images1ProjectIcon.xaml
   2. Set the `Build Action` for both images to `Resource`
 4. Consume the new Image Moniker from your code (see the Tutorial above)
