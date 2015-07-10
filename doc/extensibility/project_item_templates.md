@@ -22,3 +22,4 @@ Command Group Handler extension | Export that defines command handling for a gro
 Item Template | Description | More Info
 ------------ | ------------- | -------------
 Property Page Value Editor extension | Export that provides a custom property value editor. | [Property value editors](property_value_editors.md)
+Custom Icons | Adds a set of custom images that can be consumed by project type using an IProjectTreeModifier export. | [Provide Custom Icons](../scenario/provide_custom_icons_for_the_project_or_item_type.md) [IProjectTreeModifier](IProjectTreeModifier.md)
