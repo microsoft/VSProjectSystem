@@ -48,7 +48,7 @@ Provides a dynamic list of enum values using an `IDynamicEnumValuesGenerator`. Y
         {
             get
             {
-                // Note: this property is ignored by the Project System runtime in the RTM version of Visual Studio 2015, but may be suppoerted in future releases
+                // Note: this property is ignored by the Project System runtime in the RTM version of Visual Studio 2015, but may be supported in future releases
                 return true;
             }
         }
@@ -88,7 +88,7 @@ Provides a dynamic list of enum values using an `IDynamicEnumValuesGenerator`. Y
         /// </remarks>
         public async Task<IEnumValue> TryCreateEnumValueAsync(string userSuppliedValue)
         {
-            // Note: this property is ignored by the Project System runtime in the RTM version of Visual Studio 2015, but may be suppoerted in future releases
+            // Note: this property is ignored by the Project System runtime in the RTM version of Visual Studio 2015, but may be supported in future releases
             await Task.Yield();
 
             return new PageEnumValue(new EnumValue() { Name = userSuppliedValue, DisplayName = userSuppliedValue });
