@@ -42,7 +42,10 @@ VS Project System Documentation
   - [Custom reference types](extensibility/custom_reference_types.md)
   - [IDebugLaunchProvider](extensibility/IDebugLaunchProvider.md)
   - [IDeployProvider](extensibility/IDeployProvider.md)
-  - [Property value editors](extensibility/property_value_editors.md)
+  - Properties
+    - [Property pages](extensibility/property_pages.md)
+    - [IDynamicEnumValuesProvider](extensibility/IDynamicEnumValuesProvider.md)
+    - [Property value editors](extensibility/property_value_editors.md)
   - [IBuildUpToDateCheckProvider](extensibility/IBuildUpToDateCheckProvider.md)
   - [IsDocumentInProject](extensibility/IsDocumentInProject.md)
   - [Automatic DependentUpon wire-up](extensibility/automatic_DependentUpon_wireup.md)
@@ -59,7 +62,6 @@ VS Project System Documentation
   - [IFileSystemErrorMessageProvider](extensibility/IFileSystemErrorMessageProvider.md)
   - [IBuildLoggerProvider](extensibility/IBuildLoggerProvider.md)
   - [IProjectCapabilitiesProvider](extensibility/IProjectCapabilitiesProvider.md)
-  - [Property pages](extensibility/property_pages.md)
   - [Reference Manager](extensibility/reference_manager.md)
 - How do I?
   - [Provide custom icons for the Project Type/Item type](scenario/provide_custom_icons_for_the_project_or_item_type.md)
