@@ -17,10 +17,11 @@ Special Files Provider extension | Export than can identify certain well-known f
 Xaml Rule | Creates an empty xaml rule | [Property Pages](property_pages.md)
 Custom Debugger extension | Export that defines the debug step for a project | [IDebugLaunchProvider](IDebugLaunchProvider.md)
 Command Group Handler extension | Export that defines command handling for a group of commands | [Command Handlers](command_handlers.md)
+Property Page Value Editor extension | Export that provides a custom property value editor. | [Property value editors](property_value_editors.md)
+Custom Icons | Adds a set of custom images that can be consumed by project type using an IProjectTreeModifier export. | [Provide Custom Icons](../scenario/provide_custom_icons_for_the_project_or_item_type.md) [IProjectTreeModifier](IProjectTreeModifier.md)
+Dynamic Enum Values Provider | Export that provides a dynamic list of enum values | [IDynamicEnumValuesProvider](IDynamicEnumValuesProvider.md)
 
 ### Future Item Templates
 Item Template | Description | More Info
 ------------ | ------------- | -------------
-Property Page Value Editor extension | Export that provides a custom property value editor. | [Property value editors](property_value_editors.md)
-Custom Icons | Adds a set of custom images that can be consumed by project type using an IProjectTreeModifier export. | [Provide Custom Icons](../scenario/provide_custom_icons_for_the_project_or_item_type.md) [IProjectTreeModifier](IProjectTreeModifier.md)
-Dynamic Enum Values Provider | Export that provides a dynamic list of enum values | [IDynamicEnumValuesProvider](IDynamicEnumValuesProvider.md)
+
