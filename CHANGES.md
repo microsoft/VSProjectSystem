@@ -11,6 +11,7 @@ Changes
     * `Project Tree Modifier extension` item template now specifies `OrderPrecedence` to avoid inconsistent behavior when used in combination with the default project type template
     * `Project Type` template - Fixed the issue that was causing the debugger not to function by default in the project type template
     * `Custom Debugger extension` item template - the file name now matches the name of the class for the `IDebugLaunchProvider` implementation
+    * All item/project templates included in the SDK now use custom icons
 * 14.0.50617.1
   * New [Threading Analyzers](https://www.nuget.org/packages/Microsoft.VisualStudio.Threading.Analyzers/)
   * New [Project System Analyzers](https://www.nuget.org/packages/Microsoft.VisualStudio.ProjectSystem.Analyzers)
