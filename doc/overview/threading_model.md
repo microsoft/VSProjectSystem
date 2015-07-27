@@ -6,9 +6,9 @@ Rules](3_threading_rules.md)
 
 Important: 
 
-    Do not call Task.Wait() or Task.Result in your code because these
-    violate [threading rule #2](3_threading_rules.md) and will often lead
-    to deadlocks.
+**Do not call Task.Wait() or Task.Result in your code because these
+violate [threading rule #2](3_threading_rules.md) and will often lead
+to deadlocks.**
    
 
 Avoid use of `ThreadHelper.JoinableTaskFactory` as that does not have the intelligence
