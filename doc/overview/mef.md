@@ -168,6 +168,9 @@ context. For example, a component in the `unconfiguredProject` that imports
         [ImportingConstructor]
         internal MyClass(UnconfiguredProject unconfiguredProject)
         {
+            // MEF does not know how to construct one of these custom collection types,
+            // so we construct it here for MEF. After the MyClass constructor completes,
+            // MEF will proceed to call Add on this.vsHierarchies to fill it with exports.
             this.vsHierarchies = new OrderPrecedenceImportCollection<IVsHierarchy>(
                 projectCapabilityCheckProvider: unconfiguredProject);
         }
