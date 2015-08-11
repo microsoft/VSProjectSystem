@@ -49,13 +49,13 @@ extensions](cookbook.md)).
             });
 ```
 
-    then later that async work becomes blocking:
+then later that async work becomes blocking:
 
 ```csharp    
         longRunningAsyncWork.Join();
 ```
 
-    or perhaps 
+or perhaps 
 
 ```csharp    
         await longRunningAsyncWork;
@@ -64,8 +64,8 @@ extensions](cookbook.md)).
     Note however that this extra step is not necessary when awaiting is
     done immediately after kicking off an asynchronous operation.
     
-    In particular, no method should call `Task.Wait()` or `Task.Result` on 
-    an incomplete `Task`.
+In particular, no method should call `Task.Wait()` or `Task.Result` on 
+an incomplete `Task`.
     
 ### Additional "honorable mention" rules: (Not JTF related)
 
