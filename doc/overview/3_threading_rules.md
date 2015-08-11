@@ -18,7 +18,7 @@ extensions](cookbook.md)).
         await joinableTaskFactoryInstance.SwitchToMainThreadAsync();
 ```
 
-    OR
+OR
     
    - Have a synchronous signature, and throw an exception when called on the wrong thread.
    
