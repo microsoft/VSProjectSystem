@@ -19,8 +19,8 @@ known to declare the capability.
 | RunningInVisualStudio
 | NotLoadedWithIDEIntegration
 | RenameNearbySimilarlyNamedImportsWithProject
-| DeclaredSourceItems
-| UserSourceItems
+| DeclaredSourceItems | Indicates that the project is a typical MSBuild project (not DNX) in that it declares source items in the project itself (rather than a project.json file that assumes all files in the directory are part of a compilation). 
+| UserSourceItems | Indicates that the user is allowed to add arbitrary files to their project. 
 | SourceItemsFromImports
 | AssemblyReferences | Indicates that the project supports assembly references.
 | COMReferences | Indicates that the project supports COM references.
