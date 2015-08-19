@@ -28,6 +28,16 @@ method in order to test for combinations of capabilities (including
 AND, OR, NOT logic). Read more about [the supported syntax and
 operators](http://msdn.microsoft.com/en-us/library/vstudio/microsoft.visualstudio.shell.interop.ivsbooleansymbolexpressionevaluator.evaluateexpression.aspx).
 
+How to declare project capabilities in your project
+---------------------------------------------------
+
+Project capabilities can be declared in several ways, the easiest of which
+being to add this MSBuild item to your .targets file:
+
+```xml
+<ProjectCapability Include="MyOwnCapability" />
+```
+
 Common project capabilities and where they are defined
 ------------------------------------------------------
 
@@ -75,13 +85,6 @@ It's very important that project capabilities you define fit this criteria:
   - Good: `CSharp`
   - Bad: `VB`
 - May include a version number, when necessary, but is usually discouraged.
-
-Project capabilities can be declared in several ways, the easiest of which
-being to add this MSBuild item to your .targets file:
-
-```xml
-    <ProjectCapability Include="MyOwnCapability" />
-```
 
  [NewIssue]: https://github.com/Microsoft/VSProjectSystem/issues/new
  
