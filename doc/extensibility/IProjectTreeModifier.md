@@ -32,4 +32,6 @@ IProjectTreeModifier implementations can also implement (but not export)
 `IProjectTreeModifier2` to be passed the original tree before the latest 
 mutation, so that it can determine what a previous tree modifier changed.
 This can prevent multiple modifiers from updating the same
-properties repeatedly.
+properties repeatedly. If a tree modifier implements this interface, 
+`IProjectTreeModifier2.ApplyModifications` will be called instead of 
+`IProjectTreeModifier.ApplyModifications`.
