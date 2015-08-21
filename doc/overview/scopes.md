@@ -3,7 +3,7 @@ Scopes
 
 ### Introduction to scopes
 
-A "scope" is a collection of MEF parts that are tied to the lifecycle of a specific object, or "context". When that object or context is torn down, so are the MEF parts that live in that scope. Scopes themselves can be nested so that parts that live in child scopes can "inherit/import exports from parent scopes, but not vice versa.
+A "scope" is a collection of MEF parts that are tied to the lifecycle of a specific object, or "context". When that object or context is torn down, so are the MEF parts that live in that scope. Scopes themselves can be nested so that parts that live in child scopes can "inherit" or import exports from parent scopes, but not vice versa.
 
 In Visual Studio, there is one global default "scope" of context and three related to project systems:
 
