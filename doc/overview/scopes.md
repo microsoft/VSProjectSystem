@@ -7,7 +7,7 @@ A "scope" is a collection of MEF parts that are tied to the lifecycle of a speci
 
 In Visual Studio, there is one global default "scope" of context and three related to project systems:
 
-- __VS Default Container__. This is the default global scope, where parts in Visual Studio live by default. There is exactly on of these in the process.
+- __VS Default Container__. This is the default global scope, where parts in Visual Studio live by default. There is exactly one of these in the process.
 - `IVsSolution`, or the solution context. There is exactly one of these in the 
   process.
 - `IVsProject`, or the project context. There is exactly one of these per 
