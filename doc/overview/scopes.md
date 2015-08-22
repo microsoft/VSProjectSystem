@@ -3,10 +3,12 @@ Scopes
 
 ### Introduction to scopes
 
-In Visual Studio there are three "scopes" of context related to project
-systems:
+A "scope" is a collection of MEF parts that are tied to the lifecycle of a specific object, or "context". When that object or context is torn down, so are the MEF parts that live in that scope. Scopes themselves can be nested so that parts that live in child scopes can "inherit" or import exports from parent scopes, but not vice versa.
 
-- `IVsSolution`, or the global context. There is exactly one of these in the 
+In Visual Studio, there is one global default "scope" of context and three related to project systems:
+
+- __VS Default Container__. This is the default global scope, where parts in Visual Studio live by default. There is exactly one of these in the process.
+- `IVsSolution`, or the solution context. There is exactly one of these in the 
   process.
 - `IVsProject`, or the project context. There is exactly one of these per 
   project in the solution.
@@ -16,19 +18,18 @@ systems:
 These contexts can be represented in a hierarchy:
 
 - Visual Studio process
-  - `IVsSolution` 
-    - `IVsProject` (a.csproj)
-      - `IVsProjectCfg` (Debug|AnyCPU)
-      - `IVsProjectCfg` (Release|AnyCPU)
-      - `IVsProjectCfg` (Debug|x86)
-      - `IVsProjectCfg` (Release|x86)
-    - `IVsProject` (b.vcxproj)
-      - `IVsProjectCfg` (Debug|Win32)
-      - `IVsProjectCfg` (Release|Win32)
+  - VS Default Container
+    - `IVsSolution` 
+      - `IVsProject` (a.csproj)
+        - `IVsProjectCfg` (Debug|AnyCPU)
+        - `IVsProjectCfg` (Release|AnyCPU)
+        - `IVsProjectCfg` (Debug|x86)
+        - `IVsProjectCfg` (Release|x86)
+      - `IVsProject` (b.vcxproj)
+        - `IVsProjectCfg` (Debug|Win32)
+        - `IVsProjectCfg` (Release|Win32)
                 
-CPS has these three context scopes as well. But they are known by the CPS
-concept names rather than their VS-specific equivalents. Here they are
-with their equivalents:
+Within CPS, the three project system scopes are known by the CPS concept names rather than their VS-specific equivalents. Here they are with their equivalents:
 
 | VS term       | CPS term            | MSBuild term                            |
 |---------------|---------------------|-----------------------------------------|
@@ -90,8 +91,7 @@ MEF parts belong to the scope necessary to satisfy all of its imports. A MEF
 part that imports nothing belongs to the 'default' or global scope. A MEF part
 that imports anything from the `ConfiguredProject` scope belongs to the
 `ConfiguredProject` scope as well (unless it does so via the
-`ActiveConfiguredProject<T>` wrapper). A MEF part that imports anything from
-the `ConfiguredProject`.
+`ActiveConfiguredProject<T>` wrapper).
 
 | A part belongs to, the scope below, when it imports MEF parts in the columns to the right | VS default container | ProjectService | UnconfiguredProject | ConfiguredProject |
 |-------------------------------------------------------------------------------------------|----------------------|----------------|---------------------|-------------------|
