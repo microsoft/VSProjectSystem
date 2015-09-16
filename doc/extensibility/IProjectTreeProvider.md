@@ -9,7 +9,6 @@ specific contract name, as shown here:
 
 ```csharp
     [AppliesTo("Project capability expression here")]
-
     [Export(ExportContractNames.ProjectTreeProviders.PhysicalViewRootGraft, typeof(IProjectTreeProvider))]
     internal class YourSubtreeProvider : ProjectTreeProviderBase
     {
