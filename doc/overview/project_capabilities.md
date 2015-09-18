@@ -12,9 +12,9 @@ known to declare the capability.
 | VisualC | Project may contain or compile C++ source files.
 | CSharp | Project may contain or compile C# source files.
 | VB | Project may contain or compile VB source files.
-| JavaScript | Project may contain JavaScript source files.
-| TypeScript | Project may contain TypeScript source files.
-| JavaScriptProject | The project uses JavaScript project system.
+| JavaScript | Project contains and handles JavaScript source files.
+| TypeScript | Indicates that the TypeScript build targets are imported into the project and the project is capable of compiling TypeScript source files into JavaScript.
+| JavaScriptProject | Indicates that the project supports JavaScript development. This capability also means that the project can manage JavaScript related project items, resolving JavaScript library references.
 | JavaScriptUAPProject |The JavaScript project targets the Universal Windows Platform of Windows 10.
 | JavaScriptWindowsPhoneProject | The JavaScript project targets Windows Phone 8.1 platform.
 | JavaScriptWindowsAppContainerProject | Indicates that the project is both "JavaScript" and "WindowsAppContainer", so all JavaScript projects that emit *.AppX bundles will declare this capability.
