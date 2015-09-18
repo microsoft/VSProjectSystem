@@ -12,8 +12,8 @@ known to declare the capability.
 | VisualC | Project may contain or compile C++ source files.
 | CSharp | Project may contain or compile C# source files.
 | VB | Project may contain or compile VB source files.
-| JavaScript | Project contains and handles JavaScript source files.
-| TypeScript | Project manages and compiles TypeScript source files.
+| JavaScript | Project may contain JavaScript source files.
+| TypeScript | Project may contain TypeScript source files.
 | JavaScriptProject | The project uses JavaScript project system.
 | JavaScriptUAPProject |The JavaScript project targets the Universal Windows Platform of Windows 10.
 | JavaScriptWindowsPhoneProject | The JavaScript project targets Windows Phone 8.1 platform.
