@@ -47,6 +47,9 @@ known to declare the capability.
 | BuildWindowsDesktopTarget
 | PerPlatformCompilation (aka. #ifdef capability) | Indicates that items in this project are compiled individually for every target platform.
 | MultiTarget | Indicates that items in this project may be applied to multiple platforms.
+| DeploymentProject | Indicates a project that is capable of provisioning Azure resources using Azure Resource Manager that will create an environment for an application.
+| FabricApplication | Indicates a project that represents a Service Fabric application.
+| LSJavaScript.v45 | Indicates a project that represents a LightSwitch JavaScript V4.5 project.
 
 ## Summary table
 
