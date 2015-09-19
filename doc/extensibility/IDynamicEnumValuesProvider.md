@@ -33,8 +33,9 @@ Provides a dynamic list of enum values using an `IDynamicEnumValuesGenerator`. Y
     }
 ```
 ##IDynamicEnumValuesGenerator
-**Note:** Issue [#53](https://github.com/Microsoft/VSProjectSystem/issues/53)
+~~**Note:** Issue [#53](https://github.com/Microsoft/VSProjectSystem/issues/53)~~
 `AllowCustomValues` and `TryCreateEnumValueAsync` are currently ignored by the Project System runtime in the RTM version of Visual Studio 2015, but may be supported in future releases. The suggested implementations below attempt to match the current behavior (any value gets accepted) to minimize disruption when this feature is enabled.
+
 ```csharp
     /// <summary>
     /// Generates dynamic enum values.
@@ -94,6 +95,12 @@ Provides a dynamic list of enum values using an `IDynamicEnumValuesGenerator`. Y
         }
     }
 ```
+
+###Changes coming in Update 1
+`TryCreateEnumValueAsync` will be connected and is called whenever the user submits a new value to the property
+`AllowCustomValues` is now obsolete and will be removed in future versions
+
+When a user submits a value `TryCreateEnumValuesAsync` will be called first with that value. If a task of null is returned CPS will then call `GetListedValuesAsync` and try to match the user supplied value to an existing `IEnumValue`. If that also returns null then the user supplied value will be placed directly into the property field.
 
 ## Usage
 
