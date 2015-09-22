@@ -12,6 +12,15 @@ known to declare the capability.
 | VisualC | Project may contain or compile C++ source files.
 | CSharp | Project may contain or compile C# source files.
 | VB | Project may contain or compile VB source files.
+| JavaScript | Project contains and handles JavaScript source files.
+| TypeScript | Indicates that the TypeScript build targets are imported into the project and the project is capable of compiling TypeScript source files into JavaScript.
+| JavaScriptProject | Indicates that the project supports JavaScript development. This capability also means that the project can manage JavaScript related project items.
+| JavaScriptUAPProject |The JavaScript project targets the Universal Windows Platform of Windows 10.
+| JavaScriptWindowsPhoneProject | The JavaScript project targets Windows Phone 8.1 platform.
+| JavaScriptWindowsAppContainerProject | Indicates that the project is both "JavaScript" and "WindowsAppContainer", so all JavaScript projects that emit *.AppX bundles will declare this capability.
+| JavaScriptWJProject | The JavaScript project targets Windows 8.1 desktop platform.
+| Cordova | The project integrates with and depends on Apache Cordova.
+| FileSystemBasedCordovaProject | Indicates that the Cordova project looks to the file system to determine the project content. This is the defining capability for the project system in Visual Studio Tools for Apache Cordova.
 | CPS | Project is based on the Project System Extensibility SDK
 | HostSetActiveProjectConfiguration
 | ProjectConfigurationsInferredFromUsage
@@ -25,9 +34,9 @@ known to declare the capability.
 | AssemblyReferences | Indicates that the project supports assembly references.
 | COMReferences | Indicates that the project supports COM references.
 | ProjectReferences | Indicates that the project supports project references.
-| SDKReferences
+| SDKReferences | Indicates that the project supports SDK references.
 | SharedProjectReferences | Indicates that the project supports references to Shared Projects.
-| WinRTReferences
+| WinRTReferences | Indicates that the project references WinRT libraries.
 | OutputGroups
 | AllTargetOutputGroups
 | VisualStudioWellKnownOutputGroups
