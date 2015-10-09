@@ -78,6 +78,12 @@ Here are some things to notice about the newly added file:
 </FooCompile>
 ```
 
+#### Making the new item type available in the *add new item* dialog
+In order to be able to easily create and add new items of the newly created *item type* through the "Add -> New item..." dialog; an item template needs to be created. See https://msdn.microsoft.com/en-us/library/vstudio/tsyyf0yh.aspx .
+To deliver the item template together with your project template, add it to the *assets* section in the *source.extension.vsixmanifest* file included with the .ProjectType project.
+For more information about what can be done through the *vsix manifest designer*, see:
+https://msdn.microsoft.com/en-us/library/vstudio/ee943167(v=vs.140).aspx
+
 More details
 ------------
 - See also [Custom item types](../extensibility/custom_item_types.md)
