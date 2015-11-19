@@ -98,7 +98,7 @@ it.
 #### Disadvantages to Responsive Design:
 
 1. Project snapshot diffs don't always capture important semantics of the 
-2. original changes. For example, a rename is significantly different from a 
+   original changes. For example, a rename is significantly different from a 
    delete and an add in how the host expects to see events raised. Preserving 
    these semantics sometimes requires extra code on the mutation side to tuck 
    hints away for later discovery by the diffing system. We minimize this 
