@@ -33,7 +33,7 @@ Provides a dynamic list of enum values using an `IDynamicEnumValuesGenerator`. Y
     }
 ```
 ##IDynamicEnumValuesGenerator
-~~**Note:** Issue [#53](https://github.com/Microsoft/VSProjectSystem/issues/53) Fixed in VS 2015 Update 1~~
+~~**Note:** Issue [#53](https://github.com/Microsoft/VSProjectSystem/issues/53)~~ (Fixed in Visual Studio 2015 Update 1)
 `AllowCustomValues` and `TryCreateEnumValueAsync` are ignored by the Project System runtime in the RTM version of Visual Studio 2015, but may be supported in future releases. The suggested implementations below attempt to match the current behavior (any value gets accepted) to minimize disruption when this feature is enabled.
 
 ```csharp
