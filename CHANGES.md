@@ -1,5 +1,7 @@
 Changes
 ==========
+* 14.1.80.38181
+  * Targets Visual Studio 2015 Update 1
 * 14.0.50721.1
   * Targets Visual Studio 2015 RTM
   * New Item Templates
