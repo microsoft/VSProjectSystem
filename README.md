@@ -15,11 +15,11 @@ You may file doc bugs [here][docbugs].
 For the latest features take a look at [Changes][changes].
 
 For further information about extending Visual Studio in other ways please check out
-[ExtendVS][3].
+[VisualStudio.com/integrate][3].
 
  [1]: doc/Index.md
  [2]: http://aka.ms/vsprojectsystemextensibilityvsix
- [3]: http://aka.ms/ijgt4w
+ [3]: https://www.visualstudio.com/integrate/explore/explore-vside-vsi?wt.mc_id=o~display~github~vsproject
  [4]: https://www.visualstudio.com/en-us/downloads/visual-studio-2015-downloads-vs.aspx
  [VSSDK]: http://go.microsoft.com/?linkid=9877247
  [prereq]: doc/overview/prereqs.md
