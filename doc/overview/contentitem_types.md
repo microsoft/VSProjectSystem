@@ -79,8 +79,39 @@ Here are some things to notice about the newly added file:
 ```
 
 #### Making the new item type available in the *add new item* dialog
-In order to be able to easily create and add new items of the newly created *item type* through the "Add -> New item..." dialog; an item template needs to be created. See https://msdn.microsoft.com/en-us/library/vstudio/tsyyf0yh.aspx .
-To deliver the item template together with your project template, add it to the *assets* section in the *source.extension.vsixmanifest* file included with the .ProjectType project.
+In order to and add new items of the newly created *item type* using the "Add -> New item..." dialog, you need to create a new item template.
+
+The following steps describe how to add a new item template for an item template with extension ".foo" to a ProjectType1
+
+1. Add a new item template project to your solution:
+  - Right click on the solution node
+  - Add new project
+  - Select "Visual C#"->"Extensibility"->"C# Item Template"
+  - Provide a name for the new project (e.g. `FooItemTemplate`)
+2. Add a project reference from your project type to this new project:
+  - right click on `ProjectType1.ProjectType`
+  - select "Add Reference"
+  - in the "Reference Manager" dialog select "Projects" on the left side and check `FooItemTemplate`
+3. Add the new item template as an asset to the vsix manifest (located under the .ProjectType project)
+  - Open `source.extension.vsixmanifest` from `ProjectType1.ProjectType`
+  - Click "Assets" on the left side
+  - Click the "New" button and provide the following values in the Add New Asset dialog:
+    - Type: select "Microsoft.VisualStudio.ItemTemplate"
+    - Source: select "A project in the current solution"
+    - Project: Select `FooItemTemplate`
+4. Customize the new item template
+  - Rename the `Class.cs` to something that applies to your project (e.g. `Class.foo`)
+  - Update the .vstemplate file `FooItemTemplate.vstemplate`
+    - Update the 2 places where the old file `Class.cs` is specified (`DefaultName` and `ProjectItem`) to `Class.foo`
+    - Add an `AppliesTo` element under `TemplateData` that points to your project's unique capability. E.g:
+```xml
+  <TemplateData>
+    ...
+    <AppliesTo>ProjectType1</AppliesTo>
+  </TemplateData>
+```
+
+See https://msdn.microsoft.com/en-us/library/vstudio/tsyyf0yh.aspx for more information.
 For more information about what can be done through the *vsix manifest designer*, see:
 https://msdn.microsoft.com/en-us/library/vstudio/ee943167(v=vs.140).aspx
 
@@ -90,6 +121,3 @@ More details
 - More documentation about defining a .xaml rule file for your item type:
   - [http://blogs.msdn.com/b/vsproject/archive/2009/06/10/platform-extensibility-part-1.aspx](http://blogs.msdn.com/b/vsproject/archive/2009/06/10/platform-extensibility-part-1.aspx)    
   - [http://blogs.msdn.com/b/vsproject/archive/2009/06/18/platform-extensibility-part-2.aspx](http://blogs.msdn.com/b/vsproject/archive/2009/06/18/platform-extensibility-part-2.aspx)
-    
-    
-
