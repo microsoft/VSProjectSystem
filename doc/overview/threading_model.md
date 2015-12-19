@@ -14,7 +14,7 @@ to deadlocks.**
 Avoid use of `ThreadHelper.JoinableTaskFactory` as that does not have the intelligence
 to mitigate deadlocks between the UI thread and the CPS project lock. Instead,
 use a CPS-specific `JoinableTaskFactory` instance, such as the one found on
-[`IThreadHandling.AsyncPump`](http://index/#Microsoft.VisualStudio.ProjectSystem.V14Only/IThreadHandling.cs,a5d499f7dd5e045e,references).
+`IThreadHandling.AsyncPump`
 
 Alternately if you want to create your own `JoinableTaskFactory` instance (for
 example to associate with your own `JoinableTaskCollection`) you can call 
