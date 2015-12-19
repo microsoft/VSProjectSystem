@@ -17,7 +17,7 @@ Please send a code review to the CPSCR alias when introducing or significantly
 modifying CPS extensions, particularly for your first few extensions so
 we can help catch common mistakes.
 
-### [`AppliesToAttribute`](http://index/Microsoft.VisualStudio.ProjectSystem.Utilities.v14.0/R/a40aabc698b937e1.html)
+### `AppliesToAttribute`
 
 Every extension based on MEF exports must include an `[AppliesTo("...")]`
 attribute on the exported type or member. The string argument is
@@ -39,7 +39,7 @@ your extension be loaded and initialized in the process. It is best to
 use the `AppliesTo` attribute effectively to prevent your assembly from even
 loading when it does not apply to a given project.
 
-### [OrderPrecedenceAttribute](http://index/Microsoft.VisualStudio.ProjectSystem.Utilities.v14.0/R/68b045852438c9bc.html)
+### `OrderPrecedenceAttribute`
 
 When more than one extension applies to a given project, CPS may pick the
 "most preferred" extension to fulfill some requirement, or it may loop
