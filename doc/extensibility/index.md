@@ -39,7 +39,7 @@ your extension be loaded and initialized in the process. It is best to
 use the `AppliesTo` attribute effectively to prevent your assembly from even
 loading when it does not apply to a given project.
 
-### OrderPrecedenceAttribute
+### `OrderPrecedenceAttribute`
 
 When more than one extension applies to a given project, CPS may pick the
 "most preferred" extension to fulfill some requirement, or it may loop
