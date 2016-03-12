@@ -44,6 +44,7 @@ VS Project System Documentation
   - [IDeployProvider](extensibility/IDeployProvider.md)
   - Properties
     - [Property pages](extensibility/property_pages.md)
+    - [How to retrieve the value of a property](extensibility/property_retrievevalue.md)
     - [IDynamicEnumValuesProvider](extensibility/IDynamicEnumValuesProvider.md)
     - [Property value editors](extensibility/property_value_editors.md)
   - [IBuildUpToDateCheckProvider](extensibility/IBuildUpToDateCheckProvider.md)
