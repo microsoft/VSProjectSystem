@@ -19,6 +19,30 @@ becomes a straightforward task, which starts creating extension classes
 through templates provided in the CPS SDK.  A typical CPS component looks 
 like this:
 
+Note: In Visual Studio Next, IProjectTreeModifier has been replaced by IProjectTreePropertiesProvider
+
+**Visual Studio Next**
+```csharp
+    [Export(typeof(IProjectTreePropertiesProvider))]
+    [AppliesTo("MyProjectType")]
+    internal class ProjectTreeIconProvider : IProjectTreePropertiesProvider
+    {
+        /// <summary>
+        /// Gets the tree factory.
+        /// </summary>
+        [Import]
+        protected Lazy<IProjectTreeFactory> TreeFactory { get; private set; }
+
+        /// <summary>
+        /// Gets the unconfigured project.
+        /// </summary>
+        [Import]
+        protected UnconfiguredProject UnconfiguredProject { get; set; }
+
+        // ...
+    }
+```
+**Visual Studio 2015**
 ```csharp
     [Export(typeof(IProjectTreeModifier))]
     [AppliesTo("MyProjectType")]
@@ -40,8 +64,8 @@ like this:
     }
 ```
 
-This extension implements the `IProjectTreeModifier` interface. Through the 
-`Export` attribute, the class above implements `IProjectTreeModifier` contract 
+This extension implements the `IProjectTreePropertiesProvider`/`IProjectTreeModifier` interface. Through the 
+`Export` attribute, the class above implements IProjectTreePropertiesProvider/`IProjectTreeModifier` contract 
 so that the right component in CPS system can load the class when it is needed. 
 Through the `Import` attribute, the class declares what it wants from the
 system so that MEF will set the two properties with `Import` attribute
@@ -102,7 +126,7 @@ Some common MEF errors include:
   extension); 
 - Importing a component in a wrong scope (e.g., `IProjectTreeModifier` 
   is expected to be in the `UnconfiguredProject` scope; therefore, the 
-  implementation of the `IProjectTreeModifier` should never import a 
+  implementation of the `IProjectTreePropertiesProvider`/`IProjectTreeModifier` should never import a 
   `ConfiguredProject` directly).
 
 In CPS, any contract that can be implemented by extensions is expected to
@@ -188,7 +212,7 @@ only those matching the capabilities of the project.
 
 For a component within the configured project scope, or in the project
 service scope, the `UnconfiguredProject` in the sample above should be
-replaced by `ConfiguredProject` or `ProjectService`.
+replaced by `ConfiguredProject` or `IProjectService`/`ProjectService`.
 
 Components in the extensions can import a singleton service implemented by CPS
 without using the `OrderPrecedenceImportCollection`. These singleton services

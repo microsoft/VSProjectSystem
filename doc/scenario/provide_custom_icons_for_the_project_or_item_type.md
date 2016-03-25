@@ -7,8 +7,11 @@ Provide custom icons for the Project Type/Item type
 ##Tutorial
 In order to add custom icons to your project, you need to follow these steps:
 
-1. Add New Item - `Project Tree Modifier extension`. This will add an [IProjectTreeModifier](../extensibility/IProjectTreeModifier.md) export to your project type that will replace the project icon with a JavaScript Icon
-2. Add New Item - `Custom Icons`. (*Note that this is a new item template, before it becomes available follow the steps below that explain how to manually add an image manifest*.) This template does a few things
+1. Add New Item
+  - **Visual Studio Next**: `Project Tree Properties Provider extension`
+  - **Visual Studio 2015**: `Project Tree Modifier extension`
+  - This will add an [IProjectTreePropertiesProvider](../extensibility/IProjectTreePropertiesProvider)/[IProjectTreeModifier](../extensibility/IProjectTreeModifier.md) export to your project type that will replace the project icon with a JavaScript Icon
+2. Add New Item - `Custom Icons`. This template does a few things:
   - Generates a new .imagemanifest file, that defines one image with 2 sources:
     - .png file that will be used for 100 % dpi
     - .xaml file that will be used for everything else
@@ -16,6 +19,12 @@ In order to add custom icons to your project, you need to follow these steps:
   - Generates a new class (`Images1Monikers.cs`) that exposes a property to easily access the new image
 3. Update the file generated at step 2 to consume the ImageMoniker exposed at step 1
 
+**Visual Studio Next:**
+  ```csharp
+  propertyValues.Icon = Images1Monikers.ProjectIconImageMoniker.ToProjectSystemType();
+  ```
+
+**Visual Studio 2015:**
   ```csharp
   tree = tree.SetIcon(Images1Monikers.ProjectIconImageMoniker.ToProjectSystemType());
   ```

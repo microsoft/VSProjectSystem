@@ -1,5 +1,16 @@
 Changes
 ==========
+**Visual Studio Next**
+* 15.0.183.53925
+  * Targets Visual Studio Next Preview
+  * Breaking changes
+  * `Project Tree Modifier extension` item template was replaced by `Project Tree Properties Provider extension`
+  * Other fixes and improvements:
+    * #81 - Can't override default Xaml rules; build fails when changing project type to Class Library
+    * #82 - Analyzers should support project.json
+    * [Connect 2293675](https://connect.microsoft.com/VisualStudio/feedback/details/2293675/cant-add-reference-to-project-created-from-an-extensibility-project-type-template-based-project) Reference Manager Dialog displays error in generated project type
+
+**Visual Studio 2015**
 * 14.1.80.38181
   * Targets Visual Studio 2015 Update 1
 * 14.0.50721.1

@@ -11,6 +11,73 @@ await ThreadHandling.SwitchToUIThread();
 ```
 - Additional information about [ItemIds](ItemIDs.md) in CPS
 
+**Visual Studio Next:**
+```CSharp
+using System.ComponentModel.Composition;
+using System.IO;
+using System.Threading;
+using System.Threading.Tasks;
+using Microsoft.VisualStudio;
+using Microsoft.VisualStudio.ProjectSystem;
+using Microsoft.VisualStudio.ProjectSystem.Build;
+using Microsoft.VisualStudio.Shell.Interop;
+
+[Export(typeof(IDeployProvider))]
+[AppliesTo(MyUnconfiguredProject.UniqueCapability)]
+internal class DeployProvider1 : IDeployProvider
+{
+    [ImportingConstructor]
+    public DeployProvider1(UnconfiguredProject unconfiguredProject)
+    {
+        this.IVsHierarchies = new OrderPrecedenceImportCollection<IVsHierarchy>(projectCapabilityCheckProvider: unconfiguredProject);
+    }
+
+    /// <summary>
+    /// Gets or sets IVsHierarchies.
+    /// </summary>
+    [ImportMany(ExportContractNames.VsTypes.IVsHierarchy)]
+    private OrderPrecedenceImportCollection<IVsHierarchy> IVsHierarchies { get; set; }
+
+    /// <summary>
+    /// Gets the IVsHierarchy instance for the project being built.
+    /// </summary>
+    internal IVsHierarchy VsHierarchy
+    {
+        get
+        {
+            return this.IVsHierarchies.First().Value;
+        }
+    }
+
+    [Import]
+    internal IProjectThreadingService ProjectThreadingService { get; private set; }
+
+    public async Task DeployAsync(CancellationToken cancellationToken, TextWriter outputPaneWriter)
+    {
+        await ProjectThreadingService.SwitchToUIThread();
+
+        object caption;
+        if (ErrorHandler.Succeeded(this.VsHierarchy.GetProperty((uint)VSConstants.VSITEMID.Root, (int)__VSHPROPID.VSHPROPID_Caption, out caption)))
+        {
+            await outputPaneWriter.WriteAsync(caption as string);
+        }
+    }
+
+    public bool IsDeploySupported
+    {
+        get { return true; }
+    }
+
+    public void Commit()
+    {
+    }
+
+    public void Rollback()
+    {
+    }
+}
+```
+**Visual Studio 2015:**
 ```CSharp
 using System.ComponentModel.Composition;
 using Microsoft.VisualStudio.ProjectSystem;
