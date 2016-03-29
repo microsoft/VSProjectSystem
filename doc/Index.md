@@ -75,3 +75,4 @@ VS Project System Documentation
   - [Turn on CPS for a C#/VB project](scenario/turn_on_cps_for_csharp_vb_project.md)
 - [Differences between Visual Studio 2013 and Visual Studio 2015](overview/VS2013_vs_VS2015.md)
 - [Changes](../CHANGES.md)
+- [Breaking Changes in Visual Studio Next](overview/breaking_changes_visual_studio_next.md)
