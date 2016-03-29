@@ -59,7 +59,12 @@ The following steps explain how to create and use such a Single File Generator i
   ```Xml
     <StringProperty Name="Generator" Visible="True"/>
   ```
-4. Test the generator
+4. Define the `SingleFileGenerators` capability (Note this is not needed for the default project type because it is already defined in `Microsoft.Common.CurrentVersion.targets` but will be needed if your project type uses a different set of targets)
+  - Insert the following line in `CustomProject.targets` (next to the other ProjectCapability items)
+  ```Xml
+  <ProjectCapability Include="SingleFileGenerators" />
+  ```
+5. Test the generator
   - Build and Run
   - Create a new project of your project type
   - Because we don't have an item template for ".foo" files, we need to create one in File Explorer and include it in the project
