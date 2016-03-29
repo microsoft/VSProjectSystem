@@ -12,6 +12,7 @@ VS Project System Documentation
   - [MEF](overview/mef.md)
   - [Scopes](overview/scopes.md)
   - [Project Capabilities](overview/about_project_capabilities.md)
+  - [Dynamic Capabilities in V.Next](overview/dynamicCapabilities.md)
   - [Interfaces defined on IVsProject object](overview/interfaces_defined_on_IVsProject_object.md)
   - [Interfaces NOT defined on IVsProject object](overview/interfaces_NOT_defined_on_IVsProject_object.md)
   - [The Project Lock](overview/project_lock.md)
