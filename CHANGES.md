@@ -3,7 +3,7 @@ Changes
 **Visual Studio Next**
 * 15.0.183.53925
   * Targets Visual Studio Next Preview
-  * Breaking changes
+  * [Breaking changes](doc/overview/breaking_changes_visual_studio_next.md)
   * `Project Tree Modifier extension` item template was replaced by `Project Tree Properties Provider extension`
   * Other fixes and improvements:
     * [#81](https://github.com/Microsoft/VSProjectSystem/issues/81) - Can't override default Xaml rules; build fails when changing project type to Class Library
