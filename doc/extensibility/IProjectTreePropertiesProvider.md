@@ -7,8 +7,8 @@
 **Scope:** UnconfiguredProject
 
 The `IProjectTreePropertiesProvider` interface can be exported into the 
-`UnconfiguredProject` scope to apply cosmetic changes to a project tree 
-or one of its nodes. `IProjectTreePropertiesProvider.CalculatePropertyValues` is called back
+`UnconfiguredProject` scope to customize some properties of a project tree node. 
+`IProjectTreePropertiesProvider.CalculatePropertyValues` is called back
 for every visible and non-visible node in the tree.
 
 This allows you to, for example, set the icon on 
@@ -45,9 +45,8 @@ You can also set the icons on specific source items that are may be unique to yo
     }
 ```
 
-Do NOT use this to modify the structure of the tree. Adding, removing, or
-moving nodes in the tree in a modifier will most likely cause malfunctions
-in the project system. 
+Do NOT use this to modify some structural flags of the tree. For example, marking a file item
+to be a folder will cause malfunctions in the project system. 
 
 You can create an `IProjectTreePropertiesProvider` export using the "Project Tree
 Modifier extension" item template included in the CPS SDK.
