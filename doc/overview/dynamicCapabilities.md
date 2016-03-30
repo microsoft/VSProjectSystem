@@ -1,22 +1,22 @@
-Dynamic Capabilities
+Dynamic Capabilities - Visual Studio Next
 ====================
 
 Project capabilities are the recommended way to determine the type, platform,
 and features of a project. In the modern world, features of a project can change over the time.
-For example, when a NuGet package is added.  In the next version of the Visual Studio,
+For example, when a NuGet package is added.  In the Visual Studio Next,
 the CPS has a built-in infrastructure to support capabilities of a project to be changed without
 reloading the project.
 
-This infrastruture will eventually allow design time experience of
-a project adjusted dynamically based on features/NuGet packages being used in the project.
-For example, WPF features can be turned on, only the project is referencing WPF related packages,
-instead of basing on which template is used to create the project.
+This infrastruture will eventually allow the design time experience of
+a project to be adjusted dynamically based on features/NuGet packages being used in the project.
+For example, WPF features can be turned on, only because the project references WPF related packages,
+instead of depending on which template was used when the project was created.
  
 
 Capabilities are now coming from dataflows
 ---------------------------------------------------
-In both project and configured project level, capabilities are no longer a fixed set of strings. 
-It is now exposed as a dataflow source of `IProjectCapabilitiesSnapshot`.
+In both unconfigured project and configured project scopes, capabilities are no longer a fixed set of strings. 
+They are now exposed as a dataflow source of `IProjectCapabilitiesSnapshot`.
 
 For code which only cares about the current status of the project, it can get the current value,
 like this:
@@ -31,7 +31,7 @@ Or use a built-in extension method in CPS, which is recommended over the perviou
     project.Capabilities.Contains("SomeCapability");
 ```
 
-For who cares about capability changes, it can chain to the data source:
+To detect capability changes, you need to chain to the data source:
 
 ```csharp
     var myCapabilitiesReceiver = new ActionBlock<IProjectVersionedValue<IProjectCapabilitiesSnapshot>>(...);
@@ -39,7 +39,7 @@ For who cares about capability changes, it can chain to the data source:
 ```
 
 More often, CPS extensions are MEF components, and they import other CPS components filtered by project
-capabilities.  This still works as it is.
+capabilities. The following sample still works as before:
 
 ```csharp
         [ImportMany]
@@ -54,17 +54,17 @@ capabilities.  This still works as it is.
 ```
 
 The `DeployProviders` collection will contain a set of `IDeployProvider` filtered by the current capabilities
-of the configuredProject.  The content of the collection can change over the time. 
+of the configuredProject. The content of the collection can change over the time. 
 
-Prevent seeing capability changes in the middle of an execution
+How to prevent seeing capability changes in the middle of an execution
 ---------------------------------------------------
-When changes made to the project, just like other dataflows inside CPS.  Capabilites are being recalculated
-in the background, and published when it is ready.  Without proper protection, the content of a collection
-like the DeployProviders in the earlier sample can be changed at any moment.  It will be hard to write stable
+When changes are made to the project, just like other dataflows inside CPS, capabilites are being recalculated
+in the background, and published when it is ready. Without proper protection, the content of a collection
+like the DeployProviders in the earlier sample can change at any moment. It would be hard to write stable
 code in this environment.
 
-To prevent this, code in the project system can create a `ProjectCapabiltiesContext`, and wraps all the logic
-inside it.  Implemented as a part of `ExecutionContext`, the context will apply to methods called inside, and
+To prevent this, you can create a `ProjectCapabiltiesContext`, and wrap all the logic
+inside it. Implemented as a part of `ExecutionContext`, the context will apply to methods called inside, and
 also async tasks started inside it. 
 
 ```csharp
@@ -77,11 +77,14 @@ also async tasks started inside it.
 
 Block unsupported capabilities changes
 ---------------------------------------------------
-A project system or its extensions may not be able to handle some capabilities changes.
-Those features can register requirements through `IProjectCapabilitiesRequirementsService`.
-If new set of capabilities violates any of those rules, it will force to reload the project.
+A project system or its extensions may not be able to handle some capabilities changes,
+and may want to trigger the project to be reloaded in that case.
+That can be done by registering requirements through `IProjectCapabilitiesRequirementsService`.
+If new set of capabilities violates any of those rules, it will force to reload the project automatically.
 
-An easy way to register requirements is through a `ProjectCapabilitiesContext`.
+An easy way to register requirements is through creating a `ProjectCapabilitiesContext`.  The following
+sample will register capabilities requirements to ensure the result of `DeployProviders` stays unchanged
+for the project in the current session:
 
 ```csharp
     List<IDeployProvider> effectiveProviders;
@@ -92,10 +95,6 @@ An easy way to register requirements is through a `ProjectCapabilitiesContext`.
         effectiveProviders = this.DeployProviders.ToList();
     }
 ```
-
-This `ProjectCapabilitiesContext` tracks the result of capabilities checks, and registers them through
-the `IProjectCapabilitiesRequirementsService` automatically.  The effective result is that it will ensure
-the result of `DeployProviders` stays unchanged for the project in the current session.   
 
 Automatically load components when a new capability is added
 ---------------------------------------------------
