@@ -1,5 +1,18 @@
 Changes
 ==========
+**Visual Studio "15"**
+Download Location: [Visual Studio Project System Exntesibility Preview](https://visualstudiogallery.msdn.microsoft.com/43691584-1f0f-46da-adaf-a07c290c1e6e)
+* 15.0.183.53925
+  * Targets [Visual Studio "15" Preview](https://www.visualstudio.com/en-us/downloads/visual-studio-next-downloads-vs)
+  * [Breaking changes](doc/overview/breaking_changes_visual_studio_next.md)
+  * `Project Tree Modifier extension` item template was replaced by `Project Tree Properties Provider extension`
+  * Other fixes and improvements:
+    * [#81](https://github.com/Microsoft/VSProjectSystem/issues/81) - Can't override default Xaml rules; build fails when changing project type to Class Library
+    * [#82](https://github.com/Microsoft/VSProjectSystem/issues/82) - Analyzers should support project.json
+    * [Connect 2293675](https://connect.microsoft.com/VisualStudio/feedback/details/2293675/cant-add-reference-to-project-created-from-an-extensibility-project-type-template-based-project) Reference Manager Dialog displays error in generated project type
+
+**Visual Studio 2015**
+Download Location: [Visual Studio Project System Exntesibility Preview](https://visualstudiogallery.msdn.microsoft.com/31e107b7-b0ce-4236-8ffa-ed35f03397b8)
 * 14.1.80.38181
   * Targets Visual Studio 2015 Update 1
 * 14.0.50721.1

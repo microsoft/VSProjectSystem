@@ -1,5 +1,7 @@
-`IProjectTreeModifier` and `IProjectTreeModifier2`
+`IProjectTreeModifier` and `IProjectTreeModifier2`- Visual Studio 2015
 ======================
+
+**Visual Studio "15":** use [IProjectTreePropertiesProvider](IProjectTreePropertiesProvider.md)
 
 **[Item template:](project_item_templates.md)** Project Tree Modifier extension
 
