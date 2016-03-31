@@ -23,7 +23,7 @@ up an instance of your object).
 
 **Visual Studio "15":**
 ```csharp
-    ProjectService projectService;
+    IProjectService projectService;
     IProjectLockService projectLockService = projectService.Services.ProjectLockService;
 ```
 
