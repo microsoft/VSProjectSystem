@@ -1,6 +1,6 @@
 Obtaining the `IProjectThreadingService`/`IThreadHandling` service
 =====================================
-**Visual Studio Next:** IProjectThreadingService
+**Visual Studio "15":** IProjectThreadingService
 
 **Visual Studio 2015:** IThreadHandling
 
@@ -12,7 +12,7 @@ VS default MEF catalog into a CPS catalog "sub-scope". Import properties
 are only 'satisfied' when MEF activated your type (not simply by `new`ing
 up an instance of your object).
 
-**Visual Studio Next:**
+**Visual Studio "15":**
 ```csharp
     [Import]
     IProjectThreadingService ProjectThreadingService { get; set; }
@@ -26,7 +26,7 @@ up an instance of your object).
 
 ### From MEF via an imperative `GetService` query
 
-**Visual Studio Next:**
+**Visual Studio "15":**
 ```csharp
     IProjectService projectService;
     IProjectThreadingService projectThreadingService = projectService.Services.ThreadingPolicy;
@@ -43,7 +43,7 @@ Where `projectService` is obtained as described in
 
 ### From a loaded project
 
-**Visual Studio Next:**
+**Visual Studio "15":**
 ```csharp
     IVsBrowseObjectContext context;
     IProjectThreadingService projectThreadingService = context.UnconfiguredProject.ProjectService.Services.ThreadingPolicy;

@@ -10,7 +10,7 @@ Important:
 violate [threading rule #2](3_threading_rules.md) and will often lead
 to deadlocks.**
 
-**Visual Studio Next:** `IProjectThreadingService.JoinableTaskFactory`
+**Visual Studio "15":** `IProjectThreadingService.JoinableTaskFactory`
 
 **Visual Studio 2015:** `IThreadHandling.AsyncPump`   
 

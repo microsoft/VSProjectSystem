@@ -1,9 +1,9 @@
-Dynamic Capabilities - Visual Studio Next
+Dynamic Capabilities - Visual Studio "15"
 ====================
 
 Project capabilities are the recommended way to determine the type, platform,
 and features of a project. In the modern world, features of a project can change over the time.
-For example, when a NuGet package is added.  In the Visual Studio Next,
+For example, when a NuGet package is added. In Visual Studio "15",
 the CPS has a built-in infrastructure to support capabilities of a project to be changed without
 reloading the project.
 

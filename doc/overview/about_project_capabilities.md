@@ -86,7 +86,7 @@ It's very important that project capabilities you define fit this criteria:
   - Bad: `VB`
 - May include a version number, when necessary, but is usually discouraged.
 
-### Dynamic project capabilities in Visual Studio Next
+### Dynamic project capabilities in Visual Studio "15"
 
 Capablities of a project can be changed without reloading the project.
 Read more about [dynamic project capabilities](dynamicCapabilities.md).

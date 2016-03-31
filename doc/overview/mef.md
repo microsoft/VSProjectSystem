@@ -19,9 +19,9 @@ becomes a straightforward task, which starts creating extension classes
 through templates provided in the CPS SDK.  A typical CPS component looks 
 like this:
 
-Note: In Visual Studio Next, IProjectTreeModifier has been replaced by IProjectTreePropertiesProvider
+Note: In Visual Studio "15", IProjectTreeModifier has been replaced by IProjectTreePropertiesProvider
 
-**Visual Studio Next**
+**Visual Studio "15"**
 ```csharp
     [Export(typeof(IProjectTreePropertiesProvider))]
     [AppliesTo("MyProjectType")]

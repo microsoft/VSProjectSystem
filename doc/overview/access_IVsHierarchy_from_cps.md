@@ -11,7 +11,7 @@ await ThreadHandling.SwitchToUIThread();
 ```
 - Additional information about [ItemIds](ItemIDs.md) in CPS
 
-**Visual Studio Next:**
+**Visual Studio "15":**
 ```CSharp
 using System.ComponentModel.Composition;
 using System.IO;

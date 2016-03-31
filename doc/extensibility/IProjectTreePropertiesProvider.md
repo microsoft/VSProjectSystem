@@ -1,4 +1,4 @@
-`IProjectTreePropertiesProvider` - Visual Studio Next
+`IProjectTreePropertiesProvider` - Visual Studio "15"
 ======================
 **Visual Studio 2015:** use [IProjectTreeModifier, IProjectTreeModifier2](IProjectTreePropertiesProvider.md)
 
