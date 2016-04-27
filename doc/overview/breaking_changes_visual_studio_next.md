@@ -77,7 +77,7 @@ Old Name | New Name
 `UnconfiguredProjectAutoLoad2Attribute` | `ProjectAutoLoadAttribute`
 `OrderPrecedenceAttribute` | `OrderAttribute`
 `IThreadHandling` | `IProjectThreadingService`
-`IThreadHandling.AsyncPump` | `IProjectThreadingService.JoinableTaskFacory`
+`IThreadHandling.AsyncPump` | `IProjectThreadingService.JoinableTaskFactory`
 `IProjectTree.Capabilities` | `IProjectTree.Flags`
 `IProjectReloader.ReloadIfCapabilitiesChangedAsync` | `IProjectReloader.ReloadIfNecessaryAsync`
 
