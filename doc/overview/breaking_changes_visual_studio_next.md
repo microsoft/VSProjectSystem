@@ -84,8 +84,8 @@ Old Name | New Name
 
 ##Behavioral Changes
 
+* Dynamic capability support added. This makes capabilities a part of the data flow. More information can be found [here](dynamicCapabilities.md).
 * The contract for `ProjectAutoLoadAttribute` (previously `UnconfiguredProjectAutoLoadAttribute`) has changed from `void Initialize()` to `Task Initialize()`
-* Dynamic capability support added. This makes capabilities a part of the data flow.
 * `IProjectThreadingService.SwitchToUIThread` is now an extension method
 * `IProjectTree.Flags` is a new struct `ProjectTreeFlags` which is a hybrid of `enum` and `ImmutableHashSet<string>`. Most commonly used flags are found in `enum ProjectTreeFlags.Common`.
 * `ExportCommandGroupAttribute.Group` is now a `Guid` (formerly `string`). The constructor accepts either a string or guid.
