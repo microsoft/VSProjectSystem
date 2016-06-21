@@ -6,7 +6,7 @@ creating extensions that add new project types to Visual Studio. We welcome comm
 wish to contribute new topics or find any issues.
 
 To get started, read the [introduction][intro] while you're waiting for the [pre-requisites][prereq] to install.
- 
+
 Please file any product bugs you find on [Microsoft Connect][connect]. 
 You may file doc bugs [here][docbugs].
 
@@ -16,6 +16,8 @@ For the latest features take a look at [Changes][changes].
 
 For further information about extending Visual Studio in other ways please check out
 [VisualStudio.com/integrate][3].
+
+This project has adopted the [Microsoft Open Source Code of Conduct](https://opensource.microsoft.com/codeofconduct/). For more information see the [Code of Conduct FAQ](https://opensource.microsoft.com/codeofconduct/faq/) or contact [opencode@microsoft.com](mailto:opencode@microsoft.com) with any additional questions or comments.
 
  [1]: doc/Index.md
  [2]: http://aka.ms/vsprojectsystemextensibilityvsix
