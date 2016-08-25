@@ -11,10 +11,10 @@ exported in order to apply to different scenarios. These distinct contracts
 are described below in terms of how they should be exported:
 
 | Contract name    | Applies to MSBuild evaluation? | Applies to design-time builds? | Applies to full builds? |
-|--|--|--|--|
-| `[Export(typeof(IProjectGlobalPropertiesProvider))]` | Yes | Yes | Yes
-| `[ExportBuildGlobalPropertiesProvider(designTimeBuildProperties: false)]` | No | No | Yes
-| `[ExportBuildGlobalPropertiesProvider(designTimeBuildProperties: true)]` | No | Yes | No
+|---|:---:|:---:|:---:|
+| `[Export(typeof(IProjectGlobalPropertiesProvider))]` | Yes | Yes | Yes |
+| `[ExportBuildGlobalPropertiesProvider(designTimeBuildProperties: false)]` | No | No | Yes |
+| `[ExportBuildGlobalPropertiesProvider(designTimeBuildProperties: true)]` | No | Yes | No |
 
 If the global properties you want to set on projects never changes after your
 initial properties are determined within the scope of your exported MEF part,
