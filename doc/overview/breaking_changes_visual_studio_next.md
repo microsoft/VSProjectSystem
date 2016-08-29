@@ -90,7 +90,7 @@ Old Name | New Name
 * `IProjectTree.Flags` is a new struct `ProjectTreeFlags` which is a hybrid of `enum` and `ImmutableHashSet<string>`. Most commonly used flags are found in `enum ProjectTreeFlags.Common`.
 * `ExportCommandGroupAttribute.Group` is now a `Guid` (formerly `string`). The constructor accepts either a string or guid.
 * Implementation of `IVsProject.IsDocumentInProject` changed to return not found for items of `DP2_NonMember` and below. Previously it would return true for excluded items underneath the project directory.
-  * You can use `IVsHeirarchy.ParseCanonicalName` to check if an item is under the project directory, but may not be included.
+  * You can use `IVsHierarchy.ParseCanonicalName` to check if an item is under the project directory, but may not be included.
 * `IProjectSubscriptionService.XXXBlock` marked obsolete. Use `IProjectSubscriptionService.XXXSource.SourceBlock` instead.
 * `IProjectValueDataSource.DataSourceKey` changed from `Guid` to a new class `NamedIdentity`. This allows for naming the data source with a string.
 * `StaticGlobalPropertiesProviderBase` constructor now takes only an `IProjectCommonServices`.
