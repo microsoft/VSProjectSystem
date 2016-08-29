@@ -7,7 +7,7 @@ For example, when a NuGet package is added. In Visual Studio "15",
 the CPS has a built-in infrastructure to support capabilities of a project to be changed without
 reloading the project.
 
-This infrastruture will eventually allow the design time experience of
+This infrastructure will eventually allow the design time experience of
 a project to be adjusted dynamically based on features/NuGet packages being used in the project.
 For example, WPF features can be turned on, only because the project references WPF related packages,
 instead of depending on which template was used when the project was created.
@@ -25,7 +25,7 @@ like this:
     project.Capabilities.Current.Value.IsProjectCapabilityPresent("SomeCapability");
 ```
 
-Or use a built-in extension method in CPS, which is recommended over the pervious method:
+Or use a built-in extension method in CPS, which is recommended over the previous method:
 
 ```csharp
     project.Capabilities.Contains("SomeCapability");
@@ -63,14 +63,14 @@ in the background, and published when it is ready. Without proper protection, th
 like the DeployProviders in the earlier sample can change at any moment. It would be hard to write stable
 code in this environment.
 
-To prevent this, you can create a `ProjectCapabiltiesContext`, and wrap all the logic
+To prevent this, you can create a `ProjectCapabilitiesContext`, and wrap all the logic
 inside it. Implemented as a part of `ExecutionContext`, the context will apply to methods called inside, and
 also async tasks started inside it. 
 
 ```csharp
-    using (ProjectCapabiltiesContext.CreateContext(currentProject))
+    using (ProjectCapabilitiesContext.CreateContext(currentProject))
     {
-        // Inside a ProjectCapabiltiesContext, project.Capabilities.Contains("SomeCapability")
+        // Inside a ProjectCapabilitiesContext, project.Capabilities.Contains("SomeCapability")
         // and DeployProviders will always return the same result.
     }
 ```
@@ -88,7 +88,7 @@ for the project in the current session:
 
 ```csharp
     List<IDeployProvider> effectiveProviders;
-    using (ProjectCapabiltiesContext.CreateContext(
+    using (ProjectCapabilitiesContext.CreateContext(
         currentProject,
         DependencyManagementType.InvalidateProjectState))
     {
@@ -100,7 +100,7 @@ Automatically load components when a new capability is added
 ---------------------------------------------------
 Project systems or extensions can add `IProjectDynamicLoadComponent` through MEF. 
 When capabilities requirements are satisfied, CPS will load the component, 
-and unload it when the condition is no longer satisified.
+and unload it when the condition is no longer satisfied.
 
 ```csharp
         [Export(ExportContractNames.Scopes.UnconfiguredProject, typeof(IProjectDynamicLoadComponent))]
