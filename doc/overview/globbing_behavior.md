@@ -17,151 +17,151 @@ Solution and File Explorer.
 
 1. User creates a new ASP.net core, which includes these default globs.
 
-```xml
-<Compile Include="**\*.cs" />
+   ```xml
+   <Compile Include="**\*.cs" />
 
-<Content Include="wwwroot\**" />
+   <Content Include="wwwroot\**" />
 
-<Compile Remove="wwwroot\**\*.cs" />
-<Compile Remove="obj\**" />
-<Compile Remove="bin\**" />
-```
+   <Compile Remove="wwwroot\**\*.cs" />
+   <Compile Remove="obj\**" />
+   <Compile Remove="bin\**" />
+   ```
 
 2. User adds a *class.cs* at the project root and *script.js* file under wwwroot, via VS or File Explorer.
     * There is no change to the project file, the file automatically appears in solution Explorer.
 
-```xml
-<Compile Include="**\*.cs" />
+   ```xml
+   <Compile Include="**\*.cs" />
 
-<Content Include="wwwroot\**" />
+   <Content Include="wwwroot\**" />
 
-<Compile Remove="wwwroot\**\*.cs" />
-<Compile Remove="obj\**" />
-<Compile Remove="bin\**" />
-<!-- No project file change as all added items are covered by globs -->
-```
+   <Compile Remove="wwwroot\**\*.cs" />
+   <Compile Remove="obj\**" />
+   <Compile Remove="bin\**" />
+   <!-- No project file change as all added items are covered by globs -->
+   ```
 
 3. User excludes *class.cs*
 
-```xml
-<Compile Include="**\*.cs" />
+   ```xml
+   <Compile Include="**\*.cs" />
 
-<Content Include="wwwroot\**" />
+   <Content Include="wwwroot\**" />
 
-<Compile Remove="wwwroot\**\*.cs" />
-<Compile Remove="obj\**" />
-<Compile Remove="bin\**" />
+   <Compile Remove="wwwroot\**\*.cs" />
+   <Compile Remove="obj\**" />
+   <Compile Remove="bin\**" />
 
-<Compile Remove="class.cs" /> <!-- explicit removal added -->
-```
+   <Compile Remove="class.cs" /> <!-- explicit removal added -->
+   ```
 
 4. User includes *class.cs*
 
-```xml
-<Compile Include="**\*.cs" />
+   ```xml
+   <Compile Include="**\*.cs" />
 
-<Content Include="wwwroot\**" />
+   <Content Include="wwwroot\**" />
 
-<Compile Remove="wwwroot\**\*.cs" />
-<Compile Remove="obj\**" />
-<Compile Remove="bin\**" />
+   <Compile Remove="wwwroot\**\*.cs" />
+   <Compile Remove="obj\**" />
+   <Compile Remove="bin\**" />
 
-<!-- explicit removal deleted to accommodate inclusion via glob -->
-```
+   <!-- explicit removal deleted to accommodate inclusion via glob -->
+   ```
 
 5. User adds *script.js* file at project root.
     * CPS adds an explicit include for that js file.
 
-```xml
-<Compile Include="**\*.cs" />
+   ```xml
+   <Compile Include="**\*.cs" />
 
-<Content Include="wwwroot\**" />
+   <Content Include="wwwroot\**" />
 
-<Compile Remove="wwwroot\**\*.cs" />
-<Compile Remove="obj\**" />
-<Compile Remove="bin\**" />
+   <Compile Remove="wwwroot\**\*.cs" />
+   <Compile Remove="obj\**" />
+   <Compile Remove="bin\**" />
 
-<Content Include="script.js" /> <!-- explicit include added because no glob covers it -->
-```
+   <Content Include="script.js" /> <!-- explicit include added because no glob covers it -->
+   ```
 
 6. User drags a new folder (described below) under project root in file explorerer,
 then Includes the folder through solution explorer.
     * CPS adds globs based on each extension found.
 
-Folder Contents:
-```
-New Folder
-|   1.txt
-|   2.txt
-|__ Sub Folder
-    | script.js
-```
+   Folder Contents:
+   ```
+   New Folder
+   |   1.txt
+   |   2.txt
+   |__ Sub Folder
+       | script.js
+   ```
 
-```xml
-<Compile Include="**\*.cs" />
+   ```xml
+   <Compile Include="**\*.cs" />
 
-<Content Include="New Folder\**\*.txt" /> <!-- Glob includes added based on the contents of the folder -->
-<Content Include="New Folder\**\*.js" />
-<Content Include="wwwroot\**" />
+   <Content Include="New Folder\**\*.txt" /> <!-- Glob includes added based on the contents of the folder -->
+   <Content Include="New Folder\**\*.js" />
+   <Content Include="wwwroot\**" />
 
-<Compile Remove="wwwroot\**\*.cs" />
-<Compile Remove="obj\**" />
-<Compile Remove="bin\**" />
+   <Compile Remove="wwwroot\**\*.cs" />
+   <Compile Remove="obj\**" />
+   <Compile Remove="bin\**" />
 
-<Content Include="script.js" />
-```
+   <Content Include="script.js" />
+   ```
 
 7. User excludes *New Folder*.
     * Includes are deleted, removals are added.
     * CPS determines which globs potentially cover the folder to be excluded, and adds a removal for each one.
 
-```xml
-<Compile Include="**\*.cs" />
+   ```xml
+   <Compile Include="**\*.cs" />
 
-<Content Include="wwwroot\**" />
+   <Content Include="wwwroot\**" />
 
-<Compile Remove="New Folder\**" /> <!-- CPS will add a glob remove, Compile is the only glob covering this folder -->
-<Compile Remove="wwwroot\**\*.cs" />
-<Compile Remove="obj\**" />
-<Compile Remove="bin\**" />
+   <Compile Remove="New Folder\**" /> <!-- CPS will add a glob remove, Compile is the only glob covering this folder -->
+   <Compile Remove="wwwroot\**\*.cs" />
+   <Compile Remove="obj\**" />
+   <Compile Remove="bin\**" />
 
-<Content Include="script.js" />
-```
+   <Content Include="script.js" />
+   ```
 
 8. User deletes *New Folder*.
     * New Folder is **already excluded**, so CPS does not edit the project file when deleting it
     * This means the Remove item will be left behind when deleting this folder.
 
-```xml
-<Compile Include="**\*.cs" />
+   ```xml
+   <Compile Include="**\*.cs" />
 
-<Content Include="wwwroot\**" />
+   <Content Include="wwwroot\**" />
 
-<Compile Remove="New Folder\**" /> <!-- CPS leaves this behind -->
-<Compile Remove="wwwroot\**\*.cs" />
-<Compile Remove="obj\**" />
-<Compile Remove="bin\**" />
+   <Compile Remove="New Folder\**" /> <!-- CPS leaves this behind -->
+   <Compile Remove="wwwroot\**\*.cs" />
+   <Compile Remove="obj\**" />
+   <Compile Remove="bin\**" />
 
-<Content Include="script.js" />
-```
+   <Content Include="script.js" />
+   ```
 
 9. User adds *New Folder* through solution explorer.
     * New Folder removals are deleted, folder include is added.
     * Adding through file explorer, then selecting *Include* behaves the same.
 
-```xml
-<Compile Include="**\*.cs" />
+   ```xml
+   <Compile Include="**\*.cs" />
 
-<Content Include="wwwroot\**" />
+   <Content Include="wwwroot\**" />
 
-<Compile Remove="wwwroot\**\*.cs" />
-<Compile Remove="obj\**" />
-<Compile Remove="bin\**" />
+   <Compile Remove="wwwroot\**\*.cs" />
+   <Compile Remove="obj\**" />
+   <Compile Remove="bin\**" />
 
-<Content Include="script.js" />
+   <Content Include="script.js" />
 
-<Folder Include="New Folder\" /> <!-- Remove deleted, Include added -->
-```
+   <Folder Include="New Folder\" /> <!-- Remove deleted, Include added -->
+   ```
 
 10. User deletes *wwwroot* from solution explorer.
     * Includes and Removes that start with *wwwroot* are removed.
@@ -169,195 +169,195 @@ New Folder
     prevent CPS from deleting these globs, *or* to recreate the specific globs when
     the user re-adds *wwwroot*.
 
-```xml
-<Compile Include="**\*.cs" />
-<!-- wwwroot include is deleted -->
+   ```xml
+   <Compile Include="**\*.cs" />
+   <!-- wwwroot include is deleted -->
 
-<!-- wwwroot remove is deleted because it was included at the time of deletion -->
-<Compile Remove="obj\**" />
-<Compile Remove="bin\**" />
+   <!-- wwwroot remove is deleted because it was included at the time of deletion -->
+   <Compile Remove="obj\**" />
+   <Compile Remove="bin\**" />
 
-<Content Include="script.js" />
+   <Content Include="script.js" />
 
-<Folder Include="New Folder\" />
-```
+   <Folder Include="New Folder\" />
+   ```
 
 11. User excludes *New Folder* and adds *class.cs* to that folder via File Explorer,
 then includes the folder.
     * No Compile include is added because an existing glob already covers it
 
-```xml
-<Compile Include="**\*.cs" />
-<!-- This compile glob already covers class.cs, so a new one is not added -->
+   ```xml
+   <Compile Include="**\*.cs" />
+   <!-- This compile glob already covers class.cs, so a new one is not added -->
 
-<!-- The Compile Remove="New Folder\**" is deleted to accomadate the include -->
-<Compile Remove="obj\**" />
-<Compile Remove="bin\**" />
+   <!-- The Compile Remove="New Folder\**" is deleted to accomadate the include -->
+   <Compile Remove="obj\**" />
+   <Compile Remove="bin\**" />
 
-<Content Include="script.js" />
-```
+   <Content Include="script.js" />
+   ```
 
 ## 2: Renaming and Changing ItemTypes of  Files and Folders
 -------------------------------------------------------------------
 
 1. Again, start with a new ASP.NET Core project.
 
-```xml
-<Compile Include="**\*.cs" />
+   ```xml
+   <Compile Include="**\*.cs" />
 
-<Content Include="wwwroot\**" />
+   <Content Include="wwwroot\**" />
 
-<Compile Remove="wwwroot\**\*.cs" />
-<Compile Remove="obj\**" />
-<Compile Remove="bin\**" />
-```
+   <Compile Remove="wwwroot\**\*.cs" />
+   <Compile Remove="obj\**" />
+   <Compile Remove="bin\**" />
+   ```
 
 2. User renames *wwwroot* to *root*.
     * Includes and Removes are renamed.
 
-```xml
-<Compile Include="**\*.cs" />
+   ```xml
+   <Compile Include="**\*.cs" />
 
-<Content Include="root\**" /> <!-- renamed -->
+   <Content Include="root\**" /> <!-- renamed -->
 
-<Compile Remove="root\**\*.cs" /> <!-- renamed -->
-<Compile Remove="obj\**" />
-<Compile Remove="bin\**" />
-```
+   <Compile Remove="root\**\*.cs" /> <!-- renamed -->
+   <Compile Remove="obj\**" />
+   <Compile Remove="bin\**" />
+   ```
 
 3. User has added *class.txt* to the project.
 
-```xml
-<Compile Include="**\*.cs" />
+   ```xml
+   <Compile Include="**\*.cs" />
 
-<Content Include="root\**" />
+   <Content Include="root\**" />
 
-<Compile Remove="root\**\*.cs" />
-<Compile Remove="obj\**" />
-<Compile Remove="bin\**" />
+   <Compile Remove="root\**\*.cs" />
+   <Compile Remove="obj\**" />
+   <Compile Remove="bin\**" />
 
-<Content Include="class.txt" /> <!-- explicit include added -->
-```
+   <Content Include="class.txt" /> <!-- explicit include added -->
+   ```
 
 4. User renames *class.txt* to *class.cs* and changes item type to *Compile*.
     * The compile glob now covers this item, so we remove the include.
 
-```xml
-<Compile Include="**\*.cs" />
+   ```xml
+   <Compile Include="**\*.cs" />
 
-<Content Include="root\**" />
+   <Content Include="root\**" />
 
-<!-- explicit include removed -->
+   <!-- explicit include removed -->
 
-<Compile Remove="root\**\*.cs" />
-<Compile Remove="obj\**" />
-<Compile Remove="bin\**" />
-```
+   <Compile Remove="root\**\*.cs" />
+   <Compile Remove="obj\**" />
+   <Compile Remove="bin\**" />
+   ```
 
 5. User has added, excluded, and deleted a folder *MyFolder*.
     * This results in the lingering remove item.
 
-```xml
-<Compile Include="**\*.cs" />
+   ```xml
+   <Compile Include="**\*.cs" />
 
-<Content Include="root\**" />
+   <Content Include="root\**" />
 
-<Compile Remove="MyFolder\**" /> <!-- lingering remove due to exclusion -->
-<Compile Remove="root\**\*.cs" />
-<Compile Remove="obj\**" />
-<Compile Remove="bin\**" />
-```
+   <Compile Remove="MyFolder\**" /> <!-- lingering remove due to exclusion -->
+   <Compile Remove="root\**\*.cs" />
+   <Compile Remove="obj\**" />
+   <Compile Remove="bin\**" />
+   ```
 
 6. User adds a new folder *New Folder* and adds *class.cs* to it.
     * A folder item is added then removed as *class.cs* is covered by a glob
 
-```xml
-<Compile Include="**\*.cs" />
+   ```xml
+   <Compile Include="**\*.cs" />
 
-<Content Include="root\**" />
+   <Content Include="root\**" />
 
-<!-- no change -->
-<Compile Remove="MyFolder\**" />
-<Compile Remove="root\**\*.cs" />
-<Compile Remove="obj\**" />
-<Compile Remove="bin\**" />
-```
+   <!-- no change -->
+   <Compile Remove="MyFolder\**" />
+   <Compile Remove="root\**\*.cs" />
+   <Compile Remove="obj\**" />
+   <Compile Remove="bin\**" />
+   ```
 
 7. User renames *New Folder* to *MyFolder*
     * *MyFolder* remove is deleted.
 
-```xml
-<Compile Include="**\*.cs" />
+   ```xml
+   <Compile Include="**\*.cs" />
 
-<Content Include="root\**" />
+   <Content Include="root\**" />
 
-<!-- Remove deleted to prevent contents of the folder being excluded -->
-<Compile Remove="root\**\*.cs" />
-<Compile Remove="obj\**" />
-<Compile Remove="bin\**" />
-```
+   <!-- Remove deleted to prevent contents of the folder being excluded -->
+   <Compile Remove="root\**\*.cs" />
+   <Compile Remove="obj\**" />
+   <Compile Remove="bin\**" />
+   ```
 
 ## 3: Metadata with Globbing
 ------------------------------------
 
 1. Again, start with a new ASP.NET Core project.
 
-```xml
-<Compile Include="**\*.cs" />
+   ```xml
+   <Compile Include="**\*.cs" />
 
-<Content Include="wwwroot\**" />
+   <Content Include="wwwroot\**" />
 
-<Compile Remove="wwwroot\**\*.cs" />
-<Compile Remove="obj\**" />
-<Compile Remove="bin\**" />
-```
+   <Compile Remove="wwwroot\**\*.cs" />
+   <Compile Remove="obj\**" />
+   <Compile Remove="bin\**" />
+   ```
 
 2. User adds *class.cs* and changes *Copy To Output Directory* to *Copy Always*
     * CPS adds an Update item for class.cs since it is from a glob
 
-```xml
-<Compile Include="**\*.cs" />
+   ```xml
+   <Compile Include="**\*.cs" />
 
-<Content Include="wwwroot\**" />
+   <Content Include="wwwroot\**" />
 
-<Compile Remove="wwwroot\**\*.cs" />
-<Compile Remove="obj\**" />
-<Compile Remove="bin\**" />
+   <Compile Remove="wwwroot\**\*.cs" />
+   <Compile Remove="obj\**" />
+   <Compile Remove="bin\**" />
 
-<Compile Update="class.cs"> <!-- Update item added -->
-    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-</Compile>
-```
+   <Compile Update="class.cs"> <!-- Update item added -->
+       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+   </Compile>
+   ```
 
 3. User sets *Copy To Output Directory* back to default
     * CPS deletes update item
 
-```xml
-<Compile Include="**\*.cs" />
+   ```xml
+   <Compile Include="**\*.cs" />
 
-<Content Include="wwwroot\**" />
+   <Content Include="wwwroot\**" />
 
-<Compile Remove="wwwroot\**\*.cs" />
-<Compile Remove="obj\**" />
-<Compile Remove="bin\**" />
-<!-- update item deleted -->
-```
+   <Compile Remove="wwwroot\**\*.cs" />
+   <Compile Remove="obj\**" />
+   <Compile Remove="bin\**" />
+   <!-- update item deleted -->
+   ```
 
 4. User sets *Copy To Output Directory* to *Copy Always* again, then excludes class.cs
     * Update item is deleted, removal is added
 
-```xml
-<Compile Include="**\*.cs" />
+   ```xml
+   <Compile Include="**\*.cs" />
 
-<Content Include="wwwroot\**" />
+   <Content Include="wwwroot\**" />
 
-<Compile Remove="wwwroot\**\*.cs" />
-<Compile Remove="obj\**" />
-<Compile Remove="bin\**" />
-<!-- no update item -->
+   <Compile Remove="wwwroot\**\*.cs" />
+   <Compile Remove="obj\**" />
+   <Compile Remove="bin\**" />
+   <!-- no update item -->
 
-<Compile Remove="class.cs" />
-```
+   <Compile Remove="class.cs" />
+   ```
 
 # General Behavior
 
