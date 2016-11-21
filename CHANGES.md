@@ -6,11 +6,11 @@ Download Location: [Visual Studio Project System Extensibility Preview](https://
 * 15.0.594.65117
   * Targets [Visual Studio 2017 RC](https://www.visualstudio.com/vs/visual-studio-2017-rc/)
   * [.Net Core project](https://github.com/dotnet/roslyn-project-system) is built on top of CPS
-      * App Designer support
-      * Nuget support
-      * Editing the project file is now possible without unloading the project
+    * App Designer support
+    * Nuget support
+    * Editing the project file is now possible without unloading the project
   * [File globbing support](doc/overview/globbing_behavior.md)
-      * Dynamic Depend Upon Items
+    * Dynamic Depend Upon Items
   * Folder Properties
   * Extending Xaml rules
 * 15.0.183.53925
