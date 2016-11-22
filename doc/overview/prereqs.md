@@ -5,8 +5,10 @@ Install these prequisites before writing project system extensions:
 
 **Visual Studio 2017**
 
-1. Install [Visual Studio 2017 RC](https://www.visualstudio.com/vs/visual-studio-2017-rc/)
-2. Install Visual Sdutio 2017 RC SDK
+1. Install [Visual Studio 2017 RC](https://www.visualstudio.com/vs/visual-studio-2017-rc/). Check the following workloads:
+ * .Net Desktop development
+ * Visual Studio extension development
+ * .Net Core and Docker - project system based on CPS
 3. Install [Visual Studio Project System Extensibility Preview](https://visualstudiogallery.msdn.microsoft.com/43691584-1f0f-46da-adaf-a07c290c1e6e)
 
 **Visual Studio 2015**
