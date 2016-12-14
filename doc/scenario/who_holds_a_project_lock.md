@@ -49,6 +49,7 @@ answer.
     18cec5a0    0.9MB         18dd7084 System.Byte[]
     18dd9090    1.2MB         18f04ea4 System.Byte[]
     18f434bc    3.6MB         192d5ff4 System.Byte[]
+    
     0:000> !dumpheap -mt 62a04af0        
      Address       MT     Size
     0bf21e20 62a04af0      116     
@@ -64,6 +65,7 @@ answer.
     18cec5a0    0.9MB         18dd7084 System.Byte[]
     18dd9090    1.2MB         18f04ea4 System.Byte[]
     18f434bc    3.6MB         192d5ff4 System.Byte[]
+    
     0:000> !do 0bf21e20
     Name:        Microsoft.VisualStudio.ProjectSystem.ProjectLockService
     MethodTable: 62a04af0
@@ -91,6 +93,7 @@ answer.
     6d4d2928  4000026       24 ...tudio.Threading]]  0 instance 0bf22948
     waitingWriters
     …
+    
     0:000> !do 0bf228a8 
     Name:        System.Collections.Generic.HashSet`1[[Microsoft.VisualStudio.Threading.AsyncReaderWriterLock+Awaiter,
     Microsoft.VisualStudio.Threading]]
@@ -116,6 +119,7 @@ answer.
     m_version
     71893580  40006fd       10 ...SerializationInfo  0 instance 00000000
     m_siInfo
+    
     0:000> !DumpArray /d 0c55b3b0
     Name:        System.Collections.Generic.HashSet`1+Slot[[Microsoft.VisualStudio.Threading.AsyncReaderWriterLock+Awaiter,
     Microsoft.VisualStudio.Threading]][]
@@ -131,8 +135,9 @@ answer.
     [4] 0c55b3e8
     [5] 0c55b3f4
     [6] 0c55b400
-    I then enumerate the array looking for valid dictionary entries. Because
-    each entry is a value-type, I have to use the appropriate syntax:
+    
+I then enumerate the array looking for valid dictionary entries. Because each entry is a value-type, I have to use the appropriate syntax:
+
     0:000> !dumpvc 6d51e0f4    0c55b3b8
     Name:        System.Collections.Generic.HashSet`1+Slot[[Microsoft.VisualStudio.Threading.AsyncReaderWriterLock+Awaiter,
     Microsoft.VisualStudio.Threading]]
@@ -178,8 +183,9 @@ answer.
     71897aa8  40000b6       b4 ...endOrPostCallback  0   shared   static
     CS$<>9__CachedAnonymousMethodDelegate1
         >> Domain:Value  013e8c60:0bf3376c <<
-    So I've found my awaiter that represents the lock. I need to find out who
-    is holding it. 
+
+So I've found my awaiter that represents the lock. I need to find out who is holding it.
+
     0:000> !gcroot 11b8cfb0
     Thread 1594:
         0113e140 6d5068dc Microsoft.VisualStudio.Threading.JoinableTaskFactory.WaitSynchronouslyCore(System.Threading.Tasks.Task)
@@ -401,18 +407,19 @@ answer.
     (dependent handle)
                 ->  11b8cfb0 Microsoft.VisualStudio.Threading.AsyncReaderWriterLock+Awaiter
 
-    Found 3 unique roots (run '!GCRoot -all' to see all roots).
+Found 3 unique roots (run '!GCRoot -all' to see all roots).
 
-    The gcroot #1 is the one pointed to by an ExecutionContext, so that is
-    where we can look to find the async state machine that is doing work that
-    is holding the upgradeable read project lock. 
-    Gcroot #3 isn't interesting because it's redundant with #2 (rooted by the
-    same thread).
-    What's also interesting here is gcroot #2, in that it's a very short chain
-    and tells me there is actually a background thread that holds some relevant
-    code. That suggests this might be a simple deadlock due to a violation of
-    threading rule #1. Using the "Processes and Threads" window, I translate
-    thread 1344 to thread #016 and I switch to it to print the callstack. 
+The gcroot #1 is the one pointed to by an ExecutionContext, so that is
+where we can look to find the async state machine that is doing work that
+is holding the upgradeable read project lock. 
+Gcroot #3 isn't interesting because it's redundant with #2 (rooted by the
+same thread).
+
+What's also interesting here is gcroot #2, in that it's a very short chain
+and tells me there is actually a background thread that holds some relevant
+code. That suggests this might be a simple deadlock due to a violation of
+threading rule #1. Using the "Processes and Threads" window, I translate
+thread 1344 to thread #016 and I switch to it to print the callstack. 
 
     0:000> ~16s
     eax=00000001 ebx=00000001 ecx=00000000 edx=00000000 esi=00000001 edi=00000001
@@ -421,6 +428,7 @@ answer.
     cs=0023  ss=002b  ds=002b  es=002b  fs=0053  gs=002b             efl=00000206
     ntdll!NtWaitForMultipleObjects+0xc:
     7763aaac c21400          ret     14h
+    
     0:016> k
      # ChildEBP RetAddr  
     00 10ebe1b4 75660927 ntdll!NtWaitForMultipleObjects+0xc
@@ -595,17 +603,17 @@ answer.
     41 10ebfb54 00000000 ntdll!_RtlUserThreadStart+0x1b [d:\9151\minkernel\ntdll\rtlstrt.c
     @ 939]
 
-    Sure enough, we have a call that synchronously blocking piece of code in
-    ProjectSnapshotService.ProjectSnapshot that isn't using the JoinableTaskFactory.
-    This is a really bad thing and can lead to deadlocks (perhaps this very
-    one!). We should fix this.
+Sure enough, we have a call that synchronously blocking piece of code in
+ProjectSnapshotService.ProjectSnapshot that isn't using the JoinableTaskFactory.
+This is a really bad thing and can lead to deadlocks (perhaps this very
+one!). We should fix this.
 
-    Let's move on to find who actually acquired the project upgradeable
-    read lock though. From GCRoot#2, which is conveniently short, we see
-    ConfiguredProjectCache.GetValueSlowAsync is holding it. We learn by code
-    inspection that this method may take either an upgradeable read or a read
-    lock. Let's inspect the fields of this object to determine which one it
-    would have taken to verify. Copied from above, the gcroot is:
+Let's move on to find who actually acquired the project upgradeable
+read lock though. From GCRoot#2, which is conveniently short, we see
+ConfiguredProjectCache.GetValueSlowAsync is holding it. We learn by code
+inspection that this method may take either an upgradeable read or a read
+lock. Let's inspect the fields of this object to determine which one it
+would have taken to verify. Copied from above, the gcroot is:
 
         10ebea40 62996a0a Microsoft.VisualStudio.ProjectSystem.ConfiguredProjectCache`1+<GetValueSlowAsync>d__1[[System.__Canon,
     mscorlib]].MoveNext() [f:\dd\vsproject\cps\components\implementations\ConfiguredProjectCache.cs
@@ -645,6 +653,7 @@ answer.
     <>u__$awaiter4
     718a6818  40006e4       40 ...Canon, mscorlib]]  1 instance 11b8d064
     <>u__$awaiter5
+    
     0:016> !DumpObj /d 11b8cf60
     Name:        Microsoft.VisualStudio.ProjectSystem.ConfiguredProjectCache`1[[System.ComponentModel.ICustomTypeDescriptor,
     System]]
