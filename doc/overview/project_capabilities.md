@@ -59,6 +59,7 @@ known to declare the capability.
 | DeploymentProject | Indicates a project that is capable of provisioning Azure resources using Azure Resource Manager that will create an environment for an application.
 | FabricApplication | Indicates a project that represents a Service Fabric application.
 | LSJavaScript.v45 | Indicates a project that represents a LightSwitch JavaScript V4.5 project.
+| UnitTestContainer | The project may contain unit tests. 
 
 ## Summary table
 
