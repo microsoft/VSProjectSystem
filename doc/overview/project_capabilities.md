@@ -34,6 +34,7 @@ known to declare the capability.
 | AssemblyReferences | Indicates that the project supports assembly references.
 | COMReferences | Indicates that the project supports COM references.
 | ProjectReferences | Indicates that the project supports project references.
+| PackageReferences | Indicates that the project supports package references. For eg: C# projects use PackageReference items for NuGet package references.
 | SDKReferences | Indicates that the project supports SDK references.
 | SharedProjectReferences | Indicates that the project supports references to Shared Projects.
 | WinRTReferences | Indicates that the project references WinRT libraries.
@@ -60,6 +61,20 @@ known to declare the capability.
 | FabricApplication | Indicates a project that represents a Service Fabric application.
 | LSJavaScript.v45 | Indicates a project that represents a LightSwitch JavaScript V4.5 project.
 | FolderPublish | Indicates a project that is capable of publishing the deployment artifacts to a folder.
+| UnitTestContainer | The project may contain unit tests. 
+| AppDesigner | Indicates that the project uses the app designer for managing project properties.
+| HandlesOwnReload | Indicates that the project can handle a reload by itself (potentially smartly) without the solution doing a full reload of the project when the project file changes on disk.
+| UseFileGlobs | Indicates that the project file can include files using MSBuild file globbing patterns.
+| EditAndContinue | Indicates that the project supports the edit and continue debugging feature.
+| OpenProjectFile | Indicates that the project is capable of handling the project file being edited live in an IDE while the project is already loaded.
+| DependenciesTree | Indicates that the project supports the dependencies node in Visual Studio.
+| LaunchProfiles | Indicates that the project supports multiple profiles for debugging.
+| ReferenceManagerAssemblies | Indicates that the project will show the Assemblies tab in the Reference manager dialog in Visual Studio.
+| ReferenceManagerBrowse | Indicates that the project will show the Browse button in the Reference manager dialog in Visual Studio.
+| ReferenceManagerCOM | Indicates that the project will show the COM tab in the Reference manager dialog in Visual Studio.
+| ReferenceManagerProjects | Indicates that the project will show the Projects tab in the Reference manager dialog in Visual Studio.
+| ReferenceManagerSharedProjects | Indicates that the project will show the Shared Projects tab in the Reference manager dialog in Visual Studio.
+| ReferenceManagerWinRT | Indicates that the project will show the WinRT tab in the Reference manager dialog in Visual Studio.
 
 ## Summary table
 
