@@ -74,6 +74,8 @@ known to declare the capability.
 | ReferenceManagerProjects | Indicates that the project will show the Projects tab in the Reference manager dialog in Visual Studio.
 | ReferenceManagerSharedProjects | Indicates that the project will show the Shared Projects tab in the Reference manager dialog in Visual Studio.
 | ReferenceManagerWinRT | Indicates that the project will show the WinRT tab in the Reference manager dialog in Visual Studio.
+| NoGeneralDependentFileIcon | Indicates that dependent files should have their own corresponding icons instead of generic one
+
 
 ## Summary table
 
