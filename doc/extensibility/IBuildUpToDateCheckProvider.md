@@ -6,7 +6,7 @@ How to add a fast up-to-date check?
 Applicable exports of this class are called as part of CPS' implementation of 
 `IVsBuildableProjectCfg.StartUpToDateCheck` ([MSDN](https://msdn.microsoft.com/en-us/library/microsoft.visualstudio.shell.interop.ivsbuildableprojectcfg.startuptodatecheck.aspx)).
 
-CPS filters the up-to-date check providers into 2 categories: before draining [critical tasks](https://github.com/Microsoft/VSProjectSystem/blob/b70104c4781749369c995a48f83e64607a0c6594/doc/scenario/defer_critical_project_operations.md),
+CPS filters the up-to-date check providers into 2 categories: before draining [critical tasks](../scenario/defer_critical_project_operations.md),
 and after. With each set being called before or after the draining of critical tasks. If you do not
 depend on critical tasks it is recommended to set this to `true` so CPS can avoid unnecessary
 draining of critical tasks.
