@@ -1,7 +1,7 @@
 ﻿3 Threading Rules
 =================
 
-The 3 Threading Rules can now be found at [Microsoft/vs-threading/doc/threading_rules.md](Microsoft/vs-threading/doc/threading_rules.md)
+The 3 Threading Rules can now be found at [Microsoft/vs-threading/doc/threading_rules.md](https://github.com/Microsoft/vs-threading/blob/master/doc/threading_rules.md)
 
 
 CPS Threading
@@ -12,7 +12,7 @@ CPS Threading
 When calling into CPS specific API's (anything underneath the `Microsoft.VisualStudio.ProjectSystem` namespace) you __must__
 use the `IProjectThreadingService.JoinableTaskFactory` instead of the Shell `ThreadHelper.JoinableTaskFactory`. This is
 because the CPS JTF has additional knowledge to mitigate deadlocks from project lock and UI thread contentions.
-[Obtaining the IProjectThreadingService.](../automation/obtainging_the_IThreadHandling_service.md)
+[Obtaining the IProjectThreadingService.](../automation/obtaining_the_IThreadHandling_service.md)
 
 
 ### `IVs*` Interfaces From `Microsoft.VisualStudio.ProjectSystem`
