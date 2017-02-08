@@ -1,13 +1,13 @@
 Threading model
 ===============
 
-CPS requires strict adherence to the rules and guidelines at [3 Threading
-Rules](3_threading_rules.md)
+CPS requires strict adherence to the rules and guidelines at [Threading
+Rules](threading_rules.md)
 
 Important: 
 
 **Do not call Task.Wait() or Task.Result in your code because these
-violate [threading rule #2](3_threading_rules.md) and will often lead
+violate [threading rule #2](https://github.com/Microsoft/vs-threading/blob/master/doc/threading_rules.md#2-when-an-implementation-of-an-already-shipped-public-api-must-call) and will often lead
 to deadlocks.**
 
 **Visual Studio "15":** `IProjectThreadingService.JoinableTaskFactory`

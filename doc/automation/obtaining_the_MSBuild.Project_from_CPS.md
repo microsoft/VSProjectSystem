@@ -23,7 +23,7 @@ Obtaining the MSBuild.Project from CPS
 Note that it's important that you use `await`. Do not use `Task.Result` or
 `Task.Wait()` on these async methods or your code will malfunction and/or hang.
 If you must do this within a synchronous method, see [threading 
-rule #2](../overview/3_threading_rules.md).
+rule #2](https://github.com/Microsoft/vs-threading/blob/master/doc/threading_rules.md#2-when-an-implementation-of-an-already-shipped-public-api-must-call).
 
 **Please observe CPS [project locking rules](../overview/project_lock.md) by not
 retaining any references to MSBuild objects beyond the scope of the lock and
