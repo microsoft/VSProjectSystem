@@ -124,6 +124,6 @@ that give more information, and the name of the async method)
     18825064 Microsoft.VisualStudio.ProjectSystem.VS.Implementation.Package.ProjectNode+<>c__DisplayClasscd+<<AddItem>b__cc>d__cf
     188251c8 Microsoft.VisualStudio.ProjectSystem.VS.Implementation.Package.ProjectNode+<>c__DisplayClass1b7+<<HrInvoke>b__1b5>d__1ba
 
- [Rule1]: https://github.com/Microsoft/VSProjectSystem/blob/master/doc/overview/3_threading_rules.md#1-if-a-method-has-certain-thread-apartment-requirements-sta-or-mta-it-must-either
+ [Rule1]: https://github.com/Microsoft/VSProjectSystem/blob/master/doc/overview/threading_rules.md#1-if-a-method-has-certain-thread-apartment-requirements-sta-or-mta-it-must-either
  [SwitchToMainThreadAsync]: https://github.com/Microsoft/VSProjectSystem/blob/async-hang-debugging/doc/overview/cookbook.md#how-to-switch-to-the-ui-thread
  

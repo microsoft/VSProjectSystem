@@ -22,7 +22,7 @@ VS Project System Documentation
     - [ItemIDs](overview/ItemIDs.md)
   - [Responsive design](overview/responsive_design.md)
 - [Threading model](overview/threading_model.md)
-  - [3 Threading Rules](overview/3_threading_rules.md)
+  - [Threading Rules](overview/threading_rules.md)
   - [CookBook](overview/cookbook.md)
 - Clients / Automation
   - [Detect whether a project is a CPS project](automation/detect_whether_a_project_is_a_CPS_project.md)
