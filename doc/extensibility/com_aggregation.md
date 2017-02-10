@@ -31,7 +31,7 @@ below.
 ``` CSharp
 [Export(ExportContractNames.VsTypes.ProjectNodeComExtension)]
 [AppliesTo(MyCapability)]
-[Order(1)] // Higher the better
+[Order(1)] // Higher values win, but put yours low as possible
 [ComServiceIid(typeof(IVsComInterface))]
 internal class MyComImplementation : IVsComInterface
 {
