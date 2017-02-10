@@ -30,7 +30,7 @@ below.
 
 ``` CSharp
 [Export(ExportContractNames.VsTypes.ProjectNodeComExtension)]
-[AppliesTo(MyCapability)]
+[AppliesTo(MyCapability)] // MUST be a static capability from the unconfigured scope
 [Order(1)] // Higher values win, but put yours low as possible
 [ComServiceIid(typeof(IVsComInterface))]
 internal class MyComImplementation : IVsComInterface
