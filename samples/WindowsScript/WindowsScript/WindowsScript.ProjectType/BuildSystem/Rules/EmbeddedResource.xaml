@@ -1,0 +1,12 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<!--Copyright, Microsoft Corporation, All rights reserved.-->
+<Rule
+	Name="EmbeddedResource"
+	DisplayName="Embedded Resource"
+	PageTemplate="generic"
+	Description="Embedded resources"
+	xmlns="http://schemas.microsoft.com/build/2009/properties">
+	<Rule.DataSource>
+		<DataSource Persistence="ProjectFile" HasConfigurationCondition="False" ItemType="EmbeddedResource" />
+	</Rule.DataSource>
+</Rule>

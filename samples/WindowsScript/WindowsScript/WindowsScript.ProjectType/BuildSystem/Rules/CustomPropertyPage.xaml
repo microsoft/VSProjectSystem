@@ -1,0 +1,16 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<!--Copyright, Microsoft Corporation, All rights reserved.-->
+<Rule
+	Name="MyCustomPropertyPage"
+	DisplayName="My Custom page"
+	PageTemplate="SampleCustomPageTemplate"
+	Description="General"
+	xmlns="http://schemas.microsoft.com/build/2009/properties">
+	<Rule.Categories>
+		<Category Name="General" DisplayName="General" Description="General" />
+	</Rule.Categories>
+	<Rule.DataSource>
+		<DataSource Persistence="ProjectFile" Label="Configuration" />
+	</Rule.DataSource>
+  <StringProperty Name="SomeProperty" DisplayName="Some Property" />
+</Rule>
