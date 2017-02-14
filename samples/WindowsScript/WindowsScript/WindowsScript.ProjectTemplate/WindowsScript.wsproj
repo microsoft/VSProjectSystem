@@ -1,46 +1,9 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup Label="Globals">
-      <CustomProjectExtensionsPath>$(LocalAppData)\CustomProjectSystems\WindowsScript\</CustomProjectExtensionsPath>
-  </PropertyGroup>
-  
-  <Import Project="$(CustomProjectExtensionsPath)CustomProject.Default.props" />
-
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'" Label="Configuration">
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'" Label="Configuration">
+    <CustomProjectExtensionsPath>$(LocalAppData)\CustomProjectSystems\WindowsScript\</CustomProjectExtensionsPath>
   </PropertyGroup>
 
   <Import Project="$(CustomProjectExtensionsPath)CustomProject.props" />
-    
-  <PropertyGroup>
-    <SchemaVersion>2.0</SchemaVersion>
-  </PropertyGroup>
-  <ItemGroup>
-    <Reference Include="mscorlib" />
-    <Reference Include="System" />
-    <Reference Include="System.Core" />
-    <Reference Include="System.Data" />
-    <Reference Include="System.Data.DataSetExtensions" />
-    <Reference Include="System.Xml" />
-    <Reference Include="System.Xml.Linq" />
-  </ItemGroup>
-  
-  <ItemGroup>
-    <Compile Include="Properties\AssemblyInfo.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Program.cs">
-      <SubType>Code</SubType>
-    </Compile>
-  </ItemGroup>
-
-  <Import Project="$(CustomProjectExtensionsPath)CustomProjectCs.targets" />
-
-  <!-- This next bit is required unless the macro used to Import your targets is defined in an MSBuild toolset. -->
-  <ProjectExtensions>
-    <ProjectCapabilities>
-      <ProjectConfigurationsDeclaredAsItems />
-    </ProjectCapabilities>
-  </ProjectExtensions>
+  <Import Project="$(CustomProjectExtensionsPath)CustomProject.targets" />
 </Project>

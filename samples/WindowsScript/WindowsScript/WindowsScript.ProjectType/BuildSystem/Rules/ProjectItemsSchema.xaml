@@ -4,6 +4,12 @@
     xmlns="http://schemas.microsoft.com/build/2009/properties">
 
     <ContentType
+        Name="Script"
+        DisplayName="Script file"
+        ItemType="Script">
+    </ContentType>
+
+    <ContentType
         Name="Text"
         DisplayName="Text file"
         ItemType="None">
@@ -33,6 +39,7 @@
         ItemType="Compile">
     </ContentType>
 
+    <ItemType Name="Script" DisplayName="Script"/>
     <ItemType Name="Compile" DisplayName="C# compiler"/>
     <ItemType Name="EmbeddedResource" DisplayName="Embedded Resource"/>
     <ItemType Name="None" DisplayName="Does not participate in build"/>
@@ -49,7 +56,7 @@
     <FileExtension Name=".bmp" ContentType="BMP"/>
     <FileExtension Name=".ico" ContentType="ICO"/>
     <FileExtension Name=".cur" ContentType="CUR"/>
-    <FileExtension Name=".vbS" ContentType="Script"/>
+    <FileExtension Name=".vbs" ContentType="Script"/>
     <FileExtension Name=".jS" ContentType="Script"/>
     <FileExtension Name=".xml" ContentType="XML"/>
     <FileExtension Name=".cs" ContentType="CSharpFile"/>

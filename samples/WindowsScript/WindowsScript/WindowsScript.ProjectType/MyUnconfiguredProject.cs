@@ -42,7 +42,7 @@ namespace WindowsScript
         /// <remarks>
         /// This value should be kept in sync with the capability as actually defined in your .targets.
         /// </remarks>
-        internal const string UniqueCapability = "WindowsScript";
+        internal const string UniqueCapability = "WindowsScriptSample";
 
         internal const string Language = "WindowsScript";
 
