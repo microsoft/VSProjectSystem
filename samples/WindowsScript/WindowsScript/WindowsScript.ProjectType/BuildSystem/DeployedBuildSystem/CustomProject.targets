@@ -16,6 +16,7 @@
     <ProjectCapability Include="WindowsScriptSample" />
     <ProjectCapability Include="UseFileGlobs"/>
     <ProjectCapability Include="OpenProjectFile"/>
+    <ProjectCapability Include="HandlesOwnReload"/>
     <ProjectCapability Include="ProjectConfigurationsDeclaredAsItems"/>
   </ItemGroup>
 
