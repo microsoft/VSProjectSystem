@@ -19,7 +19,7 @@
       These are the items which will show up when a new project is created using the custom project system.
       Items referenced in here must also be referenced in the project file.
       -->
-      <ProjectItem ReplaceParameters="true" OpenInEditor="true">Start.js</ProjectItem>
+      <ProjectItem OpenInEditor="true">Start.js</ProjectItem>
     </Project>
   </TemplateContent>
 </VSTemplate>

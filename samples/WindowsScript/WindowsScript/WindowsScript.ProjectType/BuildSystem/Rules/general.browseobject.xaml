@@ -9,16 +9,9 @@
 	<Rule.Categories>
 		<Category Name="General" DisplayName="General" Description="General" />
 	</Rule.Categories>
-	<Rule.DataSource>
-		<DataSource Persistence="ProjectFile" Label="Configuration" HasConfigurationCondition="false" SourceOfDefaultValue="BeforeContext"/>
-	</Rule.DataSource>
-
-    <!--Workaround: Disabled as bug in the CPS runtime prevents this property from being refreshed-->
-    <!--<StringProperty Name="StartItem" DisplayName="Start Item">
-        <StringProperty.DataSource>
-            <DataSource Persistence="ProjectFile" Label="Globals" HasConfigurationCondition="False" SourceOfDefaultValue="AfterContext"/>
-        </StringProperty.DataSource>
-    </StringProperty>-->
+    <Rule.DataSource>
+        <DataSource Persistence="ProjectFile" Label="Configuration" HasConfigurationCondition="false" />
+    </Rule.DataSource>
 
     <StringProperty Name="FileName" DisplayName="Project File" ReadOnly="True">
         <StringProperty.DataSource>
