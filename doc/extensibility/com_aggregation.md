@@ -1,4 +1,5 @@
 # COM Aggregation
+#### Available: Visual Studio 2017
 
 In Visual Studio 2017 a MEF-based extension for COM aggregation has been added to CPS.
 This extension point should be used only when all other CPS extension points are
@@ -17,9 +18,9 @@ below.
 
 ## Limitations
 
-1) __Cannot__ override existing CPS implementations of COM interfaces.
+1. __Cannot__ override existing CPS implementations of COM interfaces.
    It is only for adding __new__ COM interfaces to the CPS `IVsProject`.
-2) Does not work with dynamic capabilities. Any export of this extension
+2. Does not work with dynamic capabilities. Any export of this extension
    must have the capabilities in its `[AppliesTo]` be static. CPS will
    reload the project, or even throw, if it the set of these exports ever
    changes in the lifespan of a loaded project. This means that any
