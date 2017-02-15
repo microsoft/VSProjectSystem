@@ -26,7 +26,8 @@ The sample doesn't currently provide any item templates. To create new files, yo
 - create new script files (.vbs or .js) in Windows Explorer; the project includes automatically all *.js and *.vbs located under the project cone
 
 ### Specifying a different script file to run
-Project uses a custom property `StartItem` to specify which script file to run. The default value is `Start.js`. 
+Project uses a custom property `StartItem` to specify which script file to run. The default value is `Start.js`.
+
 1. Open the Property Pages dialog (right click on the project node -> `Properties`)
 2. Set the value of `Start Item` property (located under `Common Properties` -> `General`) to specify the file you would like to run (e.g. `Foo.js`)
 
@@ -50,9 +51,10 @@ They can be set from the project properties dialog (`Configuration Properties` -
   ```xml
   <Import Project="$(MSBuildProjectFullPath).user" Condition="Exists('$(MSBuildProjectFullPath).user')" /> 
   ```
+
 These properties are consumed in 2 different places:
 - Debug Launch Provider (F5 and Ctrl F5 from Visual Studio) - see `ScriptDebuggerLaunchProvider.cs`
-- The `Run` Target - that can be used from MSBuild - see `CustomProject.targets`
+- The `Run` Target - that can be used from MSBuild - see `CustomProject.targets` using
   ```
   MSBuild /t:Run
   ```
