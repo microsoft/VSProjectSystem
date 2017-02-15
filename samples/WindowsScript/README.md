@@ -48,6 +48,7 @@ They can be set from the project properties dialog (`Configuration Properties` -
 ### Custom properties
 - Default values are defined in the .props file. This allows them to be used from msbuild when the value is not specified.
 - `.user` file is imported in .targets for consumption by msbuild
+
   ```xml
   <Import Project="$(MSBuildProjectFullPath).user" Condition="Exists('$(MSBuildProjectFullPath).user')" /> 
   ```
