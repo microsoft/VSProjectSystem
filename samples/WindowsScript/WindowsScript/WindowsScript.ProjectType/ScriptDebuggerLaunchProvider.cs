@@ -14,15 +14,15 @@ namespace WindowsScript
     [AppliesTo(MyUnconfiguredProject.UniqueCapability)]
     public class ScriptDebuggerLaunchProvider : DebugLaunchProviderBase
     {
-        [ExportPropertyXamlRuleDefinition("WindowsScript, Version=1.0.0.0, Culture=neutral, PublicKeyToken=9be6e469bc4921f1", "XamlRuleToCode:ScriptDebugger.xaml", "Project")]
-        [AppliesTo(MyUnconfiguredProject.UniqueCapability)]
-        private object DebuggerXaml { get { throw new NotImplementedException(); } }
-
         [ImportingConstructor]
         public ScriptDebuggerLaunchProvider(ConfiguredProject configuredProject)
             : base(configuredProject)
         {
         }
+
+        [ExportPropertyXamlRuleDefinition("WindowsScript, Version=1.0.0.0, Culture=neutral, PublicKeyToken=9be6e469bc4921f1", "XamlRuleToCode:ScriptDebugger.xaml", "Project")]
+        [AppliesTo(MyUnconfiguredProject.UniqueCapability)]
+        private object DebuggerXaml { get { throw new NotImplementedException(); } }
 
         /// <summary>
         /// Gets project properties that the debugger needs to launch.
