@@ -13,16 +13,16 @@
 
   <!-- Capabilities for this project.  Conditions should be based on platform|configuration only. -->
   <ItemGroup>
-    <ProjectCapability Include="WindowsScript" />
-    <ProjectCapability Include="AssemblyReferences;COMReferences;ProjectReferences;SDKReferences" />
-    <ProjectCapability Include="AllTargetOutputGroups;VisualStudioWellKnownOutputGroups" />
-    <ProjectCapability Include="ProjectConfigurationsDeclaredAsItems" />
+    <ProjectCapability Include="WindowsScriptSample" />
+    <ProjectCapability Include="UseFileGlobs"/>
+    <ProjectCapability Include="OpenProjectFile"/>
+    <ProjectCapability Include="HandlesOwnReload"/>
+    <ProjectCapability Include="ProjectConfigurationsDeclaredAsItems"/>
   </ItemGroup>
 
   <ItemGroup>
     <PropertyPageSchema Include="
                         $(MSBuildThisFileDirectory)Rules\general.xaml;
-                        $(MSBuildThisFileDirectory)Rules\CustomPropertyPage.xaml;
                         ">
         <Context>Project</Context>
     </PropertyPageSchema>
@@ -44,31 +44,32 @@
     <PropertyPageSchema Include="
                         $(MSBuildThisFileDirectory)Rules\folder.xaml;
                         $(MSBuildThisFileDirectory)Rules\none.xaml;
-                        $(MSBuildThisFileDirectory)Rules\EmbeddedResource.xaml;
                         ">
       <Context>File;BrowseObject</Context>
-    </PropertyPageSchema>
-    <PropertyPageSchema Include="
-                        $(MSBuildThisFileDirectory)Rules\assemblyreference.xaml;
-                        $(MSBuildThisFileDirectory)Rules\comreference.xaml;
-                        $(MSBuildThisFileDirectory)Rules\projectreference.xaml;
-                        $(MSBuildThisFileDirectory)Rules\sdkreference.xaml;
-                        ">
-      <Context>;BrowseObject</Context>
-    </PropertyPageSchema>
-
-    <PropertyPageSchema Include="
-                        $(MSBuildThisFileDirectory)Rules\ResolvedAssemblyReference.xaml;
-                        $(MSBuildThisFileDirectory)Rules\ResolvedCOMReference.xaml;
-                        $(MSBuildThisFileDirectory)Rules\ResolvedProjectReference.xaml;
-                        $(MSBuildThisFileDirectory)Rules\ResolvedSDKReference.xaml;
-                        ">
-      <Context>ProjectSubscriptionService;BrowseObject</Context>
     </PropertyPageSchema>
 
     <PropertyPageSchema Include="$(MSBuildThisFileDirectory)Rules\general.browseobject.xaml">
       <Context>BrowseObject</Context>
     </PropertyPageSchema>
+
+    <PropertyPageSchema Include="$(MSBuildThisFileDirectory)Rules\script.xaml;">
+      <Context>File</Context>
+    </PropertyPageSchema>
+    <PropertyPageSchema Include="$(MSBuildThisFileDirectory)Rules\script.browseobject.xaml;">
+      <Context>BrowseObject</Context>
+    </PropertyPageSchema>
   </ItemGroup>
+
+  <Import Project="$(MSBuildProjectFullPath).user" Condition="Exists('$(MSBuildProjectFullPath).user')" />
   
+  <Target Name="Run">
+    <Message Text="$(RunCommandArguments)" />
+    <Exec Command='$(RunCommand) "$(MSBuildProjectDirectory)\$(StartItem)" $(RunCommandArguments)' WorkingDirectory="$(RunWorkingDirectory)" />
+  </Target>
+
+  <Target Name="Build" >
+  </Target>
+
+  <Target Name="Rebuild">
+  </Target>  
 </Project>

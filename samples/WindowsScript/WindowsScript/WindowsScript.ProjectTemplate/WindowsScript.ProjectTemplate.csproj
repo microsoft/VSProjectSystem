@@ -60,10 +60,11 @@
   remove files here, you must also reference them in the ProjectTemplateTemplate.vstemplate file.
   -->
   <ItemGroup>
-    <None Include="WindowsScript.wsproj" />
+    <None Include="WindowsScript.wsproj">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="WindowsScript.ico" />
-    <None Include="Program.cs" />
-    <None Include="AssemblyInfo.cs" />
+    <None Include="Start.js" />
   </ItemGroup>
   <ItemGroup>
     <VSTemplate Include="WindowsScript.vstemplate">

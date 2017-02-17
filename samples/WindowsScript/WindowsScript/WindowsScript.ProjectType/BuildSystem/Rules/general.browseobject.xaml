@@ -9,29 +9,19 @@
 	<Rule.Categories>
 		<Category Name="General" DisplayName="General" Description="General" />
 	</Rule.Categories>
-	<Rule.DataSource>
-		<DataSource Persistence="ProjectFile" Label="Configuration" HasConfigurationCondition="false" />
-	</Rule.DataSource>
-	<StringProperty Name="ApplicationIcon" DisplayName="Application Icon" />
-	<DynamicEnumProperty Name="TargetFrameworkMoniker" DisplayName="Target Framework Moniker" EnumProvider="TargetFrameworkMoniker" />
-	<StringProperty Name="AssemblyName" />
-	<StringProperty Name="Name" />
-	<StringProperty Name="RootNamespace" DisplayName="Root namespace" />
-	<StringProperty Name="TargetFramework" Visible="False">
-		<StringProperty.DataSource>
-			<DataSource Persistence="ProjectFile" PersistedName="TargetFrameworkMoniker" />
-		</StringProperty.DataSource>
-	</StringProperty>
-	<StringProperty Name="OutputName" />
-	<EnumProperty Name="OutputType">
-		<EnumValue Name="library" DisplayName="Class Library" />
-		<EnumValue Name="exe" DisplayName="Console Application" />
-		<EnumValue Name="winexe" DisplayName="Windows Application" />
-	</EnumProperty>
-	<StringListProperty Name="AvailablePlatforms" Separator="," />
-	<StringProperty Name="FullPath" ReadOnly="True">
-		<StringProperty.DataSource>
-			<DataSource Persistence="ProjectFile" PersistedName="MSBuildProjectFullPath" />
-		</StringProperty.DataSource>
-	</StringProperty>
+    <Rule.DataSource>
+        <DataSource Persistence="ProjectFile" Label="Configuration" HasConfigurationCondition="false" />
+    </Rule.DataSource>
+
+    <StringProperty Name="FileName" DisplayName="Project File" ReadOnly="True">
+        <StringProperty.DataSource>
+            <DataSource Persistence="ProjectFile" PersistedName="MSBuildProjectFile" />
+        </StringProperty.DataSource>
+    </StringProperty>
+
+    <StringProperty Name="FullPath" ReadOnly="True">
+        <StringProperty.DataSource>
+            <DataSource Persistence="ProjectFile" PersistedName="MSBuildProjectFullPath" />
+        </StringProperty.DataSource>
+    </StringProperty>
 </Rule>
