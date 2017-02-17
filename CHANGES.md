@@ -1,8 +1,9 @@
 Changes
 ==========
-**Visual Studio "15"**
+**Visual Studio 2017**
 Download Location: [Visual Studio Project System Extensibility Preview](https://visualstudiogallery.msdn.microsoft.com/43691584-1f0f-46da-adaf-a07c290c1e6e)
 
+* Nuget only 15.0.688-pre - Updated nuget packages for Visual Studio 2017 RC3
 * 15.0.594.65117
   * Targets [Visual Studio 2017 RC](https://www.visualstudio.com/vs/visual-studio-2017-rc/)
   * [.Net Core project](https://github.com/dotnet/roslyn-project-system) is built on top of CPS
@@ -24,6 +25,7 @@ Download Location: [Visual Studio Project System Extensibility Preview](https://
 
 **Visual Studio 2015**
 Download Location: [Visual Studio Project System Extensibility Preview](https://visualstudiogallery.msdn.microsoft.com/31e107b7-b0ce-4236-8ffa-ed35f03397b8)
+* Nuget only 14.1.170-pre - Updated nuget packages for Visual Studio 2015 Update 3
 * 14.1.127.50932
   * Targets Visual Studio 2015 Update 2
   * Other fixes and improvements:
