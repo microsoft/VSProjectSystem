@@ -24,14 +24,16 @@ In addition, it inherits a behavior from VB/C# that supports
 adding the child files automatically when user only selects and adds the
 parent file.
 
-## Dynamic dependency
+## Dynamic file dependency
 #### Available: Visual Studio 2017
 
-The addition of the globs feature in Visual Studio 2017 offered us a great opportunity to review this behavior.
-In order to keep the size of the project file to a minimum, we wanted to avoid persisting in the project file each dependency.
-That's why we introduced a new feature - dynamic dependent upon calculation.
+Allows dynamic calculation of file dependencies without storing them in the project file.
 
-This is enabled by the `DynamicDependentFile` capability.
+This feature, in combination with the new [file globbing](../overview/globbing_behavior.md) feature
+(that enables not listing each included item in the project file),
+allows keeping the size of the project file to a minimum.
+
+Dynamic file dependency is enabled by the `DynamicDependentFile` [capability](../overview/about_project_capabilities.md).
 ```xml
 <ProjectCapability Include="DynamicDependentFile"/>
 ```
