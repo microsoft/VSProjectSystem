@@ -11,7 +11,7 @@ Download Location: [Visual Studio Project System Extensibility Preview](https://
     * Nuget support
     * Editing the project file is now possible without unloading the project
   * [File globbing support](doc/overview/globbing_behavior.md)
-  * Dynamic Depend Upon Items
+  * [Dynamic Depend Upon Items](doc/extensibility/automatic_DependentUpon_wireup.md)
   * Folder Properties
   * Extending Xaml rules
 * 15.0.183.53925
