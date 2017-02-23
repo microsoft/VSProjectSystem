@@ -231,16 +231,12 @@
     <XamlPropertyRule Include="BuildSystem\Rules\script.xaml">
       <SubType>Designer</SubType>
     </XamlPropertyRule>
-  </ItemGroup>
-  <ItemGroup>
+    <XamlPropertyRule Include="BuildSystem\Rules\general.browseobject.xaml">
+      <SubType>Designer</SubType>
+    </XamlPropertyRule>
     <XamlPropertyRule Include="BuildSystem\Rules\ScriptDebugger.xaml">
       <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
     </XamlPropertyRule>
-    <Page Include="BuildSystem\Rules\general.browseobject.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
   </ItemGroup>
   <ItemGroup>
     <Analyzer Include="..\..\packages\Microsoft.VisualStudio.ProjectSystem.Analyzers.15.0.688-pre\analyzers\Microsoft.VisualStudio.ProjectSystem.Analyzers.dll" />
