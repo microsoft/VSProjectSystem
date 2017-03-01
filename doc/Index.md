@@ -62,6 +62,7 @@ VS Project System Documentation
   - [Clipboard](extensibility/clipboard.md)
   - [IValidProjectReferenceChecker](extensibility/IValidProjectReferenceChecker.md)
   - [IProjectSourceItemProviderExtension](extensibility/IProjectSourceItemProviderExtension.md)
+  - [IProjectContextMenuProvider](extensibility/IProjectContextMenuProvider.md)
   - [IProjectPropertiesProvider](extensibility/IProjectPropertiesProvider.md)
   - [IProjectGlobalPropertiesProvider](extensibility/IProjectGlobalPropertiesProvider.md)
   - [IFileSystemErrorMessageProvider](extensibility/IFileSystemErrorMessageProvider.md)
