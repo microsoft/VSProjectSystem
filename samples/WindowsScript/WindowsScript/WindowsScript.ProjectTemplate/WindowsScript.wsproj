@@ -4,6 +4,10 @@
     <CustomProjectExtensionsPath>$(LocalAppData)\CustomProjectSystems\WindowsScript\</CustomProjectExtensionsPath>
   </PropertyGroup>
 
-  <Import Project="$(CustomProjectExtensionsPath)CustomProject.props" />
-  <Import Project="$(CustomProjectExtensionsPath)CustomProject.targets" />
+  <Import Project="$(CustomProjectExtensionsPath)WindowsScript.props" />
+  <ItemGroup>
+    <Script Include="**\*.js" />
+    <Script Include="**\*.vbs" />
+  </ItemGroup>
+  <Import Project="$(CustomProjectExtensionsPath)WindowsScript.targets" />
 </Project>

@@ -7,7 +7,7 @@
 	Description="Script Debugger options"
 	xmlns="http://schemas.microsoft.com/build/2009/properties">
     <Rule.DataSource>
-        <DataSource Persistence="UserFileWithXamlDefaults" SourceOfDefaultValue="AfterContext" HasConfigurationCondition="True"/>
+        <DataSource Persistence="UserFileWithXamlDefaults" HasConfigurationCondition="True"/>
     </Rule.DataSource>
 
     <StringProperty Name="RunCommand" DisplayName="Command"

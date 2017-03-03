@@ -192,8 +192,8 @@
   final implementation, and provide the basic processing for handling rules in CPS.
   -->
   <ItemGroup>
-    <None Include="BuildSystem\DeployedBuildSystem\CustomProject.props" />
-    <None Include="BuildSystem\DeployedBuildSystem\CustomProject.targets" />
+    <None Include="BuildSystem\DeployedBuildSystem\WindowsScript.props" />
+    <None Include="BuildSystem\DeployedBuildSystem\WindowsScript.targets" />
   </ItemGroup>
   <!--
   The XAML files provide buth compile-time implementations for CPS rules as well as
