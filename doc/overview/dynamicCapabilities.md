@@ -126,6 +126,8 @@ With dynamic capabilities it is possible to get an error dialog during load that
 capability change occured during project load, and the project can never finish loading.
 The most typical cause of this is an unconfigured scope extension depends on a capability
 from the configured scope, but that extension point does not support dynamic capabilities.
+Capabilities fron the configured scope do eventually flow to the unconfigured scope, but
+that is too late for some extension points.
 
 Some (but not all) extension points to watch out for:
 - `ProjectAutoLoad`
