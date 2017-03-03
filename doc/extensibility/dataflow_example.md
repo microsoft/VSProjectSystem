@@ -7,8 +7,8 @@
 /// An example of an original datasource.
 /// The goal is to listen to an original source and publish a new value whenever it changes.
 /// </summary>
-[Export]
-private class MyOriginalDataSource : ProjectValueDataSourceBase<string>
+[Export(typeof(IMyOriginalDataSourceContract))]
+private class MyOriginalDataSource : ProjectValueDataSourceBase<string>, IMyOriginalDataSourceContract
 {
     private int sourceVersion;
 
@@ -95,8 +95,8 @@ private class MyOriginalDataSource : ProjectValueDataSourceBase<string>
 /// Links to a single upstream source and produces values based on it.
 /// Since this is chained, its versions are derived from the source versions
 /// </summary>
-[Export]
-private class MyChainedDataSource : ChainedProjectValueDataSourceBase<string>
+[Export(typeof(IMyChainedDataSourceContract))]
+private class MyChainedDataSource : ChainedProjectValueDataSourceBase<string>, IMyChainedDataSourceContract
 {
 
     [ImportingConstructor]
@@ -115,7 +115,8 @@ private class MyChainedDataSource : ChainedProjectValueDataSourceBase<string>
         // Even if our value does not change.
         this.JoinUpstreamDataSources(this.DataSource); // Must join upstream to avoid deadlocks!
         var transformBlock = new TransformBlock<IProjectVersionedValue<string>, IProjectVersionedValue<string>>(
-            i => i.Derive(v => v + "New Value!")); // do some processing with this value and produce a new value
+            i => i.Derive(v => v + "New Value!"),
+            new ExecutionDataFlowBlockOptions() { NameFormat = "MyChainedDataSource Input: {1}" }); // do some processing with this value and produce a new value
         var firstLink = this.DataSource.SourceBlock.LinkTo(transformBlock, new DataflowLinkOptions { PropagateCompletion = true });
         transformBlock.LinkTo(targetBlock, new DataflowLinkOptions { PropagateCompletion = true });
         return firstLink; // disposing first link will cause everything linked to it to dispose
@@ -130,8 +131,8 @@ private class MyChainedDataSource : ChainedProjectValueDataSourceBase<string>
 /// Links to multiple upstream data sources and produces a single value from them.
 /// This is done using <see cref="ProjectDataSources.SyncLinkTo" />.
 /// </summary>
-[Export]
-private class MyChainedDataSource2 : ChainedProjectValueDataSourceBase<string>
+[Export(typeof(IMyChainedDataSourceContract2))]
+private class MyChainedDataSource2 : ChainedProjectValueDataSourceBase<string>, IMyChainedDataSourceContract2
 {
 
     [ImportingConstructor]
@@ -155,7 +156,8 @@ private class MyChainedDataSource2 : ChainedProjectValueDataSourceBase<string>
 
         // When joining multiple sources, your transform block takes in a IProjectVersionedValue<Tuple<>>
         var transformBlock = new TransformBlock<IProjectVersionedValue<Tuple<string, string>>, IProjectVersionedValue<string>>(
-            i => i.Derive(v => v.Item1 + v.Item2 + "New Value!")); // do some processing with this value and produce a new value
+            i => i.Derive(v => v.Item1 + v.Item2 + "New Value!"),
+            new ExecutionDataFlowBlockOptions() { NameFormat = "MyChainedDataSource2 Input: {1}" ); // do some processing with this value and produce a new value
         var firstLink = ProjectDataSources.SyncLinkTo(
             this.DataSource1.SourceBlock.SyncLinkOptions(),
             this.DataSource2.SourceBlock.SyncLinkOptions(),
@@ -166,3 +168,52 @@ private class MyChainedDataSource2 : ChainedProjectValueDataSourceBase<string>
     }
 }
 ```
+### `SyncLinkTo` Overloads
+
+1. Overloads for 2 - 6 inputs, all typed as `Typle<T1, ...T6>`.
+    ``` Csharp
+    /// <summary>
+    /// Links several source blocks carrying project versioned valued to a target block
+    /// such that only consistently versioned tuples are posted to the target block.
+    /// </summary>
+    /// <typeparam name="T1">The type of the value that comes from block <paramref name="source1"/>.</typeparam>
+    /// ...
+    /// <typeparam name="T6">The type of the value that comes from block <paramref name="source6"/>.</typeparam>
+    /// <param name="source1">A source block.</param>
+    /// ...
+    /// <param name="source6">A source block.</param>
+    /// <param name="target">The block that receives consistently versioned tuples from the source blocks.</param>
+    /// <param name="linkOptions">
+    /// The link options to apply between the source blocks and the target block.
+    /// If <c>null</c> the default behavior is to propagate completion.
+    /// </param>
+    /// <param name="cancellationToken">A token whose cancellation terminates the flow of data.</param>
+    /// <returns>A link that may be disposed to terminate the flow of data.</returns>
+    public static IDisposable SyncLinkTo<T1, ...T6>(
+            SourceBlockAndLink<IProjectVersionedValue<T1>> source1,
+            ...
+            SourceBlockAndLink<IProjectVersionedValue<T6>> source6,
+            ITargetBlock<IProjectVersionedValue<Tuple<T1, ...T6>>> target,
+            DataflowLinkOptions linkOptions = null,
+            CancellationToken cancellationToken = default(CancellationToken))
+    ```
+
+2. Another overload for immutable list of inputs and an immutable list input to the target. You will have to
+   manually cast the inputs in the `target` block.
+    ``` Csharp
+    /// <summary>
+    /// Jointly links several source blocks to a target block, taking care to ensure
+    /// that any message posted to the target block carries a set of messages from the
+    /// source blocks that are all based on the same version of backing data.
+    /// </summary>
+    /// <param name="sourceBlocks">The blocks to be joined.</param>
+    /// <param name="target">The block to receive the joined messages.</param>
+    /// <param name="linkOptions">The options to apply to the link to the target block.</param>
+    /// <param name="cancellationToken">A cancellation token to cancel the link (without throwing InvalidOperationExceptions due to a project unload).</param>
+    /// <returns>An object that may be disposed to terminate the link.</returns>
+    public static IDisposable SyncLinkTo(
+            ImmutableList<SourceBlockAndLink<IProjectValueVersions>> sourceBlocks,
+            ITargetBlock<Tuple<ImmutableList<IProjectValueVersions>, IImmutableDictionary<NamedIdentity, IComparable>>> target,
+            DataflowLinkOptions linkOptions,
+            CancellationToken cancellationToken = default(CancellationToken))
+    ```

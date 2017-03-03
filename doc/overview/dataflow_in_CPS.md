@@ -45,7 +45,7 @@ produces a value when the version of `C` it has was produced from the same versi
 `D` currently has. To solve this consistency issue CPS versions all dataflow and then synchronizes
 around these published versions.
 
-## Datflow Versioning
+## Dataflow Versioning
 
 To solve the problem described above, all dataflow in CPS produces types of `IProjectVersionedValue<T>`.
 This type combines `T Value` and `IImmutableDictionary<NamedIdentity, IComparable> DataSourceVersions`.
