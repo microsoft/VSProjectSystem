@@ -1,6 +1,6 @@
 # IProjectContextMenuProvider
 
-Extension point for suppling the context menu group `Guid` and the menu Id `int` to display
+Extension point for supplying the context menu group `Guid` and the menu Id `int` to display
 to the user. This interface does not let you _implement_ new context menus to show to the
 user, but only lets you select what menu to show based on the `IProjectTree` selected.
 See [Extending Menus and Commands](https://msdn.microsoft.com/en-us/library/bb165937.aspx)
