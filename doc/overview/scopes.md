@@ -37,7 +37,7 @@ Within CPS, the three project system scopes are known by the CPS concept names r
 | IVsProject    | UnconfiguredProject | ProjectRootElement (construction model) |
 | IVsProjectCfg | ConfiguredProject   | Project (evaluation model)              |
 
-**Visual Studio "15":** IProjectService
+**Visual Studio 2017:** IProjectService
 
 **Visual Studio 2015:** ProjectService
 

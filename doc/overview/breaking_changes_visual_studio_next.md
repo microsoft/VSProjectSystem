@@ -1,4 +1,4 @@
-#Project System Extensibility Breaking Changes for Visual Studio "15"
+#Project System Extensibility Breaking Changes for Visual Studio 2017
 
 We have made several breaking changes for the next version of Project System Extensibility. Our goal with these changes is to provide a consistent assembly name over releases, simplified namespaces, and new features. Below is a list of these changes.  
 

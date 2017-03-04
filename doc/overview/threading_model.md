@@ -10,7 +10,7 @@ Important:
 violate [threading rule #2](https://github.com/Microsoft/vs-threading/blob/master/doc/threading_rules.md#2-when-an-implementation-of-an-already-shipped-public-api-must-call) and will often lead
 to deadlocks.**
 
-**Visual Studio "15":** `IProjectThreadingService.JoinableTaskFactory`
+**Visual Studio 2017:** `IProjectThreadingService.JoinableTaskFactory`
 
 **Visual Studio 2015:** `IThreadHandling.AsyncPump`   
 
