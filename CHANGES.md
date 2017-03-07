@@ -15,7 +15,7 @@ Download Location: [Visual Studio Project System Extensibility Preview](https://
   * Folder Properties
   * Extending Xaml rules
 * 15.0.183.53925
-  * Targets [Visual Studio "15" Preview](https://www.visualstudio.com/en-us/downloads/visual-studio-next-downloads-vs)
+  * Targets Visual Studio 2017 Preview
   * [Breaking changes](doc/overview/breaking_changes_visual_studio_next.md)
   * `Project Tree Modifier extension` item template was replaced by `Project Tree Properties Provider extension`
   * Other fixes and improvements:
