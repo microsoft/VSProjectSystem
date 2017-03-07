@@ -41,7 +41,7 @@ loading when it does not apply to a given project.
 
 ### `OrderAttribute`/`OrderPrecedenceAttribute`
 
-**Visual Studio "15":** OrderAttribute
+**Visual Studio 2017:** OrderAttribute
 **Visual Studio 2015:** OrderPrecedenceAttribute
 
 When more than one extension applies to a given project, CPS may pick the
