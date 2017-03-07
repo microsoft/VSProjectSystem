@@ -22,7 +22,9 @@ Dataflow in CPS comes primarily in two types, an original source or a chained so
    * Carries all the versions of the dataflow it chains to.
      * More about versioning later
 
-## [Dataflow Examples](../extensibility/dataflow_example.md)
+### [Dataflow Examples](../extensibility/dataflow_example.md)
+
+### [Dataflow Sources](../extensibility/dataflow_sources.md)
 
 ## Data Consistency Problem
 
