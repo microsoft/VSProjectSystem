@@ -15,7 +15,7 @@
 
     <StringProperty Name="StartItem" DisplayName="Start Item">
         <StringProperty.DataSource>
-            <DataSource Persistence="ProjectFile" Label="Globals" HasConfigurationCondition="False" SourceOfDefaultValue="AfterContext"/>
+            <DataSource Persistence="ProjectFile" HasConfigurationCondition="False" />
         </StringProperty.DataSource>
     </StringProperty>
 

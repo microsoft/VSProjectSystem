@@ -2,7 +2,7 @@
 Simple project type that supports .js and .vbs files; can run and debug them using `cscript.exe`.
 
 ## Showcased Features
-- File globbing (project automatically includes *.js and *.vbs under the project cone); globs are defined in .props file, to minimize the content of the project file
+- File globbing (project automatically includes *.js and *.vbs under the project cone)
 - Editing the project file without unloading the project (right click on the project node - `Edit`)
 - Project handles own reload without the solution doing a full reload when the project file changes on disk
 - Custom properties
