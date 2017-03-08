@@ -1,7 +1,7 @@
 Obtaining the ProjectService
 ============================
 
-**Visual Studio "15":** IProjectService
+**Visual Studio 2017:** IProjectService
 
 **Visual Studio 2015:** ProjectService
 
@@ -12,7 +12,7 @@ VS default MEF catalog into a CPS catalog "sub-scope". Import properties
 are only 'satisfied' when MEF activated your type (not simply by `new`ing
 up an instance of your object).
 
-**Visual Studio "15":**
+**Visual Studio 2017:**
 ```csharp
     [Import]
     IProjectService ProjectService { get; set; }
@@ -26,7 +26,7 @@ up an instance of your object).
 
 ### From MEF via an imperative `GetService` query
 
-**Visual Studio "15":**
+**Visual Studio 2017:**
 ```csharp
     IServiceProvider site; // the VS global service provider
     var componentModel = site.GetService(typeof(SComponentModel)) as IComponentModel;

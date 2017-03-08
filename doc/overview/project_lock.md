@@ -37,7 +37,7 @@ are not upgradeable.
 
 #### Threading
 
-**Visual Studio "15":** `IProjectThreadingService.JoinableTaskFactory`
+**Visual Studio 2017:** `IProjectThreadingService.JoinableTaskFactory`
 
 **Visual Studio 2015:** `IThreadHandling.AsyncPump`
 
@@ -65,7 +65,7 @@ See [Obtaining the MSBuild.Project from CPS](../automation/obtaining_the_MSBuild
 for an example.
 
 ### DO's and DON'Ts
-**Visual Studio "15":** `IProjectThreadingService.JoinableTaskFactory`
+**Visual Studio 2017:** `IProjectThreadingService.JoinableTaskFactory`
 
 **Visual Studio 2015:** `IThreadHandling.AsyncPump`
 

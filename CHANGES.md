@@ -1,8 +1,19 @@
 Changes
 ==========
 **Visual Studio 2017**
-Download Location: [Visual Studio Project System Extensibility Preview](https://visualstudiogallery.msdn.microsoft.com/43691584-1f0f-46da-adaf-a07c290c1e6e)
+Download Location: [Visual Studio Project System Extensibility](https://visualstudiogallery.msdn.microsoft.com/43691584-1f0f-46da-adaf-a07c290c1e6e)
 
+* 15.0.743.997
+  * Targets Visual Studio 2017 RTM
+  * Project System Extensibility generates a [Windows Script sample project type](samples/WindowsScript) instead of a C#-like project system
+    * Simpler, easier to understand structure (no dependency on CSharp targets that have more than 8000 lines of code)
+    * Avoids confusion with [roslyn project system](https://github.com/dotnet/roslyn-project-system/)
+  * Removed the Preview tag
+  * Wizard dialog now has a new field for specifying the language
+    * [#152](https://github.com/Microsoft/VSProjectSystem/issues/152) - Put a space in the category name
+  * Fixing some inconsistencies when including xaml rule files
+    * [#171](https://github.com/Microsoft/VSProjectSystem/issues/171) - Bug in VS2017 Extensibility Preview - Project Type - general.browseobject.xaml wrong build action
+    * [#175](https://github.com/Microsoft/VSProjectSystem/issues/175) - VS2017 Extensibility Preview - Custom tools not set
 * Nuget only 15.0.688-pre - Updated nuget packages for Visual Studio 2017 RC3
 * 15.0.594.65117
   * Targets [Visual Studio 2017 RC](https://www.visualstudio.com/vs/visual-studio-2017-rc/)
@@ -15,7 +26,7 @@ Download Location: [Visual Studio Project System Extensibility Preview](https://
   * Folder Properties
   * Extending Xaml rules
 * 15.0.183.53925
-  * Targets [Visual Studio "15" Preview](https://www.visualstudio.com/en-us/downloads/visual-studio-next-downloads-vs)
+  * Targets Visual Studio 2017 Preview
   * [Breaking changes](doc/overview/breaking_changes_visual_studio_next.md)
   * `Project Tree Modifier extension` item template was replaced by `Project Tree Properties Provider extension`
   * Other fixes and improvements:
