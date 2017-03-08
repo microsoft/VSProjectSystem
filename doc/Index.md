@@ -21,6 +21,9 @@ VS Project System Documentation
   - [Accessing IVsHierarchy from CPS](overview/access_IVsHierarchy_from_cps.md)
     - [ItemIDs](overview/ItemIDs.md)
   - [Responsive design](overview/responsive_design.md)
+  - Diagnostics
+    - [How to examine Visual Studio 2017 registry](overview/examine_registry.md)
+    - [How to enable logging](overview/enable_logging.md)
 - [Threading model](overview/threading_model.md)
   - [Threading Rules](overview/threading_rules.md)
   - [CookBook](overview/cookbook.md)
