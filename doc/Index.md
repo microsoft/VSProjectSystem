@@ -23,6 +23,9 @@ VS Project System Documentation
   - [Responsive design](overview/responsive_design.md)
   - [Globbing behavior - Visual Studio 2017](overview/globbing_behavior.md)
   - [Dataflow in CPS](overview/dataflow_in_CPS.md)
+  - Diagnostics
+    - [How to examine Visual Studio 2017 registry](overview/examine_registry.md)
+    - [How to enable logging](overview/enable_logging.md)
 - [Threading model](overview/threading_model.md)
   - [Threading Rules](overview/threading_rules.md)
   - [CookBook](overview/cookbook.md)
