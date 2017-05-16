@@ -3,6 +3,11 @@ Changes
 **Visual Studio 2017**
 Download Location: [Visual Studio Project System Extensibility](https://visualstudiogallery.msdn.microsoft.com/43691584-1f0f-46da-adaf-a07c290c1e6e)
 
+Official NuGet packages: http://www.nuget.org
+
+Pre-release NuGet packages: https://myget.org/gallery/vs-devcore
+
+* Nuget only 15.0.751 - Updated nuget packages for Visual Studio 2017 Update 2
 * Nuget only 15.0.747 - Updated nuget packages for Visual Studio 2017 Update 1
 * 15.0.743.997
   * Targets Visual Studio 2017 RTM
