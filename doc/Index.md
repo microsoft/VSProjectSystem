@@ -54,6 +54,7 @@ VS Project System Documentation
     - [How to retrieve the value of a property](extensibility/property_retrievevalue.md)
     - [IDynamicEnumValuesProvider](extensibility/IDynamicEnumValuesProvider.md)
     - [Property value editors](extensibility/property_value_editors.md)
+    - [Extending rules](extensibility/extending_rules.md)
   - [IBuildUpToDateCheckProvider](extensibility/IBuildUpToDateCheckProvider.md)
   - [IsDocumentInProject](extensibility/IsDocumentInProject.md)
   - [Automatic DependentUpon wire-up](extensibility/automatic_DependentUpon_wireup.md)
