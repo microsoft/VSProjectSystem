@@ -4,6 +4,9 @@ In CPS, you can extend a XAML rule of the same name by setting `OverrideMode="Ex
 Alternatively, you can use `OverrideMode="Replace"` if you desire to completely override any
 existing rule of the same name.
 
+This is useful if you are building ontop of an existing project system and want to add
+or change properties to the existing rules.
+
 Example:
 
 ``` xml
