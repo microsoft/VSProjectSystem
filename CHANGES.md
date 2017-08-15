@@ -7,6 +7,14 @@ Official NuGet packages: http://www.nuget.org
 
 Pre-release NuGet packages: https://myget.org/gallery/vs-devcore
 
+* 15.3.224.43737
+  * Targets Visual Studio 2017 Update 3
+  * Improved the default debug launcher when starting the script without attaching a debugger (using Ctrl + F5)
+    * Fixed unhandled exception
+    * Wrapping cscript.exe in cmd.exe, which displays a message and waits for keyboard input
+  * Running project system analyzers from command line is now possible (no longer depends on System.Threading.Tasks.Dataflow)
+  * Fixed [#234](https://github.com/Microsoft/VSProjectSystem/issues/234) - Xaml Rules compilation stops working when adding WPF Xaml pages 
+  * Referencing System.Composition package instead of Microsoft.Composition (which is being deprecated)
 * Nuget only 15.0.751 - Updated nuget packages for Visual Studio 2017 Update 2
 * Nuget only 15.0.747 - Updated nuget packages for Visual Studio 2017 Update 1
 * 15.0.743.997
