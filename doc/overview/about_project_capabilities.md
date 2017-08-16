@@ -21,12 +21,12 @@ code such as:
 ```
 
 Where [`IVsHierarchy.IsCapabilityMatch`][l01] is an extension method.
-[l01]:http://msdn.microsoft.com/en-us/library/vstudio/hh443055.aspx
+[l01]:https://msdn.microsoft.com/en-us/library/hh443055.aspx
 
 Project capability expressions can also be passed to the `IsCapabilityMatch`
 method in order to test for combinations of capabilities (including
 AND, OR, NOT logic). Read more about [the supported syntax and
-operators](http://msdn.microsoft.com/en-us/library/vstudio/microsoft.visualstudio.shell.interop.ivsbooleansymbolexpressionevaluator.evaluateexpression.aspx).
+operators](https://msdn.microsoft.com/en-us/library/microsoft.visualstudio.shell.interop.ivsbooleansymbolexpressionevaluator.evaluateexpression.aspx).
 
 How to declare project capabilities in your project
 ---------------------------------------------------
