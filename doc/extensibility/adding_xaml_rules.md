@@ -9,8 +9,8 @@ A xaml rule can be simply included via msbuild evaluation, like so:
 ``` xml
   <ItemGroup>
     <PropertyPageSchema Include="my_rule.xaml">
-      <!-- The Context determines what it applies to. -->
-      <Context>Project;File;BrowseObject;Invisible</Context>
+      <!-- The Context determines what it applies to. See below for more details -->
+      <Context>File;BrowseObject;</Context>
     </PropertyPageSchema>
   </ItemGroup>
 ```
