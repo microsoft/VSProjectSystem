@@ -11,8 +11,9 @@ technology to create an extensible project system, CPS utilizes it
 extensively and uses it as its foundation; therefore, creating a CPS based
 project system is basically providing a set of MEF components.
 
-The concept of MEF can be found in the [MSDN documentation][mef].
-[mef]:https://msdn.microsoft.com/en-us/library/dd460648(v=vs.110).aspx
+The concept of MEF can be found at [Managed Extensibility Framework (MEF)][mef].
+
+[mef]:https://docs.microsoft.com/en-us/dotnet/framework/mef/index
 
 Through MEF, writing an extension to create a CPS based project system
 becomes a straightforward task, which starts creating extension classes 
