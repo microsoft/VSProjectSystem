@@ -1,10 +1,25 @@
 # Adding Xaml Rules
 
 In CPS, the role of XAML rules is to describe to CPS _what_ and _how_ properties, items, and metadata
-from msbuild matter. There are several ways to add XAML rules to the project for CPS to pick up.
+from msbuild matter. There are 3 ways to add XAML rules to the project for CPS to pick up. These are:
+
+1. Including the .xaml file via MSBuild `PropertyPageSchema` items
+2. Embedding the xaml in your assembly and exposing it via a MEF export
+3. Adding either the xaml file or Rule object programatically via a CPS API
+
+## When to choose what way to add the rule
+We recommend adding rules via MSBuild items whenever possible. This method is the most flexible as you can take
+full advantage of MSBuild to determine when and how the rule is included. CPS also supports
+[extending rules](extending_rules.md) imported via MSBuild. This also does not require your assembly to be
+part of the MEF composition.
+
+The two extension ways of adding rules to CPS are both equally acceptable. They are useful for when your rule
+is not intended to be extended and essentially "private" to you. An example is a rule backing an
+`IDebugLaunchProvider`. Between the two the MEF Export is simpler and leaves the logic of dynamically adding and
+removing the rule to CPS.
 
 ## Via MSBuild items
-A xaml rule can be simply included via msbuild evaluation, like so:
+This is the recommended way of adding rules to CPS. A xaml rule can be simply included via msbuild evaluation.
 
 ``` xml
   <ItemGroup>
@@ -16,10 +31,14 @@ A xaml rule can be simply included via msbuild evaluation, like so:
 ```
 
 ## Via MEF Export
+This method is recommended when your rule is "private" to your implementation, like backing an
+`IDebugLaunchProvider`. With the MEF export method, CPS will handle adding/removing the rule
+the rule for you.
 
 1. Reference the ProjectSystem SDK Nuget: https://www.nuget.org/packages/Microsoft.VisualStudio.ProjectSystem.SDK.Tools/
 
-2. Include the rule as `XamlPropertyRule` in your project. This will embed the rule in your assembly (named `XamlRuleToCode:{rule_name}.xaml`) and optionaly generate a partial class for easy access to the rule.
+2. Include the rule as `XamlPropertyRule` in your project. This will embed the rule in your assembly (named `XamlRuleToCode:{rule_name}.xaml`)
+and optionaly generate a partial class for easy access to the rule.
 ``` xml
   <ItemGroup>
     <XamlPropertyRule Include="my_rule.xaml">
