@@ -1,8 +1,8 @@
-#Project System Extensibility Breaking Changes for Visual Studio 2017
+# Project System Extensibility Breaking Changes for Visual Studio 2017
 
 We have made several breaking changes for the next version of Project System Extensibility. Our goal with these changes is to provide a consistent assembly name over releases, simplified namespaces, and new features. Below is a list of these changes.  
 
-##Assembly Rename and Consolidation
+## Assembly Rename and Consolidation
 
 We have renamed all of our assemblies to the following:
 
@@ -13,7 +13,7 @@ Microsoft.VisualStudio.ProjectSystem.VS.v14Only | Microsoft.VisualStudio.Project
 
 Microsoft.VisualStudio.ProjectSystem.Utilities.14.0 has been removed, and its contents merged into the other 2 assemblies.
 
-##Namespace Changes
+## Namespace Changes
 
 Namespaces have been heavily refactored.
 
@@ -29,7 +29,7 @@ Namespaces have been heavily refactored.
 | Microsoft.VisualStudio.ProjectSystem.VS.Debug |
 | Microsoft.VisualStudio.ProjectSystem.VS.Properties |
 
-##Interface Merging
+## Interface Merging
 In VS2015 update 1 we added some '2' versions of various interfaces. 
 These interfaces have been merged into the original version of the interface. 
 
@@ -45,7 +45,7 @@ Interface Source | Interface Target
 
 ## Adds, Removals, and Renames
 
-###Added
+### Added
 
 New | Description
 --- | ---
@@ -55,7 +55,7 @@ New | Description
 `IProjectDynamicLoadComponent` | New extension point for components that support being dynamically loaded/unloaded
 `IProjectCapabilitiesScope` | Scopes the current capabilities to support dynamic capabilities
 
-###Removals
+### Removals
 
 Removed | Description
 --- | ---
@@ -69,7 +69,7 @@ Removed | Description
 `UnconfiguredProject.GetCapabilitiesAsync` | replaced by `UnconfiguredProject.Capabilities`
 `ConfiguredProject.GetCapabilitiesAsync` | replaced by `ConfiguredProject.Capabilities`
 
-###Renames
+### Renames
 
 Old Name | New Name
 --- | ---
@@ -82,7 +82,7 @@ Old Name | New Name
 `IProjectReloader.ReloadIfCapabilitiesChangedAsync` | `IProjectReloader.ReloadIfNecessaryAsync`
 
 
-##Behavioral Changes
+## Behavioral Changes
 
 * Dynamic capability support added. This makes capabilities a part of the data flow. More information can be found [here](dynamicCapabilities.md).
 * The contract for `ProjectAutoLoadAttribute` (previously `UnconfiguredProjectAutoLoadAttribute`) has changed from `void Initialize()` to `Task Initialize()`
