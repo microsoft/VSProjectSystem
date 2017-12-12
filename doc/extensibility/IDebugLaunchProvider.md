@@ -23,7 +23,7 @@ properties while launching. If your debugger has no configuration necessary, the
 For another example see [ScriptDebuggerLaunchProvider.cs](../../samples/WindowsScript/WindowsScript/WindowsScript.ProjectType/ScriptDebuggerLaunchProvider.cs)
 and [ScriptDebugger.xaml](../../samples/WindowsScript/WindowsScript/WindowsScript.ProjectType/BuildSystem/Rules/ScriptDebugger.xaml).
 
-## The xaml rule for your debugger.
+### The xaml rule for your debugger.
 See [adding xaml rules](adding_xaml_rules.md)
 
 ``` XML
@@ -48,7 +48,7 @@ See [adding xaml rules](adding_xaml_rules.md)
 If you use Microsoft.VisualStudio.ProjectSystem.SDK.Tools to compile the above XAML rule into your project, you can access it strongly-typed below.
 
 
-## The debugger launch provider
+### The debugger launch provider
 ``` CSharp
 using System;
 using System.Collections.Generic;
