@@ -20,8 +20,8 @@ is completely optional, but it is a convenient way for allowing the user to opti
 launching it. The configuration is done by the user setting properties on the user file, then the debugger reads those
 properties while launching. If your debugger has no configuration necessary, then the XAML rule is not needed.
 
-For another example see [ScriptDebuggerLaunchProvider.cs](..\..\samples\WindowsScript\WindowsScript\WindowsScript.ProjectType\ScriptDebuggerLaunchProvider.cs)
-and [ScriptDebugger.xaml](..\..\samples\WindowsScript\WindowsScript\WindowsScript.ProjectType\BuildSystem\Rules\ScriptDebugger.xaml).
+For another example see [ScriptDebuggerLaunchProvider.cs](../../samples/WindowsScript/WindowsScript/WindowsScript.ProjectType/ScriptDebuggerLaunchProvider.cs)
+and [ScriptDebugger.xaml](../../samples/WindowsScript/WindowsScript/WindowsScript.ProjectType/BuildSystem/Rules/ScriptDebugger.xaml).
 
 ## The xaml rule for your debugger.
 See [adding xaml rules](adding_xaml_rules.md)
