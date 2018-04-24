@@ -30,8 +30,8 @@ instance per-project and each instance can return a different set of properties.
     internal class BuildPropertiesProvider : StaticGlobalPropertiesProviderBase
     {
         [ImportingConstructor]
-        internal BuildPropertiesProvider(IThreadHandling threadHandling)
-            : base(threadHandling.JoinableTaskContext)
+        internal BuildPropertiesProvider(IProjectCommonServices services)
+            : base(services)
         {
         }
  
