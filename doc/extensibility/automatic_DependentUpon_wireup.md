@@ -6,7 +6,8 @@ In Solution Explorer, dependent items get displayed as chilren items under the i
 
 ## Static dependency
 
-The dependent information gets stored in the project file, using `<DependentUpon>` metadata.
+The dependent information gets stored in the project file, using
+evaluation-time `<DependentUpon>` metadata.
 
 ```xml
   <None Include="foo.xaml" />
