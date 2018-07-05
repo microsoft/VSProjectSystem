@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.27829.1
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CpsExtension.Nuget", "CpsExtension.Nuget\CpsExtension.Nuget.csproj", "{9F9DD63D-AA68-4F9E-BE6C-88707A5BCD46}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CpsExtension.Vsix", "CpsExtension.Vsix\CpsExtension.Vsix.csproj", "{0E3E2F1F-98E9-40D5-9626-D4ACA5E9A498}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{9F9DD63D-AA68-4F9E-BE6C-88707A5BCD46}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9F9DD63D-AA68-4F9E-BE6C-88707A5BCD46}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9F9DD63D-AA68-4F9E-BE6C-88707A5BCD46}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9F9DD63D-AA68-4F9E-BE6C-88707A5BCD46}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0E3E2F1F-98E9-40D5-9626-D4ACA5E9A498}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0E3E2F1F-98E9-40D5-9626-D4ACA5E9A498}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0E3E2F1F-98E9-40D5-9626-D4ACA5E9A498}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0E3E2F1F-98E9-40D5-9626-D4ACA5E9A498}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {403A3D6E-C198-4DC2-968C-41E5C8A65D33}
+	EndGlobalSection
+EndGlobal
