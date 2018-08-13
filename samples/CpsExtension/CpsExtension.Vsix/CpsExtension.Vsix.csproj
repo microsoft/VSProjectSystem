@@ -1,0 +1,54 @@
+﻿<Project>
+
+  <!-- Set these early for VSSDK to work -->
+  <PropertyGroup>
+    <Configuration Condition="'$(Configuration)' == ''">Debug</Configuration>
+    <Platform Condition="'$(Platform)' == ''">AnyCPU</Platform>
+    <BaseOutputPath>$(MSBuildThisFileDirectory)bin\</BaseOutputPath>
+    <BaseIntermediateOutputPath>$(MSBuildThisFileDirectory)obj\</BaseIntermediateOutputPath>
+    <IntermediateOutputPath>$(BaseIntermediateOutputPath)$(Configuration)\</IntermediateOutputPath>
+    <OutputPath>$(BaseOutputPath)$(Configuration)\</OutputPath>
+    <RootNamespace>CpsExtension</RootNamespace>
+  </PropertyGroup>
+
+  <Import Sdk="Microsoft.NET.Sdk" Project="Sdk.props" />
+
+  <PropertyGroup>
+    <TargetFramework>net461</TargetFramework>
+    <GeneratePkgDefFile>false</GeneratePkgDefFile>
+    <IsPackable>false</IsPackable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.Build" Version="15.7.179" />
+    <PackageReference Include="Microsoft.VisualStudio.ProjectSystem.SDK" Version="15.3.224" />
+    <PackageReference Include="Microsoft.VSSDK.BuildTools" Version="15.7.109" />
+    <PackageReference Include="System.ComponentModel.Composition" Version="4.5.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Remove="BuildSystem\Rules\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="BuildSystem\**" Exclude="**\*.cs">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+
+  <ItemGroup>
+    <VSIXSourceItem Include="BuildSystem\**" Exclude="**\*.cs">
+      <InstallRoot>MSBuild</InstallRoot>
+      <VSIXSubPath>Microsoft\VisualStudio\v15.0\CpsExtension\%(RelativeDir)</VSIXSubPath>
+      <Visible>false</Visible>
+    </VSIXSourceItem>
+  </ItemGroup>
+
+  <ItemGroup>
+    <XamlPropertyRule Include="BuildSystem\Rules\*.xaml" Namespace="$(RootNamespace).Rules" />
+  </ItemGroup>
+
+  <Import Sdk="Microsoft.NET.Sdk" Project="Sdk.targets" />
+  <Import Project="$(VSToolsPath)\VSSDK\Microsoft.VsSDK.targets" Condition="Exists('$(VSToolsPath)\VSSDK\Microsoft.VsSDK.targets')" />
+
+</Project>

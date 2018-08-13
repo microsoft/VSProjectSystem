@@ -1,0 +1,13 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net461</TargetFramework>
+    <IsTool>true</IsTool>
+    <IncludeBuildOutput>false</IncludeBuildOutput>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Update="Build/**" Pack="true" PackagePath="build/%(Filename)%(Extension)" />
+  </ItemGroup>
+
+</Project>

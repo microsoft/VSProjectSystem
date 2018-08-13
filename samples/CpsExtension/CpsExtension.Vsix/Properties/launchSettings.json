@@ -1,0 +1,10 @@
+﻿{
+  "profiles": {
+    "CpsExtension": {
+      "commandName": "Executable",
+      "executablePath": "$(DevenvDir)devenv.exe",
+      "commandLineArgs": "/rootsuffix exp",
+      "environmentVariables": { "CpsExtensionDesignTimeTargetsPath": "$(OutputPath)BuildSystem\\CpsExtension.DesignTime.targets" }
+    }
+  }
+}

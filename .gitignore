@@ -5,6 +5,9 @@
 *.suo
 *.user
 *.sln.docstates
+*.sln.metaproj
+.vs/
+.vscode/
 
 # Build results
 [Dd]ebug/
