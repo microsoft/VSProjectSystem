@@ -4,6 +4,7 @@
     <TargetFramework>net461</TargetFramework>
     <IsTool>true</IsTool>
     <IncludeBuildOutput>false</IncludeBuildOutput>
+    <Version>1.1.0</Version>
   </PropertyGroup>
 
   <ItemGroup>
