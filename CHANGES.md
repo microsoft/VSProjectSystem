@@ -7,6 +7,15 @@ Official NuGet packages: http://www.nuget.org
 
 Pre-release NuGet packages: https://myget.org/gallery/vs-devcore
 
+* 15.8.243.39717
+  * Targets Visual Studio 2017 Update 8
+  * Microsoft.VisualStudio.ProjectSystem.Sdk.Tools
+    * Xaml rule generator improvements
+      * Generating a new set of methods to make it easy to get properties from the snapshot
+      * Better formatting in the generated C# code: using spaces instead of tabs, using C bracing style
+      * Using hash rather than random Guid for the fallback rule name that which remains unchanged if there are no changes in the xaml rule
+    * Defined some missing properties in the embedded XamlPropertyRule.xaml rule (available when used from a CPS-based project - see the CpsExtension sample)
+    * Updated package dependencies: removed dependency on VsixSuppression as it is no longer needed, using System.Threading.Tasks.Dataflow instead of Microsoft.Tpl.Dataflow
 * 15.3.224.43737
   * Targets Visual Studio 2017 Update 3
   * Improved the default debug launcher when starting the script without attaching a debugger (using Ctrl + F5)
