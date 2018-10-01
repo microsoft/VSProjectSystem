@@ -5,7 +5,7 @@ Download Location: [Visual Studio Project System Extensibility](https://visualst
 
 Official NuGet packages: http://www.nuget.org
 
-Pre-release NuGet packages: https://myget.org/gallery/vs-devcore
+Pre-release NuGet packages: https://vside.myget.org/gallery/devcore
 
 * 15.8.243.39717
   * Targets Visual Studio 2017 Update 8
