@@ -10,7 +10,7 @@ To get started, read the [introduction][intro] while you're waiting for the [pre
 Please file any product bugs you find on [Microsoft Connect][connect]. 
 You may file doc bugs [here][docbugs].
 
-[![Join the chat at https://gitter.im/Microsoft/VSProjectSystem](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/Microsoft/VSProjectSystem?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+[![Join the chat at https://gitter.im/Microsoft/extendvs](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/Microsoft/extendvs?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
 For the latest features take a look at [Changes][changes].
 
