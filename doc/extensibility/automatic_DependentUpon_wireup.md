@@ -1,8 +1,9 @@
 ﻿Automatic `DependentUpon` wire-up
 ===============================
 
-Project systems can specify dependencies between items. For example, .xaml.cs can be represented as dependent upon .xaml.
-In Solution Explorer, dependent items get displayed as chilren items under the item they depend upon. 
+Project systems can specify dependencies between items. For example, a `.xaml.cs` 
+file can be represented as dependent upon its `.xaml` file.
+In Solution Explorer, dependent items get displayed as child items under the item they depend upon. 
 
 ## Static dependency
 
@@ -10,16 +11,15 @@ The dependent information gets stored in the project file, using
 evaluation-time `<DependentUpon>` metadata.
 
 ```xml
-  <None Include="foo.xaml" />
+<None Include="foo.xaml" />
 
-  <Compile Include="foo.xaml.cs">
-    <DependentUpon>foo.xaml</DependentUpon>
-  </Compile>
-
+<Compile Include="foo.xaml.cs">
+  <DependentUpon>foo.xaml</DependentUpon>
+</Compile>
 ```
 
 CPS can automatically add the necessary `<DependentUpon>` metadata 
-project items when using Add New Item and Add Existing Item.
+project items when using _Add New Item_ and _Add Existing Item_.
 
 In addition, it inherits a behavior from VB/C# that supports
 adding the child files automatically when user only selects and adds the
@@ -36,30 +36,32 @@ allows keeping the size of the project file to a minimum.
 
 Dynamic file dependency is enabled by the `DynamicDependentFile` [capability](../overview/about_project_capabilities.md).
 ```xml
-<ProjectCapability Include="DynamicDependentFile"/>
+<ProjectCapability Include="DynamicDependentFile" />
 ```
 
 ## How to define new dependencies
 
-There are 2 different ways to define new dependencies:
-- using the built-in calculation provided by CPS
-- Visual Studio 2017: implement `IDependentFilesProvider` if you need a more advanced logic than the built-in implementation supports.
+There are two different ways to define new dependencies:
+- Add rule data for the built-in calculation provided by CPS
+- Implement `IDependentFilesProvider` if you need a more advanced logic than the built-in implementation supports (Visual Studio 2017 or later)
 
 ### Using the built-in item dependency calculation
 
-That is done via authoring xaml rules. For instance, we would like to make all the files ending with `.xaml.cs`
-to be under the corresponding parent `.xaml` files.
+CPS's built-in dependency calculation is extended by authoring XAML rules.
+
+In the following example we will make files ending with `.xaml.cs`
+dependent upon (and appear under) their parent `.xaml` files.
 
 Firstly, we need to define a content type and a mapping from ‘file
 extension’ to ‘content type’. They could be added into the existing
-`ProjectItemsSchema.xaml` file, or a new xaml file being included in project
+`ProjectItemsSchema.xaml` file, or a new XAML file being included in project
 system specific `.targets` file.
 
 ```xml
-    <ProjectSchemaDefinitions xmlns="http://schemas.microsoft.com/build/2009/properties">
-      <ContentType Name="PageXaml" DisplayName="XAML Page" ItemType="Page" />
-      <FileExtension Name=".xaml" ContentType="PageXaml" />
-    </ProjectSchemaDefinitions>
+<ProjectSchemaDefinitions xmlns="http://schemas.microsoft.com/build/2009/properties">
+  <ContentType Name="PageXaml" DisplayName="XAML Page" ItemType="Page" />
+  <FileExtension Name=".xaml" ContentType="PageXaml" />
+</ProjectSchemaDefinitions>
 ```
 
 Then when CPS handles a `.xaml` file, it can map it to a content type
@@ -79,11 +81,12 @@ The following snippent defines *filename*.xaml.cs as dependent on *filename*.xam
 
 ```xml
 <ContentType Name="PageXaml" DisplayName="XAML Page" ItemType="Page">
-    <NameValuePair Name="DependentExtensions" Value=".xaml.cs" />
+  <NameValuePair Name="DependentExtensions" Value=".xaml.cs" />
 </ContentType>
 ```
 
 #### Visual Studio 2015; obsolete in Visual Studio 2017
+
 Allows defining depenencies for files where child item contains the filename and extension of the parent:
 *filename*.*ext1*.*ext2* depends on *filename*.*ext1*
 
@@ -99,7 +102,7 @@ Note that child file name must be formed as "`<parent file name>.<dependent file
 extension>`". A few examples: `.xaml.cs`, `.aspx.cs`, 
 `.aspx.designer.cs`, etc.
 
-The new mechanism that exists in Visual Studio 2017 (using `DependentExtensions`) is more flexible
+The mechanism in Visual Studio 2017 and later (using `DependentExtensions`) is more flexible
 as it doesn't require the dependent item to contain the extension of the parent file. That enables dependency
-calculation for items where only the file name is the same (regardless the extension)
-abc.bar depends on abc.foo
+calculation for items where only the file name is the same (regardless of extension) such as
+`abc.bar` depending upon `abc.foo`.
