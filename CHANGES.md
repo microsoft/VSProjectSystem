@@ -7,6 +7,12 @@ Official NuGet packages: http://www.nuget.org
 
 Pre-release NuGet packages: https://vside.myget.org/gallery/devcore
 
+**Visual Studio 2019**
+* Nuget only 16.0.374-pre
+  * Targets Visual Studio 2019 Preview 1
+  * [Breaking changes](doc/overview/breaking_changes_visual_studio_2019.md)
+
+**Visual Studio 2017**
 * 15.8.243.39717
   * Targets Visual Studio 2017 Update 8
   * Microsoft.VisualStudio.ProjectSystem.Sdk.Tools
@@ -50,7 +56,7 @@ Pre-release NuGet packages: https://vside.myget.org/gallery/devcore
   * Extending Xaml rules
 * 15.0.183.53925
   * Targets Visual Studio 2017 Preview
-  * [Breaking changes](doc/overview/breaking_changes_visual_studio_next.md)
+  * [Breaking changes](doc/overview/breaking_changes_visual_studio_2017.md)
   * `Project Tree Modifier extension` item template was replaced by `Project Tree Properties Provider extension`
   * Other fixes and improvements:
     * [#81](https://github.com/Microsoft/VSProjectSystem/issues/81) - Can't override default Xaml rules; build fails when changing project type to Class Library

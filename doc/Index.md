@@ -85,4 +85,4 @@ VS Project System Documentation
   - [Add Single File Generator](scenario/add_single_file_generator.md)
 - [Differences between Visual Studio 2013 and Visual Studio 2015](overview/VS2013_vs_VS2015.md)
 - [Changes](../CHANGES.md)
-- [Breaking Changes in Visual Studio 2017](overview/breaking_changes_visual_studio_next.md)
+- [Breaking Changes in Visual Studio 2017](overview/breaking_changes_visual_studio_2017.md)
