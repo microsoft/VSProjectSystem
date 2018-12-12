@@ -6,13 +6,13 @@ For breaking changes made in previous releases:
   * [Breaking changes in Visual Studio 2017](breaking_changes_visual_studio_2017.md)
   * [Breaking changes in Visual Studio 2015](VS2013_vs_VS2015.md)
 
-## Changed the type of the `Services` object
+## Changed the type of the Services object
 
 The type `Services` object of `IProjectService`/`UnconfiguredProject`/`ConfiguredProject` has been changed from interface to abstract class, so new services can be added without introducing breaking changes in the future.
 
 While there is no code change needed to adopt this breaking change, a **rebuild of the component is required** with the Visual Studio 2019 version of CPS reference assembly make the component to work in Visual Studio 2019.
 
-## Some snapshot interfaces no longer inherit from `IProjectVersionedValue`
+## Some snapshot interfaces no longer inherit from IProjectVersionedValue
 
 The following interfaces no longer inherit from `IProjectVersionedValue`:
 
@@ -23,41 +23,41 @@ The following interfaces no longer inherit from `IProjectVersionedValue`:
 | IProjectSharedFoldersSnapshot |
 | IProjectImportTreeSnapshot |
 
-The project version is already carried in the dataflow. This is a breaking change.
-
-In most cases, we added a new `Value` property to the interface, which originally used to inherit the property from `IProjectVersionedValue<T>`.
+In most cases, we added a new `Value` property to the interface; originally it was inherited from `IProjectVersionedValue<T>`.
 
 Any code using the version number in those snapshots should use the version number in the dataflow directly.
 
 `IProjectSnapshot.Value` has been marked as obsolete, please use `IProjectSnapshot.ProjectInstance`.
 
-## `IBuildLoggerProvider` has been marked as obsolete, and is no longer called
+This change was made to have a consistent style in all dataflow services and to reuse unchanged immutable objects to reduce allocations (instead of creating new instances that include version only changes).
+
+## IBuildLoggerProvider has been marked as obsolete, and is no longer called
 
 Code should be changed to use `IBuildLoggerProviderAsync` instead
 
-## `IVsLoggerEventProcessor` is removed
+## IVsLoggerEventProcessor is removed
 
 It was marked as obsolete in the previous release, and not called by the product.
 
 Mitigation: use `IVsLoggerEventProcessor2` instead
 
-## Property `ActiveConfigurationChangedEventArgs.ActiveConfiguredProjectProviderDataSourceVersion` is removed
+## Property ActiveConfigurationChangedEventArgs.ActiveConfiguredProjectProviderDataSourceVersion is removed
 
 It was marked as obsolete in previews version.
 
-## Enum value `ProjectFaultSeverity.Crippling` has been removed.
+## Enum value ProjectFaultSeverity.Crippling has been removed.
 
 It was renamed to `LimitedFunctionality` in Visual Studio 2017 updates, and the old enum value has been marked as obsolete for a while.
 
-## `LazyFill` value has been removed from `IProjectTreeSnapshot` and `TreeUpdateResult`
+## LazyFill value has been removed from IProjectTreeSnapshot and TreeUpdateResult
 
 This value was not used and maintained since Dev 14.
 
-## `IProjectTree.PropertySheet` is marked as obsolete and no longer saved in the tree
+## IProjectTree.PropertySheet is marked as obsolete and no longer saved in the tree
 
 We don't expect it to be used.
 
-## `IProjectLockService` introduces a new set of delegate based API to replace the current using style API to avoid potential deadlocks
+## IProjectLockService introduces a new set of delegate based API to replace the current using style API to avoid potential deadlocks
 
 The old using style API has not been removed or marked as obsolete at this point of time, so no action is required.
 
@@ -104,7 +104,7 @@ var actionBlock = DataflowBlockSlim.CreateActionBlock<IProjectVersionedValue<IPr
     nameFormat: "My Block {1}");
 ```
 
-## `IProjectSubscriptionServices` behavior changes
+## IProjectSubscriptionServices behavior changes
 
 When you chain the dataflow with `initialDataAsNew` `false`, the `ProjectChangeDescription.Before` is now the same as `ProjectChangeDescription.After`.
 
@@ -112,8 +112,8 @@ Previously, the `Before` property will provide an empty snapshot.
 
 If you receive data from those dataflow blocks directly, you will always get the latest snapshots with an empty change delta (`Change.Before` is always the same as `Change.After`).
 
-## `IProjectTree.IsLinked` is now preserved as a flag in the project tree flags
+## IProjectTree.IsLinked is now preserved as a flag in the project tree flags
 
 This doesn't affect code that access the property, but only tree providers that create linked item node.
 
-## We are considering making `IProjectTree.BrowseObjectProperties` to be computed lazily post preview 1.
+## We are considering making IProjectTree.BrowseObjectProperties to be computed lazily post preview 1.

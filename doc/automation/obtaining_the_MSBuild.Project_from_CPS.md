@@ -14,7 +14,7 @@ await projectLockService.WriteLockAsync(
     {
         Project project = await access.GetProjectAsync(configuredProject);
 
-        // party on it, respecting the type of lock you've acquired. 
+        // Use the msbuild project, respecting the type of lock acquired.
 
         // If you're going to change the project in any way, 
         // check it out from SCC first:
@@ -29,7 +29,7 @@ Visual Studio 2017 and earlier
         {
             MSBuild.Project project = await access.GetProjectAsync(configuredProject);
 
-            // party on it, respecting the type of lock you've acquired. 
+            // Use the msbuild project, respecting the type of lock acquired.
 
             // If you're going to change the project in any way, 
             // check it out from SCC first:
