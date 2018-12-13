@@ -1,5 +1,23 @@
 # DataFlow Examples
 
+## New Slim DataFlow blocks
+
+In Visual Studio 2019, in order to reduce the memory usage, we introduced slim implementation for some of the data flow blocks.
+
+Before:
+```csharp
+var actionBlock = new ActionBlock<IProjectVersionedValue<IProjectSubscriptionUpdate>>(
+    this.OnSubscriptionUpdate,
+    new ExecutionDataflowBlockOptions { NameFormat = "My Block {1}"});
+```
+
+After:
+```csharp
+var actionBlock = DataflowBlockSlim.CreateActionBlock<IProjectVersionedValue<IProjectSubscriptionUpdate>>(
+    this.OnSubscriptionUpdate,
+    nameFormat: "My Block {1}");
+```
+
 ## Original Data Source
 
 ``` Csharp

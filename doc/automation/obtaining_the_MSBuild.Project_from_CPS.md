@@ -7,12 +7,29 @@ Obtaining the MSBuild.Project from CPS
 3. Acquire a read, upgradeable read or write lock, as appropriate, and 
    use the MSBuild Project object exclusively within the lock:
 
+Visual Studio 2019
+```csharp
+await projectLockService.WriteLockAsync(
+    async access =>
+    {
+        Project project = await access.GetProjectAsync(configuredProject);
+
+        // Use the msbuild project, respecting the type of lock acquired.
+
+        // If you're going to change the project in any way, 
+        // check it out from SCC first:
+        await access.CheckoutAsync(configuredProject.UnconfiguredProject.FullPath);
+    },
+    cancellationToken);
+```
+
+Visual Studio 2017 and earlier
 ```csharp
         using (var access = await projectLockService.WriteLockAsync())
         {
             MSBuild.Project project = await access.GetProjectAsync(configuredProject);
 
-            // party on it, respecting the type of lock you've acquired. 
+            // Use the msbuild project, respecting the type of lock acquired.
 
             // If you're going to change the project in any way, 
             // check it out from SCC first:
