@@ -10,8 +10,8 @@ This page's contents apply to all CPS projects (VC++ and JavaScript).
 
 The documentation for this can be found here:
 
-1. [Platform Extensibility (Part 1)](http://blogs.msdn.com/b/vsproject/archive/2009/06/10/platform-extensibility-part-1.aspx)
-2. [Platform Extensibility (Part 2)](http://blogs.msdn.com/b/vsproject/archive/2009/06/18/platform-extensibility-part-2.aspx)
+1. [Platform Extensibility (Part 1)](https://docs.microsoft.com/en-us/visualstudio/extensibility/creating-a-basic-project-system-part-1?view=vs-2017)
+2. [Platform Extensibility (Part 2)](https://docs.microsoft.com/en-us/visualstudio/extensibility/creating-a-basic-project-system-part-2?view=vs-2017)
 
 ### Defining a custom content/item type
 
