@@ -8,6 +8,8 @@ Official NuGet packages: http://www.nuget.org
 Pre-release NuGet packages: https://vside.myget.org/gallery/devcore
 
 **Visual Studio 2019**
+* 16.1.xxx
+  * The FullPath property value for folder nodes will now always have a trailing slash (Fixes https://github.com/dotnet/project-system/issues/4485)
 * Nuget only 16.0.374-pre
   * Targets Visual Studio 2019 Preview 1
   * [Breaking changes](doc/overview/breaking_changes_visual_studio_2019.md)
