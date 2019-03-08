@@ -105,10 +105,10 @@ The following steps describe how to add a new item template for an item template
     - Update the 2 places where the old file `Class.cs` is specified (`DefaultName` and `ProjectItem`) to `Class.foo`
     - Add an `AppliesTo` element under `TemplateData` that points to your project's unique capability. E.g:
 ```xml
-  <TemplateData>
+<TemplateData>
     ...
     <AppliesTo>ProjectType1</AppliesTo>
-  </TemplateData>
+</TemplateData>
 ```
 
 See https://msdn.microsoft.com/en-us/library/vstudio/tsyyf0yh.aspx for more information.
@@ -119,5 +119,5 @@ More details
 ------------
 - See also [Custom item types](../extensibility/custom_item_types.md)
 - More documentation about defining a .xaml rule file for your item type:
-  - [http://blogs.msdn.com/b/vsproject/archive/2009/06/10/platform-extensibility-part-1.aspx](http://blogs.msdn.com/b/vsproject/archive/2009/06/10/platform-extensibility-part-1.aspx)    
-  - [http://blogs.msdn.com/b/vsproject/archive/2009/06/18/platform-extensibility-part-2.aspx](http://blogs.msdn.com/b/vsproject/archive/2009/06/18/platform-extensibility-part-2.aspx)
+  - [Platform Extensibility (Part 1)](https://docs.microsoft.com/en-us/visualstudio/extensibility/creating-a-basic-project-system-part-1?view=vs-2017)
+  - [Platform Extensibility (Part 2)](https://docs.microsoft.com/en-us/visualstudio/extensibility/creating-a-basic-project-system-part-2?view=vs-2017)
