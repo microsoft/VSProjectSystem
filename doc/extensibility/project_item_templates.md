@@ -1,7 +1,7 @@
 Item Templates
 ====================
 
-The Project System Extensibility SDK offers several item templates.
+The [Project System Extensibility SDK](https://marketplace.visualstudio.com/items?itemName=VisualStudioProductTeam.VisualStudioProjectSystemExtensibilityPreview) offers several item templates.
 
 They can be easily added to your project by using Add New Item. They are located under the Visual C# Items/Extensibility/Project System Node in the Add New Item dialog.
 
