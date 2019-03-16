@@ -1,5 +1,40 @@
 # Visual Studio Project System Extensibility Documentation
 
+## What is a project system?
+A project system sits between a project file on disk (for example, .csproj and .vbproj) and various Visual Studio features including, but not limited to, Solution Explorer, designers, the debugger, language services, build and deployment. Almost all interaction that occurs with files contained in a project file, happens through the project system.
+
+There are three reasons to extend a project system in Visual Studio:
+1. Support a new project file format.
+1. Integrate existing file format with a new language service.
+1. Customize behavior of an existing project system.
+
+## Project system extensibility
+The traditional way to a build or customize a project system  is to implement a set of [Project System COM interfaces](https://docs.microsoft.com/en-us/visualstudio/extensibility/creating-a-basic-project-system-part-1). Most project systems don't start from scratch. Instead, they leverage the [MPFProj project system example](https://docs.microsoft.com/en-us/visualstudio/extensibility/internals/using-the-managed-package-framework-to-implement-a-project-type-csharp?view=vs-2017) as a starting point.
+
+The Common Project System (CPS) described in this repository provides default implementation for a subset of project system COM interfaces. This simplifies building and maintaining a project system, but comes with the cost of reduced functionality.
+
+## How to select the project system platform?
+|Scenario|Recommended Project System Platform
+|---|---
+|Customize C#/VB/F# Desktop project system| MPFProj and COM-based [project flavoring](https://docs.microsoft.com/en-us/visualstudio/extensibility/internals/project-types?view=vs-2017)
+|Customize  C#/VB/F# .NET Core project system| Not fully supported at this time. CPS is your best bet
+|Add new a project type or a language| Prototype with CPS, be ready to fall back to MPFProj for complex scenarios
+
+## Compare MPFProj and Common Project System
+|Criteria|[MPFProj](https://docs.microsoft.com/en-us/visualstudio/extensibility/internals/using-the-managed-package-framework-to-implement-a-project-type-csharp?view=vs-2017)| Common Project System (this repo)
+|---|---|---
+|Maturity|Release|Preview|
+|Breaking changes in major updates|None|[Expected](changes)|
+|Flexibility|Full control over project system behavior|Some project system interfaces are not implemented
+|Extensibility|C++ and COM-based|C# with managed interfaces and MEF
+|Threading model|Single threaded and bound to the UI thread|Multi-threaded, scalable, and responsive
+|Scalability|Memory-optimized|Uses extra memory to support multi-threading
+|Methodology|Requires implementing all project system interfaces|Provides default implementation and allows for customizations
+|Ramp up time|High|Low
+|Used by project systems|Desktop C#/VB/F#|[.NET Core C#/VB/F#](https://github.com/dotnet/project-system) and C++
+|Minimum Supported Version| Visual Studio 2008 | Visual Studio 2015
+ 
+## Common Project System
 Visual Studio can be extended in many ways, including adding new types of projects and augmenting
 existing ones. This repository contains the [documentation and best practices][1] for
 creating extensions that add new project types to Visual Studio. We welcome community input if you
