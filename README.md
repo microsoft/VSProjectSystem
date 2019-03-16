@@ -42,7 +42,7 @@ wish to contribute new topics or find any issues.
 
 To get started, read the [introduction][intro] while you're waiting for the [pre-requisites][prereq] to install.
 
-Please file any product bugs you find on [Microsoft Connect][connect]. 
+Please file any product bugs you find on [Developer Community](https://docs.microsoft.com/en-us/visualstudio/ide/how-to-report-a-problem-with-visual-studio). 
 You may file doc bugs [here][docbugs].
 
 [![Join the chat at https://gitter.im/Microsoft/extendvs](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/Microsoft/extendvs?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
@@ -62,6 +62,5 @@ This project has adopted the [Microsoft Open Source Code of Conduct](https://ope
  [prereq]: doc/overview/prereqs.md
  [intro]: doc/overview/intro.md
  [changes]: CHANGES.md
- [connect]: https://connect.microsoft.com/VisualStudio
  [docbugs]: https://github.com/Microsoft/VSProjectSystem/issues
  
