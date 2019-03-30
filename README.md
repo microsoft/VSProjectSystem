@@ -16,7 +16,7 @@ The Visual Studio Project System (VSPS) described in this repository provides de
 ## How to select a project system platform?
 |Scenario|Recommended Project System Platform
 |---|---
-|Customize C#/VB/F# Desktop project system| MPFProj and COM-based [project flavoring](https://docs.microsoft.com/en-us/visualstudio/extensibility/internals/project-types?view=vs-2017)
+|Customize C#/VB/F# Desktop project system| COM-based [project flavoring](https://docs.microsoft.com/en-us/visualstudio/extensibility/internals/project-types?view=vs-2017)
 |Customize  C#/VB/F# .NET Core project system| Not fully supported at this time. VSPS is your best bet
 |Add new a project type or a language| Prototype with VSPS, be ready to fall back to MPFProj for complex scenarios
 
