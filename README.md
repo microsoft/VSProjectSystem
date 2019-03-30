@@ -26,11 +26,11 @@ The Visual Studio Project System (VSPS) described in this repository provides de
 |Maturity|Release|Preview|
 |Breaking changes in major updates|None|[Expected](changes)|
 |Flexibility|Full control over project system behavior.|Some project system interfaces are not implemented.
+|Complexity|High: You will need to understand all project interfaces.|Low: You only need to understand customized behavior.
 |Extensibility|Implements project system COM interfaces.|C# with managed interfaces for extension points and MEF.
 |Threading model|Single threaded and bound to the UI thread.|Multi-threaded, scalable, and responsive.
 |Scalability|Memory-optimized|Uses extra memory to support multi-threading.
 |Methodology|Provides templates that implement project interfaces. The project system can modify or add to these templates.|Locks down project system interfaces and allows to override some behaviors.
-|Ramp up time|High|Low
 |Used by project systems|Desktop C#/VB/F#|[.NET Core C#/VB/F#](https://github.com/dotnet/project-system) and C++
 |Minimum Supported Version| Visual Studio 2008 | Visual Studio 2015
  
