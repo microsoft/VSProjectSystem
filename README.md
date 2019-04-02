@@ -24,7 +24,7 @@ The Visual Studio Project System (VSPS) described in this repository provides de
 |Criteria|[MPFProj](https://docs.microsoft.com/en-us/visualstudio/extensibility/internals/using-the-managed-package-framework-to-implement-a-project-type-csharp?view=vs-2017)| Visual Studio Project System (this repo)
 |---|---|---
 |Maturity|Release|Preview|
-|Breaking changes in major updates|None|[Expected](changes)|
+|Breaking changes in major updates|None|[Expected][changes]|
 |Flexibility|Full control over project system behavior.|Some project system interfaces are not implemented.
 |Complexity|High: You will need to understand all project interfaces.|Low: You only need to understand customized behavior.
 |Extensibility|Implements project system COM interfaces.|C# with managed interfaces for extension points and MEF.
