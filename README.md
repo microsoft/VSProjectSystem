@@ -32,7 +32,7 @@ The Visual Studio Project System (VSPS) described in this repository provides de
 |Scalability|Memory-optimized|Uses extra memory to support multi-threading.
 |Methodology|Provides templates that implement project interfaces. The project system can modify or add to these templates.|Locks down project system interfaces and allows to override some behaviors.
 |Used by project systems|Desktop C#/VB/F#|[.NET Core C#/VB/F#](https://github.com/dotnet/project-system) and C++
-|Minimum Supported Version| Visual Studio 2008 | Visual Studio 2015 (some APIs are not availbale in older versions and there are [breaking changes][changes] in major versions)
+|Minimum Supported Version| Visual Studio 2008 | Visual Studio 2015 (some APIs are not available in older versions and there are [breaking changes][changes] in major versions)
  
 ## Visual Studio Project System
 Visual Studio can be extended in many ways, including adding new types of projects and augmenting
