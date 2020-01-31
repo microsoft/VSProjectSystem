@@ -50,13 +50,13 @@ You may file doc bugs [here][docbugs].
 For the latest features take a look at [Changes][changes].
 
 For further information about extending Visual Studio in other ways please check out
-[VisualStudio.com/integrate][3].
+[Visual Studio extensibility documentation][3].
 
 This project has adopted the [Microsoft Open Source Code of Conduct](https://opensource.microsoft.com/codeofconduct/). For more information see the [Code of Conduct FAQ](https://opensource.microsoft.com/codeofconduct/faq/) or contact [opencode@microsoft.com](mailto:opencode@microsoft.com) with any additional questions or comments.
 
  [1]: doc/Index.md
  [2]: http://aka.ms/vsprojectsystemextensibilityvsix
- [3]: https://www.visualstudio.com/integrate/explore/explore-vside-vsi?wt.mc_id=o~display~github~vsproject
+ [3]: https://docs.microsoft.com/en-us/visualstudio/extensibility/index
  [4]: https://www.visualstudio.com/en-us/downloads/visual-studio-2015-downloads-vs.aspx
  [VSSDK]: http://go.microsoft.com/?linkid=9877247
  [prereq]: doc/overview/prereqs.md
