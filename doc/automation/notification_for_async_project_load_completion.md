@@ -11,12 +11,6 @@ If you just want to be notified when population has completed so you can
 create your own snapshot of the project's contents, this code is appropriate:
 
 ```csharp
-    private class TreeServiceImportHelper
-    {
-        [Import("Microsoft.VisualStudio.ProjectSystem.PhysicalProjectTreeService")]
-        internal IProjectTreeService TreeService { get; set; }
-    }
-
     /// <summary>
     /// Returns a task that completes when the specified project has
     /// populated its IVsHierarchy with items.
@@ -24,9 +18,8 @@ create your own snapshot of the project's contents, this code is appropriate:
     /// <param name="unconfiguredProject">The project to wait for population.</param>
     private async Task WaitForItemPopulationAsync(UnconfiguredProject unconfiguredProject)
     {
-        var helper = new TreeServiceImportHelper();
-        unconfiguredProject.SatisfyImportsOnce(helper);
-        await helper.TreeService.PublishAnyNonLoadingTreeAsync();
+        var treeService = unconfiguredProject.Services.ExportProvider.GetExportedValue<IProjectTreeService>("Microsoft.VisualStudio.ProjectSystem.PhysicalProjectTreeService");
+        await treeService.PublishAnyNonLoadingTreeAsync();
     }
 ```
 
