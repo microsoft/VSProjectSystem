@@ -15,7 +15,7 @@ Assuming this chain of DataFlow blocks:
 
 `Source -> A -> B -> C`
 
-`Source` represents a (source block)[dataflow_sources.md], typically a MEF import.
+`Source` represents a [source block](dataflow_sources.md), typically a MEF import.
 
 `A`, `B`, `C` are blocks created and maintained locally in a component.
 
@@ -25,7 +25,7 @@ You should create the Inner links first (`A->B`, `B->C`) before linking the sour
 
 This is not required, but it will reduce the chance that `A` starts processing data before `B` is linked. It is more likely to expose race conditions, or require data to be buffered.
 
-#### Use the Fault Handler Service - IProjectFaultHandlerService
+#### Use the Fault Handler Service - `IProjectFaultHandlerService`
 The fault handler service monitors exceptions and displays the yellow notification bar when exceptions are encountered. However, it only does that when it is registered.
 
 When a dataflow block encounters an exception, it switches to a `Faulted` state and stops processing any data.
