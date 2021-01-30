@@ -61,7 +61,7 @@ known to declare the capability.
 | FabricApplication | Indicates a project that represents a Service Fabric application.
 | LSJavaScript.v45 | Indicates a project that represents a LightSwitch JavaScript V4.5 project.
 | FolderPublish | Indicates a project that is capable of publishing the deployment artifacts to a folder.
-| UnitTestContainer | The project may contain unit tests. 
+| TestContainer | The project may contain unit tests. 
 | AppDesigner | Indicates that the project uses the app designer for managing project properties.
 | HandlesOwnReload | Indicates that the project can handle a reload by itself (potentially smartly) without the solution doing a full reload of the project when the project file changes on disk.
 | UseFileGlobs | Indicates that the project file can include files using MSBuild file globbing patterns.

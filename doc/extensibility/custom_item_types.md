@@ -10,8 +10,8 @@ This page's contents apply to all CPS projects (VC++ and JavaScript).
 
 The documentation for this can be found here:
 
-1. [Platform Extensibility (Part 1)](http://blogs.msdn.com/b/vsproject/archive/2009/06/10/platform-extensibility-part-1.aspx)
-2. [Platform Extensibility (Part 2)](http://blogs.msdn.com/b/vsproject/archive/2009/06/18/platform-extensibility-part-2.aspx)
+1. [Platform Extensibility (Part 1)](https://docs.microsoft.com/en-us/visualstudio/extensibility/creating-a-basic-project-system-part-1?view=vs-2017)
+2. [Platform Extensibility (Part 2)](https://docs.microsoft.com/en-us/visualstudio/extensibility/creating-a-basic-project-system-part-2?view=vs-2017)
 
 ### Defining a custom content/item type
 
@@ -30,15 +30,15 @@ Create a XAML file, often called `ProjectItemsSchema.xaml`, with content
 such as:
 
 ```xml
-    <ProjectSchemaDefinitions xmlns="http://schemas.microsoft.com/build/2009/properties">
-        <ContentType
-            Name="XppSourceFile" 
-            DisplayName="X++ source file" 
-            ItemType="XppCompile" />
-        <ItemType 
-            Name="XppCompile" 
-            DisplayName="X++ source file"/>
-    </ProjectSchemaDefinitions>
+<ProjectSchemaDefinitions xmlns="http://schemas.microsoft.com/build/2009/properties">
+    <ContentType
+        Name="XppSourceFile" 
+        DisplayName="X++ source file" 
+        ItemType="XppCompile" />
+    <ItemType 
+        Name="XppCompile" 
+        DisplayName="X++ source file"/>
+</ProjectSchemaDefinitions>
 ```
 
 ### Associating a content type with a file extension
@@ -48,9 +48,9 @@ item type) when added to the project based on file extension, you may add
 this tag within your `ProjectSchemaDefinitions` tag:
 
 ```xml
-    <FileExtension 
-        Name=".xpp" 
-        ContentType="XppSourceFile" />
+<FileExtension 
+    Name=".xpp" 
+    ContentType="XppSourceFile" />
 ```
 
 Your project must point to this XAML file so that CPS will find it and
@@ -60,7 +60,7 @@ your project files such as is shown below. Be sure to give an absolute or
 project-relative path to your XAML file so that CPS can find it.
 
 ```xml
-    <PropertyPageSchema Include="$(MSBuildThisFileDirectory)ProjectItemsSchema.xaml" />
+<PropertyPageSchema Include="$(MSBuildThisFileDirectory)ProjectItemsSchema.xaml" />
 ```
 
 ### CPS native `FileNameAndExtension` property
@@ -72,14 +72,14 @@ supported directly by MSBuild.
 To add it for a custom type, add the following property -
 
 ```xml
-    <StringProperty
-        Name="FileNameAndExtension"
-        DisplayName="File Name"
-        ReadOnly="true"
-        Category="Misc"
-        Description="Name of the file or folder.">
-        <StringProperty.DataSource>
-            <DataSource Persistence="Intrinsic" ItemType="None" PersistedName="FileNameAndExtension" />
-        </StringProperty.DataSource>
-    </StringProperty>
+<StringProperty
+    Name="FileNameAndExtension"
+    DisplayName="File Name"
+    ReadOnly="true"
+    Category="Misc"
+    Description="Name of the file or folder.">
+    <StringProperty.DataSource>
+        <DataSource Persistence="Intrinsic" ItemType="None" PersistedName="FileNameAndExtension" />
+    </StringProperty.DataSource>
+</StringProperty>
 ```

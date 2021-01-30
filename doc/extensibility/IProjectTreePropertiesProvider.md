@@ -21,7 +21,7 @@ You can also set the icons on specific source items that are may be unique to yo
     /// </summary>
     [Export(typeof(IProjectTreePropertiesProvider))]
     [AppliesTo(MyUnconfiguredProject.UniqueCapability)]
-    // TODO: Consider removing the Order attribute as it typically should not be needed when creating a new project type. It may be needed when customizing an existing project type to override the default behavior (e.g. the default C# implementation).
+    // TODO: For new project types, consider removing this Order attribute. If customizing an existing project type, you may need a high enough value to ensure your implementation overrides the base project's behaviour.
     [Order(1000)]
     internal class ProjectTreePropertiesProvider1 : IProjectTreePropertiesProvider
     {

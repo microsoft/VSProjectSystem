@@ -5,8 +5,26 @@ Download Location: [Visual Studio Project System Extensibility](https://visualst
 
 Official NuGet packages: http://www.nuget.org
 
-Pre-release NuGet packages: https://myget.org/gallery/vs-devcore
+Pre-release NuGet packages: https://vside.myget.org/gallery/devcore
 
+**Visual Studio 2019**
+* 16.1.xxx
+  * The FullPath property value for folder nodes will now always have a trailing slash (Fixes https://github.com/dotnet/project-system/issues/4485)
+    * For example retreiving the FullPath property via DTE using `folderItem.Properties["FullPath"]` will now return a value that will always end in a trailing slash, whereas previously it would not have.
+* Nuget only 16.0.374-pre
+  * Targets Visual Studio 2019 Preview 1
+  * [Breaking changes](doc/overview/breaking_changes_visual_studio_2019.md)
+
+**Visual Studio 2017**
+* 15.8.243.39717
+  * Targets Visual Studio 2017 Update 8
+  * Microsoft.VisualStudio.ProjectSystem.Sdk.Tools
+    * Xaml rule generator improvements
+      * Generating a new set of methods to make it easy to get properties from the snapshot
+      * Better formatting in the generated C# code: using spaces instead of tabs, using C bracing style
+      * Using hash instead of random Guid for the fallback rule name that remains unchanged if there are no changes in the xaml rule
+    * Defined some missing properties in the embedded XamlPropertyRule.xaml rule (available when used from a CPS-based project - see the CpsExtension sample)
+    * Updated package dependencies: removed dependency on VsixSuppression as it is no longer needed, using System.Threading.Tasks.Dataflow instead of Microsoft.Tpl.Dataflow
 * 15.3.224.43737
   * Targets Visual Studio 2017 Update 3
   * Improved the default debug launcher when starting the script without attaching a debugger (using Ctrl + F5)
@@ -41,7 +59,7 @@ Pre-release NuGet packages: https://myget.org/gallery/vs-devcore
   * Extending Xaml rules
 * 15.0.183.53925
   * Targets Visual Studio 2017 Preview
-  * [Breaking changes](doc/overview/breaking_changes_visual_studio_next.md)
+  * [Breaking changes](doc/overview/breaking_changes_visual_studio_2017.md)
   * `Project Tree Modifier extension` item template was replaced by `Project Tree Properties Provider extension`
   * Other fixes and improvements:
     * [#81](https://github.com/Microsoft/VSProjectSystem/issues/81) - Can't override default Xaml rules; build fails when changing project type to Class Library

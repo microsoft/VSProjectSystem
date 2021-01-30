@@ -16,8 +16,8 @@ set of such XAML rules that you can use as a model.
 
 For more details, please refer to the following blog posts:
 
-1. [Platform Extensibility part 1](http://blogs.msdn.com/b/vsproject/archive/2009/06/10/platform-extensibility-part-1.aspx)
-2. [Platform Extensibility part 2](http://blogs.msdn.com/b/vsproject/archive/2009/06/18/platform-extensibility-part-2.aspx)
+1. [Platform Extensibility part 1](https://docs.microsoft.com/archive/blogs/vsproject/platform-extensibility-part-1)
+2. [Platform Extensibility part 2](https://docs.microsoft.com/archive/blogs/vsproject/platform-extensibility-part-2)
 
 These properties get compiled into `.cs` file at build time 
 
