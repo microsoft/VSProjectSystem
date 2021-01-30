@@ -16,16 +16,20 @@ Assuming this chain of DataFlow blocks:
 `Source -> A -> B -> C`
 
 `Source` represents a (source block)[dataflow_sources.md], typically a MEF import.
+
 `A`, `B`, `C` are blocks created and maintained locally in a component.
 
 ### Linking
 #### Create Inner links first before linking the source
 You should create the Inner links first (`A->B`, `B->C`) before linking the source (`Source->A`).
+
 This is not required, but it will reduce the chance that `A` starts processing data before `B` is linked. It is more likely to expose race conditions, or require data to be buffered.
 
 #### Use the Fault Handler Service - IProjectFaultHandlerService
 The fault handler service monitors exceptions and displays the yellow notification bar when exceptions are encountered. However, it only does that when it is registered.
+
 When a dataflow block encounters an exception, it switches to a `Faulted` state and stops processing any data.
+
 If the fault handler is not registered, these exceptions will be unnoticed and, because dataflow blocks stop processing data, can lead to features that silently stop working or deadlocks that are difficult to investigate.
 
 The fault handler should be registered for the last block in the chain (`C` in this case). That is because the fault state propagates through the data flow chain, so monitoring the last block is sufficient to handle exceptions in the entire chain.
@@ -70,6 +74,7 @@ Usually, there is no need to keep references to the other blocks, which helps re
 
 #### Use nameFormat to specify a readable name for your block
 The nameFormat gets associated with the data flow block, and it makes it easier to identify blocks when debugging issues.
+
 Some special consideration may be needed if there is a large number of blocks being created, as it may increase memory usage.
 ```CSharp
 this.blockA = DataflowBlockSlim.CreateBroadcastBlock<...>(
