@@ -36,8 +36,8 @@ The fault handler should be registered for the last block in the chain (`C` in t
 ```CSharp  
 this.FaultHandlerService.RegisterFaultHandler(
     this.blockC.Completion,
-	CommonProjectSystemTools.DefaultReportSettings,
-	project: this.UnconfiguredProject);
+    CommonProjectSystemTools.DefaultReportSettings,
+    project: this.UnconfiguredProject);
 ```
 #### Custom Block Completion Logic
 If needed, custom block completion logic should be chained to the last block. That is because the completion propagates through the dataflow chain.
