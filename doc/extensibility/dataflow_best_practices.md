@@ -1,8 +1,8 @@
-# DataFlow Best Coding Practices
-These are suggestions to help avoid some common pitfalls when using DataFlow blocks.
+# Dataflow Best Coding Practices
+These are suggestions to help avoid some common pitfalls when using Dataflow blocks in CPS.
 
-## Use Slim DataFlow blocks 
-You should always use the Slim version blocks provided by CPS, unless you need advanced capabilities that are not supported (like processing multiple works at the same time). See [DataFlow Examples](dataflow_example.md) for more information.
+## Use Slim Dataflow blocks 
+You should always use the Slim version blocks provided by CPS, unless you need advanced capabilities that are not supported (like processing multiple works at the same time). See [Dataflow Examples](dataflow_example.md) for more information.
 
 ## Expose `BroadcastBlock` via API
 You should typically expose `BroadcastBlock` via API instead of TransformBlock, etc
