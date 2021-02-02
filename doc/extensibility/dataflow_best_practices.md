@@ -72,10 +72,10 @@ Typically, block completion is not needed and requires special attention.
 
 Usually, there is no need to keep references to the other blocks, which helps reduce memory consumption.
 
-#### Use nameFormat to specify a readable name for your block
-The nameFormat gets associated with the data flow block, and it makes it easier to identify blocks when debugging issues.
+#### Use `nameFormat` to specify a readable name for your block
+The `nameFormat` gets associated with the Dataflow block, and it makes it easier to identify blocks when debugging issues.
 
-Some special consideration may be needed if there is a large number of blocks being created, as it may increase memory usage.
+Some special consideration may be needed if there are a large number of blocks being created, as it may increase memory usage.
 ```CSharp
 this.blockA = DataflowBlockSlim.CreateBroadcastBlock<...>(
     nameFormat: "Block A {1}",
