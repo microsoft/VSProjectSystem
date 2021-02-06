@@ -1,13 +1,14 @@
 # Dataflow Best Coding Practices
 These are suggestions to help avoid some common pitfalls when using Dataflow blocks in CPS.
 
-## Use Slim Dataflow blocks 
-You should always use the Slim version blocks provided by CPS, unless you need advanced capabilities that are not supported (like processing multiple works at the same time). See [Dataflow Examples](dataflow_example.md) for more information.
+## Use Slim Dataflow blocks
+You should always use the Slim Datwflow blocks provided by CPS, unless you need advanced capabilities that are not supported (like processing multiple works at the same time). See [Dataflow Examples](dataflow_example.md) for more information.
 
-## Expose `BroadcastBlock` via API
-You should typically expose `BroadcastBlock` via API instead of TransformBlock, etc
+## Expose only `BroadcastBlock` via API
+API should typically expose Broadcast blocks (`BroadcastBlockSlim` or `BroadcastBlock`) via API instead of other types of blocks (e.g. TransformBlock, etc)
   - Other blocks will retain data when there is no subscriber
   - If one subscriber picks a message from a block other than broadcast block, it won't be available to the next
+  - `BroadcastBlockSlim` is the only slim dataflow block that supports multiple subscribers. All other slim blocks support a single subscriber, which means any previous subscriber needs to be unliked before linking another one
   - If you chain a block with a limited capacity to the dataflow, it will force the source to buffer extra data. Or worse, if the source block is a shared broadcast block, it will block other consumers to receive new events.
 
 ## Linking/disposing patterns
@@ -32,7 +33,9 @@ When a dataflow block encounters an exception, it switches to a `Faulted` state 
 
 If the fault handler is not registered, these exceptions will be unnoticed and, because dataflow blocks stop processing data, can lead to features that silently stop working or deadlocks that are difficult to investigate.
 
-The fault handler should be registered for the last block in the chain (`C` in this case). That is because the fault state propagates through the data flow chain, so monitoring the last block is sufficient to handle exceptions in the entire chain.
+The fault handler should be registered for the last block in the chain (`C` in this case). That is because the fault state propagates through the data flow chain, so monitoring the last block is sufficient to handle exceptions in the entire chain. 
+
+Note that registering the fault handler service for middle blocks will not cause functionality problems, but will increase memory usage.
 ```CSharp  
 this.FaultHandlerService.RegisterFaultHandler(
     this.blockC.Completion,
@@ -84,14 +87,15 @@ this.blockA = DataflowBlockSlim.CreateBroadcastBlock<...>(
 
 #### Consider specifying `skipIntermediateInputData`/`skipIntermediateOutputData = true` 
 
-This improves performance, but can be used only if the latest data is needed.
+This improves performance, but can be used only if the latest data is needed. 
+If the dataflow is passing change as a 'delta', skipping intermediate input will lose data.
 
 #### DataFlow blocks should produce initial data
 
 There may be cases where producing initial data may not be possible because some conditions are not met. In that case, it is preferable to produce empty initial data than not producing any data, which can lead to deadlocks.
 
 ### Disposing/Completing
-- Only the first link needs to be disposed (`Source -> A`), the rest will be handled automatically
+- Only the external links need to be disposed (`Source -> A`), middle links get GC-ed automatically
 - Only the the first block (`A`) needs to be completed. The rest will be handled automatically
 
 ```CSharp
