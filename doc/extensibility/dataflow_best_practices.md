@@ -5,7 +5,7 @@ These are suggestions to help avoid some common pitfalls when using Dataflow blo
 You should always use the Slim Dataflow blocks provided by CPS, unless you need advanced capabilities that are not supported (like processing multiple works at the same time). See [Dataflow Examples](dataflow_example.md) for more information.
 
 ## Expose only `BroadcastBlock` via API
-APIs should typically expose Broadcast blocks (`BroadcastBlockSlim` or `BroadcastBlock`) via API instead of other types of blocks (e.g. `TransformBlock`, etc)
+APIs should typically expose Broadcast blocks (`BroadcastBlockSlim` or `BroadcastBlock`) instead of other types of blocks (e.g. `TransformBlock`, etc)
   - Other blocks will retain data when there is no subscriber
   - If one subscriber picks a message from a block other than broadcast block, it won't be available to the next
   - `BroadcastBlockSlim` is the only slim dataflow block that supports multiple subscribers. All other slim blocks support a single subscriber, which means any previous subscriber needs to be unliked before linking another one
