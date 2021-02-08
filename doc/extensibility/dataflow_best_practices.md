@@ -2,7 +2,7 @@
 These are suggestions to help avoid some common pitfalls when using Dataflow blocks in CPS.
 
 ## Use Slim Dataflow blocks
-You should always use the Slim Datwflow blocks provided by CPS, unless you need advanced capabilities that are not supported (like processing multiple works at the same time). See [Dataflow Examples](dataflow_example.md) for more information.
+You should always use the Slim Dataflow blocks provided by CPS, unless you need advanced capabilities that are not supported (like processing multiple works at the same time). See [Dataflow Examples](dataflow_example.md) for more information.
 
 ## Expose only `BroadcastBlock` via API
 API should typically expose Broadcast blocks (`BroadcastBlockSlim` or `BroadcastBlock`) via API instead of other types of blocks (e.g. TransformBlock, etc)
