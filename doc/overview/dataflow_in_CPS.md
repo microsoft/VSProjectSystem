@@ -26,6 +26,8 @@ Dataflow in CPS comes primarily in two types, an original source or a chained so
 
 ### [Dataflow Sources](../extensibility/dataflow_sources.md)
 
+### [Dataflow Best Practices](../extensibility/dataflow_best_practices.md)
+
 ## Data Consistency Problem
 
 Dataflow is simple when you have a single line of dependencies, but in CPS it is much more complex.
