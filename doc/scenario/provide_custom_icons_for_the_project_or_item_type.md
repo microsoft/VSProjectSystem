@@ -4,13 +4,13 @@ Provide custom icons for the Project Type/Item type
 
 **[Item template:](../extensibility/project_item_templates.md)** Custom Icons
 
-##Tutorial
+## Tutorial
 In order to add custom icons to your project, you need to follow these steps:
 
 1. Add New Item
   - **Visual Studio 2017**: `Project Tree Properties Provider extension`
   - **Visual Studio 2015**: `Project Tree Modifier extension`
-  - This will add an [IProjectTreePropertiesProvider](../extensibility/IProjectTreePropertiesProvider)/[IProjectTreeModifier](../extensibility/IProjectTreeModifier.md) export to your project type that will replace the project icon with a JavaScript Icon
+  - This will add an [IProjectTreePropertiesProvider](../extensibility/IProjectTreePropertiesProvider.md)/[IProjectTreeModifier](../extensibility/IProjectTreeModifier.md) export to your project type that will replace the project icon with a JavaScript Icon
 2. Add New Item - `Custom Icons`. This template does a few things:
   - Generates a new .imagemanifest file, that defines one image with 2 sources:
     - .png file that will be used for 100 % dpi
@@ -29,11 +29,11 @@ In order to add custom icons to your project, you need to follow these steps:
   tree = tree.SetIcon(Images1Monikers.ProjectIconImageMoniker.ToProjectSystemType());
   ```
 
-##Adding an image manifest manually
+## Adding an image manifest manually
 1. Image manifest
   1. Create a new xml file, name it to .imagemanifest (e.g. `Images1.imagemanifest`)
   
-    ```xml
+```xml
     <?xml version="1.0" encoding="utf-8"?>
     <ImageManifest xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
                                xmlns:xsd="http://www.w3.org/2001/XMLSchema"
@@ -53,7 +53,7 @@ In order to add custom icons to your project, you need to follow these steps:
       </Images>
       <ImageLists />
     </ImageManifest>
-  ```
+```
   2. Replace `<AssemblyName>` with your assembly name 
   3. Replace `<GUID>`with a guid
   3. In the Properties page, set the following properties:
@@ -61,7 +61,8 @@ In order to add custom icons to your project, you need to follow these steps:
     - `Include in VSIX` to `True`
 2. Image Monikers
   1. Create a new `Images1Monikers.cs` file
-    ```csharp
+```csharp
+    
     using System;
     using Microsoft.VisualStudio.Imaging.Interop;
     
@@ -82,7 +83,7 @@ In order to add custom icons to your project, you need to follow these steps:
             }
         }
     }
-    ```
+```
   2. Replace `<GUID>` with the same value used in the image manifest
   3. Replace `<namespace>` with your namespace
 3. Add images
