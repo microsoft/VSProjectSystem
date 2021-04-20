@@ -83,7 +83,7 @@ It's very important that project capabilities you define fit this criteria:
   - Bad: `Concurrency`
 - Avoid acronyms: 
   - Good: `CSharp`
-  - Bad: `VB`
+  - Bad: `CS`
 - May include a version number, when necessary, but is usually discouraged.
 
 ### Dynamic project capabilities in Visual Studio 2017
