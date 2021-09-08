@@ -1,4 +1,4 @@
-﻿Project Capabilities
+Project Capabilities
 ====================
 
 Project capabilities are the recommended way to determine the type, platform,
@@ -14,19 +14,18 @@ The presence of some capability can be detected on a given project with
 code such as:
 
 ```csharp
-    using Microsoft.VisualStudio.Shell; // imports the extension method
+using Microsoft.VisualStudio.Shell; // imports the extension method
 
-    IVsHierarchy hierarchy;
-    bool match = hierarchy.IsCapabilityMatch("SomeCapability");
+IVsHierarchy hierarchy;
+bool match = hierarchy.IsCapabilityMatch("SomeCapability");
 ```
 
-Where [`IVsHierarchy.IsCapabilityMatch`][l01] is an extension method.
-[l01]:https://msdn.microsoft.com/en-us/library/hh443055.aspx
+Where [`IVsHierarchy.IsCapabilityMatch`](https://docs.microsoft.com/dotnet/api/microsoft.visualstudio.shell.packageutilities.iscapabilitymatch) is an extension method.
 
 Project capability expressions can also be passed to the `IsCapabilityMatch`
 method in order to test for combinations of capabilities (including
 AND, OR, NOT logic). Read more about [the supported syntax and
-operators](https://msdn.microsoft.com/en-us/library/microsoft.visualstudio.shell.interop.ivsbooleansymbolexpressionevaluator.evaluateexpression.aspx).
+operators](https://msdn.microsoft.com/library/microsoft.visualstudio.shell.interop.ivsbooleansymbolexpressionevaluator.evaluateexpression.aspx).
 
 How to declare project capabilities in your project
 ---------------------------------------------------
