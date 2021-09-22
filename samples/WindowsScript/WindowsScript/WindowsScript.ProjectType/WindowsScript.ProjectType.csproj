@@ -244,11 +244,31 @@
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(VSToolsPath)\VSSDK\Microsoft.VsSDK.targets" Condition="'$(VSToolsPath)' != ''" />
-  <!-- TODO: This copies the build authoring to a well-known location so that on the machine this project builds on,
-       the projects created by the 3rd party consumer can open and build. But the real 3rd party consumer will not
-       have run this step so they won't be able to open their projects. 
-       To ship, the project type author must create an MSI that places these files in a well-known location on the
-       customer machine and update the project template to point at that location.-->
+  <!-- This will include the msbuild files and rules files in the VSIX file, installed under 
+       MSBuildExtensionsPath ([Visual Studio Install Path]\MSBuild). This gives the files a well-known
+       location, so projects can import these files and work for different users on the same machine, or work
+       on different machines when VS is installed on a different path, as long as the VSIX was installed.
+       NOTE: The VSIX manifest needs the "This VSIX is installed for all users (requires elevation on install)"
+       checkbox to be checked. -->
+  <ItemGroup>
+    <VSIXSourceItem Include="BuildSystem\DeployedBuildSystem\**">
+      <InProject>false</InProject>
+      <InstallRoot>MSBuild</InstallRoot>
+      <VSIXSubPath>CustomProjectSystems\WindowsScript</VSIXSubPath>
+    </VSIXSourceItem>
+    <VSIXSourceItem Include="BuildSystem\Rules\**">
+      <InProject>false</InProject>
+      <InstallRoot>MSBuild</InstallRoot>
+      <VSIXSubPath>CustomProjectSystems\WindowsScript\Rules</VSIXSubPath>
+    </VSIXSourceItem>
+  </ItemGroup>
+  <!-- Although the above causes the VSIX to contain the MSBuild and rules files, the automatic deploy of the
+       VSIX to the experimental instance of Visual Studio on build does not copy the files to the MSBuild
+       location. In order to simplify development, we'll copy the files to a different well-known location. To
+       avoid needed to run Visual Studio as administrator, or overwriting the files installed by the VSIX,
+       we'll copy to a different location, in the current user's profile. However, this requires any project
+       used to test the project system to import the files from a different location than to use the project
+       system installed from the VSIX. -->
   <Target Name="AfterBuild">
     <ItemGroup>
       <BuildSystemToCopy Include="BuildSystem\DeployedBuildSystem\**\*" />
