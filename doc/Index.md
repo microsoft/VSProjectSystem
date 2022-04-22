@@ -88,3 +88,4 @@ VS Project System Documentation
   - [Breaking Changes in Visual Studio 2019](overview/breaking_changes_visual_studio_2019.md)
   - [Breaking Changes in Visual Studio 2017](overview/breaking_changes_visual_studio_2017.md)
   - [Breaking changes in Visual Studio 2015](overview/VS2013_vs_VS2015.md)
+  - [VS2015 docs](https://github.com/microsoft/VSProjectSystem/commit/eea4b8528b6008099641980392a12fcf8d0be186)
