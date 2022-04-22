@@ -1,11 +1,10 @@
-Dynamic Capabilities - Visual Studio 2017
+Dynamic Capabilities
 ====================
 
 Project capabilities are the recommended way to determine the type, platform,
 and features of a project. In the modern world, features of a project can change over time.
-For example, when a NuGet package is added. In Visual Studio 2017,
-CPS has built-in infrastructure to support changing project capabilities without
-reloading the project.
+For example, when a NuGet package is added. CPS has built-in infrastructure to support
+changing project capabilities without reloading the project.
 
 This infrastructure will eventually allow the design time experience of
 a project to be adjusted dynamically based on features/NuGet packages being used in the project.

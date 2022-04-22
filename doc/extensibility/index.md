@@ -39,15 +39,12 @@ your extension be loaded and initialized in the process. It is best to
 use the `AppliesTo` attribute effectively to prevent your assembly from even
 loading when it does not apply to a given project.
 
-### `OrderAttribute`/`OrderPrecedenceAttribute`
-
-**Visual Studio 2017:** OrderAttribute
-**Visual Studio 2015:** OrderPrecedenceAttribute
+### `OrderAttribute`
 
 When more than one extension applies to a given project, CPS may pick the
 "most preferred" extension to fulfill some requirement, or it may loop
 through all extensions to allow each to participate. The preference order,
-or the order of that loop, can be influenced by adding an `[Order]`/`[OrderPrecedence]`
+or the order of that loop, can be influenced by adding an `[Order]`
 attribute to your export.
 
 Lacking any such attribute on an export, the sort order value is effectively

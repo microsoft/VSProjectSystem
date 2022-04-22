@@ -1,9 +1,9 @@
-How to examine Visual Studio 2017 registry
+How to examine Visual Studio Private Registry
 ==========================================
 
 Introduction
 ------------
-Since Visual Studio 2017, the registry settings are stored in a private registry files.
+Since Visual Studio 2017, the registry settings are stored in private registry files.
 This enables multiple installations of Visual Studio side by side, on the same machine.
 However, these entries are no longer available in the global registry file.
 

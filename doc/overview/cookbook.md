@@ -3,8 +3,8 @@
 
 Important for CPS users: If you're in CPS or a CPS extension, please
 replace all references to `ThreadHelper.JoinableTaskFactory` with
-`this.ThreadHandling.AsyncPump`, where `this.ThreadHandling` is an `[Import]
-IThreadHandling`.
+`this.ThreadingService.JoinableTaskFactory`, where `this.ThreadingService` is an `[Import]
+IProjectThreadingService`.
 
 Initial setup
 ---
@@ -17,13 +17,13 @@ Block a thread while doing async work
 ---------------------
 
 ```csharp
-    ThreadHelper.JoinableTaskFactory.Run(async delegate
+    this.ThreadingService.JoinableTaskFactory.Run(async delegate
     {
         // caller's thread
         await SomeOperationAsync(...);
 
         // switch to main thread
-        await ThreadHelper.JoinableTaskFactory.SwitchToMainThreadAsync();
+        await this.ThreadingService.JoinableTaskFactory.SwitchToMainThreadAsync();
         SomeUIThreadBoundWork();
 
         // switch to threadpool
@@ -55,7 +55,7 @@ Alternatively:
     await TaskScheduler.Default;
 
     // On some thread, but definitely want to be on the main thread:
-    await ThreadHelper.JoinableTaskFactory.SwitchToMainThreadAsync();
+    await this.ThreadingService.JoinableTaskFactory.SwitchToMainThreadAsync();
 ```
 
 How to switch to the UI thread
@@ -64,7 +64,7 @@ How to switch to the UI thread
 In an async method
 
 ```csharp
-	await ThreadHelper.JoinableTaskFactory.SwitchToMainThreadAsync();
+	await this.ThreadingService.JoinableTaskFactory.SwitchToMainThreadAsync();
 ```
 
 In a sync method
@@ -74,9 +74,9 @@ and then follow the above pattern. If you must remain synchronous, you
 can switch to the UI thread like this:
 
 ```csharp
-    ThreadHelper.JoinableTaskFactory.Run(async delegate
+    this.ThreadingService.JoinableTaskFactory.Run(async delegate
     {
-        await ThreadHelper.JoinableTaskFactory.SwitchToMainThreadAsync();
+        await this.ThreadingService.JoinableTaskFactory.SwitchToMainThreadAsync();
         // You're now on the UI thread.
     });
 ```

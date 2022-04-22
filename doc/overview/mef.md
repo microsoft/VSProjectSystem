@@ -20,9 +20,6 @@ becomes a straightforward task, which starts creating extension classes
 through templates provided in the CPS SDK.  A typical CPS component looks 
 like this:
 
-Note: In Visual Studio 2017, IProjectTreeModifier has been replaced by IProjectTreePropertiesProvider
-
-**Visual Studio 2017**
 ```csharp
     [Export(typeof(IProjectTreePropertiesProvider))]
     [AppliesTo("MyProjectType")]
@@ -43,30 +40,9 @@ Note: In Visual Studio 2017, IProjectTreeModifier has been replaced by IProjectT
         // ...
     }
 ```
-**Visual Studio 2015**
-```csharp
-    [Export(typeof(IProjectTreeModifier))]
-    [AppliesTo("MyProjectType")]
-    internal class ProjectTreeIconProvider : IProjectTreeModifier
-    {
-        /// <summary>
-        /// Gets the tree factory.
-        /// </summary>
-        [Import]
-        protected Lazy<IProjectTreeFactory> TreeFactory { get; private set; }
 
-        /// <summary>
-        /// Gets the unconfigured project.
-        /// </summary>
-        [Import]
-        protected UnconfiguredProject UnconfiguredProject { get; set; }
-
-        // ...
-    }
-```
-
-This extension implements the `IProjectTreePropertiesProvider`/`IProjectTreeModifier` interface. Through the 
-`Export` attribute, the class above implements IProjectTreePropertiesProvider/`IProjectTreeModifier` contract 
+This extension implements the `IProjectTreePropertiesProvider` interface. Through the 
+`Export` attribute, the class above implements `IProjectTreePropertiesProvider` contract 
 so that the right component in CPS system can load the class when it is needed. 
 Through the `Import` attribute, the class declares what it wants from the
 system so that MEF will set the two properties with `Import` attribute
@@ -125,9 +101,9 @@ Some common MEF errors include:
   extension (E.g., lots of CPS services like `IProjectLockService` are 
   provided by the system, which should not be implemented again inside any 
   extension); 
-- Importing a component in a wrong scope (e.g., `IProjectTreeModifier` 
+- Importing a component in a wrong scope (e.g., `IProjectTreePropertiesProvider` 
   is expected to be in the `UnconfiguredProject` scope; therefore, the 
-  implementation of the `IProjectTreePropertiesProvider`/`IProjectTreeModifier` should never import a 
+  implementation of the `IProjectTreePropertiesProvider` should never import a 
   `ConfiguredProject` directly).
 
 In CPS, any contract that can be implemented by extensions is expected to
