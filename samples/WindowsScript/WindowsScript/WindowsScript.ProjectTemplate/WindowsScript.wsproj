@@ -1,7 +1,11 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup Label="Globals">
-    <CustomProjectExtensionsPath>$(LocalAppData)\CustomProjectSystems\WindowsScript\</CustomProjectExtensionsPath>
+    <!-- NOTE: You might want to remove the first property definition (that looks for the file in the LocalAppData folder)
+         for your production template. It's here just to make testing/debugging changes to the project system as easy as
+         building the project and running the experimental instance. -->
+    <CustomProjectExtensionsPath Condition="Exists('$(LocalAppData)\CustomProjectSystems\WindowsScript\WindowsScript.props')">$(LocalAppData)\CustomProjectSystems\WindowsScript\</CustomProjectExtensionsPath>
+    <CustomProjectExtensionsPath Condition="'$(CustomProjectExtensionsPath)' == ''">$(MSBuildExtensionsPath)\CustomProjectSystems\WindowsScript\</CustomProjectExtensionsPath>
   </PropertyGroup>
 
   <Import Project="$(CustomProjectExtensionsPath)WindowsScript.props" />
