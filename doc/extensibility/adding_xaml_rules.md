@@ -1,24 +1,70 @@
 # Adding Xaml Rules
 
 In CPS, the role of XAML rules is to describe to CPS _what_ and _how_ properties, items, and metadata
-from msbuild matter. There are 3 ways to add XAML rules to the project for CPS to pick up. These are:
+from msbuild matter. There are 4 ways to add XAML rules to the project for CPS to pick up. These are:
 
 1. Including the .xaml file via MSBuild `PropertyPageSchema` items
 2. Embedding the xaml in your assembly and exposing it via a MEF export
 3. Adding either the xaml file or Rule object programatically via a CPS API
+4. Implement `IRuleObjectProvider` and expose it via a MEF export
 
 ## When to choose what way to add the rule
-We recommend adding rules via MSBuild items whenever possible. This method is the most flexible as you can take
-full advantage of MSBuild to determine when and how the rule is included. CPS also supports
-[extending rules](extending_rules.md) imported via MSBuild. This also does not require your assembly to be
-part of the MEF composition.
 
-The two extension ways of adding rules to CPS are both equally acceptable. They are useful for when your rule
-is not intended to be extended and essentially "private" to you. An example is a rule backing an
-`IDebugLaunchProvider`. Between the two the MEF Export is simpler and leaves the logic of dynamically adding and
-removing the rule to CPS.
+### MSBuild `PropertyPageSchema` items
+
+This is the recommended approach, and the most flexible as you can take full advantage of MSBuild to
+detetermine when and how the rule is included.
+
+This is the only option that does not require adding components to the MEF composition or access to
+the CPS API, and as such is the _only_ option in scenarios where those are not available (e.g., distributing
+a rule as part of a NuGet package).
+
+One disadvantage is that the `PropertyPageSchema` items need to go into a .props or .targets file that
+is imported into the user's project. If you do not already have such a .props/.targets file, one of
+the other approaches may be simpler.
+
+Another disadvantage is the difficulty around localization. If your rule contains text that needs to
+be translated into the user's locale you will need to provide multiple copies of the .xaml file (one
+per locale) and add MSBuild logic to pick the appropriate one based on the culture/locale settings.
+
+Distribution/deployment is also a consideration, especially when localization is needed. You need to
+ensure that all your XAML files are properly included in your final distributable, whether that be
+a NuGet package, VS extension, etc.
+
+### Embedded XAML files
+
+This is a good option if you have access to the MEF composition, don't need the flexibility provided
+by `PropertyPageSchema` items, and prefer to define rules in XAML.
+
+Localization is still a disadvantage, as you will still need to produce locale-specific XAML and embed
+them properly into the expected satellite assemblies.
+
+Embedded XAML files cannot override or extend rules defined in XAML files. See [extending rules](extending_rules.md)
+for more information.
+
+### CPS API
+
+You can use the `IAdditionalRuleDefinitionsService` to dynamically add and remove rule files and objects.
+This is generally the most complicated approach, and is only recommended when you need a high degree
+of control over when a rule is available in the project or if you need to dynamically generate the contents
+(i.e., properties, categories, or metadata) of a rule.
+
+### `IRuleObjectProvider`
+
+This approach is only available starting in VS 2022 Update 1 (Dev17.1).
+
+This is a good option if you have access to the MEF composition, don't need the flexibility provided
+by `PropertyPageSchema` items, and prefer to define rule objects in code rather than XAML.
+
+One significant advantage of this approach is localization, as the code generating the rule can load
+localized text from a resource file or similar. This avoids the need to create and distribute localized
+versions of a .xaml file.
+
+Rule objects defined in this way can only override or extend rules from other `IRuleObjectProvider`s.
+See [extending rules](extending_rules.md) for more information 
 
 ## Via MSBuild items
+
 This is the recommended way of adding rules to CPS. A xaml rule can be simply included via msbuild evaluation.
 
 ``` xml
@@ -31,6 +77,7 @@ This is the recommended way of adding rules to CPS. A xaml rule can be simply in
 ```
 
 ## Via MEF Export
+
 This method is recommended when your rule is "private" to your implementation, like backing an
 `IDebugLaunchProvider`. With the MEF export method, CPS will handle adding/removing the rule
 the rule for you.
@@ -84,6 +131,50 @@ and optionaly generate a partial class for easy access to the rule.
 ```
 
 3. You can also remove the rules added via `RemoveRuleDefinition`.
+
+## Via `IRuleObjectProvider`
+
+Define and export an `IRuleObjectProvider` as follows:
+
+``` CSharp
+
+[ExportRuleObjectProvider(name: "MyRuleProviderName", context: "Project")]
+[Order(0)]
+[AppliesTo(MyUnconfiguredProject.UniqueCapability)]
+internal class MyRuleProvider : IRuleObjectProvider
+{
+    public IReadOnlyCollection<Rule> GetRules()
+    {
+        var rule = new Rule();
+        rule.BeginInit();
+
+        rule.Name = "rule_name";
+        rule.PageTemplate = "generic";
+
+        rule.Properties.Add(new StringProperty
+        {
+            Name = "AStringProperty"
+        });
+
+        // Add additional categories, properties, metadata, etc.
+
+        rule.EndInit();
+
+        // Add additional rules.
+
+        return ImmutableList<Rule>.Empty
+            .Add(rule);
+    }
+}
+```
+
+Notes:
+
+1. The name given in the `ExportRuleObjectProvider` must be unique to that specific implementation of
+`IRuleObjectProvider`. Duplicating the name across multiple implementations may cause them to be ignored
+entirely.
+2. Rule objects from providers with higher `Order` numbers can override or extend those from providers
+with lower numbers.
 
 ## What is Context?
 
