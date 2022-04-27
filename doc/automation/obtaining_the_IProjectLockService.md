@@ -21,15 +21,8 @@ up an instance of your object).
 
 ### From MEF via an imperative `GetService` query
 
-**Visual Studio 2017:**
 ```csharp
     IProjectService projectService;
-    IProjectLockService projectLockService = projectService.Services.ProjectLockService;
-```
-
-**Visual Studio 2015:**
-```csharp
-    ProjectService projectService;
     IProjectLockService projectLockService = projectService.Services.ProjectLockService;
 ```
 

@@ -2,8 +2,8 @@ Interfaces *not* defined on the `IVsProject` object
 ===========================================
 
 Comparing to the current VB/C# projects, you may find some interfaces are
-missing on CPS's implementation of the `IVsProject` object. Starting in VS 2017
-CPS now supports a limited form of [COM aggregation](../extensibility/com_aggregation.md).
+missing on CPS's implementation of the `IVsProject` object.
+CPS supports a limited form of [COM aggregation](../extensibility/com_aggregation.md).
 
 These interfaces are not implemented currently.
 

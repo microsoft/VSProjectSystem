@@ -85,7 +85,7 @@ It's very important that project capabilities you define fit this criteria:
   - Bad: `CS`
 - May include a version number, when necessary, but is usually discouraged.
 
-### Dynamic project capabilities in Visual Studio 2017
+### Dynamic project capabilities
 
 Capablities of a project can be changed without reloading the project.
 Read more about [dynamic project capabilities](dynamicCapabilities.md).

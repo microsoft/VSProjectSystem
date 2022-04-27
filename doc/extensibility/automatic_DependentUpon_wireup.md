@@ -72,9 +72,7 @@ Next, we need to specify the ‘dependent file extensions’ of `.xaml` via addi
 
 Multiple dependent file extensions are allowed and must be separated by `;` (semicolon).
 
-#### Visual Studio 2017
-
-Allows defining depenencies for files that have the same file name. For example:
+Allows defining dependencies for files that have the same file name. For example:
 *filename*.*ext2* depends on *filename*.*ext1*
 
 The following snippent defines *filename*.xaml.cs as dependent on *filename*.xaml:
@@ -84,25 +82,3 @@ The following snippent defines *filename*.xaml.cs as dependent on *filename*.xam
   <NameValuePair Name="DependentExtensions" Value=".xaml.cs" />
 </ContentType>
 ```
-
-#### Visual Studio 2015; obsolete in Visual Studio 2017
-
-Allows defining depenencies for files where child item contains the filename and extension of the parent:
-*filename*.*ext1*.*ext2* depends on *filename*.*ext1*
-
-The following snippent defines *filename*.xaml.cs as dependent on *filename*.xaml:
-
-```xml
-<ContentType Name="PageXaml" DisplayName="XAML Page" ItemType="Page">
-  <NameValuePair Name="DependentFileExtensions" Value=".cs" />
-</ContentType>
-```
-
-Note that child file name must be formed as "`<parent file name>.<dependent file
-extension>`". A few examples: `.xaml.cs`, `.aspx.cs`, 
-`.aspx.designer.cs`, etc.
-
-The mechanism in Visual Studio 2017 and later (using `DependentExtensions`) is more flexible
-as it doesn't require the dependent item to contain the extension of the parent file. That enables dependency
-calculation for items where only the file name is the same (regardless of extension) such as
-`abc.bar` depending upon `abc.foo`.

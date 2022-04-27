@@ -1,6 +1,5 @@
-`IProjectTreePropertiesProvider` - Visual Studio 2017
+`IProjectTreePropertiesProvider`
 ======================
-**Visual Studio 2015:** use [IProjectTreeModifier, IProjectTreeModifier2](IProjectTreePropertiesProvider.md)
 
 **[Item template:](project_item_templates.md)** Project Tree Properties Provider extension
 

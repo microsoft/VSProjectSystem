@@ -37,9 +37,7 @@ are not upgradeable.
 
 #### Threading
 
-**Visual Studio 2017:** `IProjectThreadingService.JoinableTaskFactory`
-
-**Visual Studio 2015:** `IThreadHandling.AsyncPump`
+`IProjectThreadingService.JoinableTaskFactory`
 
 Project locks are issued asynchronously. If a project lock cannot be
 immediately assigned to you, your async method will yield and will resume
@@ -51,7 +49,7 @@ lock on the threadpool.
 
 Releasing a lock does not automatically restore you to your previous thread. 
 To get back to the UI thread after releasing a project lock use 
-`IProjectThreadingService.JoinableTaskFactory`/`IThreadHandling.AsyncPump` instead of `ThreadHelper.JoinableTaskFactory`.
+`IProjectThreadingService.JoinableTaskFactory` instead of `ThreadHelper.JoinableTaskFactory`.
 
 It is allowed to switch back to the UI thread while holding a project
 lock, but this is for purposes of calling 3rd party code when absolutely
@@ -65,10 +63,6 @@ See [Obtaining the MSBuild.Project from CPS](../automation/obtaining_the_MSBuild
 for an example.
 
 ### DO's and DON'Ts
-**Visual Studio 2017:** `IProjectThreadingService.JoinableTaskFactory`
-
-**Visual Studio 2015:** `IThreadHandling.AsyncPump`
-
 
 - DO always take a project lock when accessing MSBuild objects.
 - DON'T ever retain a reference to an MSBuild object beyond the scope of 
@@ -84,7 +78,7 @@ for an example.
   you're on the UI thread, even if you have not yet released it.
 - DON'T use `ThreadHelper.JoinableTaskFactory` in your code once you start 
   interacting directly with the CPS project lock. Import the 
-  `IProjectThreadingService`/`IThreadHandling` service (via MEF) and use the `IProjectThreadingService.JoinableTaskFactory`/`IThreadHandling.AsyncPump` 
+  `IProjectThreadingService` service (via MEF) and use the `IProjectThreadingService.JoinableTaskFactory` 
   instance of `JoinableTaskFactory` instead. This will mitigate deadlocks 
   that can result between someone holding the UI thread and wanting a 
   project lock, and you holding a project lock and wanting the UI thread.
@@ -92,9 +86,9 @@ for an example.
   Calling `ReadLockAsync().Wait()` or any other synchronously blocking 
   variant will cause your code to malfunction. If you must block the calling 
   thread while doing work with a project lock, you may use 
-  `IProjectThreadingService.JoinableTaskFactory.Run(Func<Task>)` / `IThreadHandling.AsyncPump.Run(Func<Task>)` for that purpose. See **Block 
+  `IProjectThreadingService.JoinableTaskFactory.Run(Func<Task>)` for that purpose. See **Block 
   a thread while doing async work** for more information on that, but 
-  remember to use `IProjectThreadingService.JoinableTaskFactory` / `IThreadHandling.AsyncPump` instead of 
+  remember to use `IProjectThreadingService.JoinableTaskFactory` instead of 
   `ThreadHelper.JoinableTaskFactory`.
 - DO be aware that when you have a project lock and request the UI thread, 
   that your lock may be lent out to someone controlling the UI thread and 

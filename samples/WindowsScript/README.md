@@ -15,7 +15,7 @@ Simple project type that supports .js and .vbs files; can run and debug them usi
 
 ## How to use the sample
 ### Walkthrough
-1. Open `WindowsScript.sln` in Visual Studio 2017 and use Ctrl + F5 to run it. This will open the Experimental instance of Visual Studio
+1. Open `WindowsScript.sln` in Visual Studio and use Ctrl + F5 to run it. This will open the Experimental instance of Visual Studio
 2. From the main menu, `File` -> `New Project`, select `WindowsScript` -> `Windows Script Project` and press `OK`. This will create a new project that contains a `Start.js` file
 3. In the generated project, insert a breakpoint on the 2nd line of `Start.js`
 4. Press F5 - this will start the debugger; it will stop at the breakpoint

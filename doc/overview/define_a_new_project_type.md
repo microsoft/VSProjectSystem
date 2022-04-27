@@ -30,14 +30,14 @@ A project type template and several item templates can help you get started
 with your own project type and some common customizations. 
 
 - Install the [prerequisites](prereqs.md)
-- Launch Visual Studio 2015
+- Launch Visual Studio
 - Open the New Project dialog
 - Set the target framework to .NET Framework 4.6
 - Select "Project Type" from the "Visual C# -> Extensibility" node
 - Complete the new project wizard
 
 You've got yourself your own project type. You can press F5 to launch the
-Experimental instance of Visual Studio 2015 and see your new project appear
+Experimental instance of Visual Studio and see your new project appear
 in the New Project dialog now.
 
 Now you can customize it. Notice the Add New Item dialog has several

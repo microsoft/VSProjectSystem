@@ -54,8 +54,6 @@ around these published versions.
 To solve the problem described above, all dataflow in CPS produces types of `IProjectVersionedValue<T>`.
 This type combines `T Value` and `IImmutableDictionary<NamedIdentity, IComparable> DataSourceVersions`.
 
-> In Visual Studio 2015, it is `Guid` instead of `NamedIdentity`
-
 Then, chained dataflow will cary the versions of its upstream data sources. When a chained source has
 multiple upstream sources its published version becomes the merged value of the its upstream sources.
 This functionality is facilitated via `ProjectDataSources.SyncLinkTo`. When using that method to link

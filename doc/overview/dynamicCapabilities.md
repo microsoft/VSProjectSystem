@@ -1,11 +1,10 @@
-Dynamic Capabilities - Visual Studio 2017
+Dynamic Capabilities
 ====================
 
 Project capabilities are the recommended way to determine the type, platform,
-and features of a project. In the modern world, features of a project can change over the time.
-For example, when a NuGet package is added. In Visual Studio 2017,
-the CPS has a built-in infrastructure to support capabilities of a project to be changed without
-reloading the project.
+and features of a project. In the modern world, features of a project can change over time.
+For example, when a NuGet package is added. CPS has built-in infrastructure to support
+changing project capabilities without reloading the project.
 
 This infrastructure will eventually allow the design time experience of
 a project to be adjusted dynamically based on features/NuGet packages being used in the project.
@@ -126,7 +125,7 @@ With dynamic capabilities it is possible to get an error dialog during load that
 capability change occured during project load, and the project can never finish loading.
 The most typical cause of this is an unconfigured scope extension depends on a capability
 from the configured scope, but that extension point does not support dynamic capabilities.
-Capabilities fron the configured scope do eventually flow to the unconfigured scope, but
+Capabilities from the configured scope do eventually flow to the unconfigured scope, but
 that is too late for some extension points.
 
 Some (but not all) extension points to watch out for:

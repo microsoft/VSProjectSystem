@@ -6,7 +6,7 @@ and be notified when that data changes:
 
 ```csharp
 [Import]
-IThreadHandling ThreadHandling { get; set; }
+IProjectThreadingService ProjectThreadingService { get; set; }
 
 private IDisposable SubscribeToProjectData(
     UnconfiguredProject unconfiguredProject, 
@@ -22,7 +22,7 @@ private IDisposable SubscribeToProjectData(
 private async Task ProjectUpdateAsync(IProjectVersionedValue<IProjectSubscriptionUpdate> update)
 {
     // This runs on a background thread. Switch to the Main thread (if necessary):
-    await this.ThreadHandling.AsyncPump.SwitchToMainThreadAsync();
+    await this.ProjectThreadingService.JoinableTaskFactory.SwitchToMainThreadAsync();
 
     // Process the update.
     // Either in terms of what's currently there...
