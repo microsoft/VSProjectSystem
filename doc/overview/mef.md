@@ -195,3 +195,37 @@ without using the `OrderPrecedenceImportCollection`. These singleton services
 are provided by CPS and cannot be replaced by extensions. Such services
 include the `ConfiguredProject`, `UnconfiguredProject`, `IProjectLockService`,
 etc.
+
+## MEF and C# Nullable Reference Types
+
+When using the C# nullable feature in your code, you may need to tweak the above
+examples slightly.
+
+For example, NRT requires all non-nullable fields/properties be assigned by the end of the
+constructor, however MEF assigns the value of imports via reflection. To get around
+this you can use:
+
+```csharp
+[Import]
+public MyComponent Foo { get; private set; } = null!;
+```
+
+The `= null!` tells the compiler that this is initialized to a value, and the `!`
+suppresses a warning about it being assigned to null. This change has no runtime
+impact.
+
+Note that imports that allow defaults should be marked nullable, as MEF might not
+initialize them.
+
+For example:
+
+```csharp
+[Import(AllowDefault = true)]
+public MyComponent? Foo { get; private set; };
+
+[ImportingConstructor]
+public Bar([Import(AllowDefault = true) Baz? baz])
+{
+  // ...
+}
+```
