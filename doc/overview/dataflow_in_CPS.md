@@ -35,11 +35,12 @@ It is common for a chained datasource to require input from multiple upstream so
 common for those upstream sources to also have multiple inputs. This pattern introduces a data
 consistency problem. Take a look at the dataflow diagram below (arrows represent dataflow):
 
-```
-A --> C --> D
-      ^     ^
-      |     |
-B ----|-----|
+```mermaid
+flowchart LR
+    A --> C
+    C --> D
+    B --> C
+    B --> D
 ```
 
 In the above layout, `A` and `B` are original sources. `C` listens to both `A` and `B`, but since

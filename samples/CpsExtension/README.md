@@ -17,7 +17,7 @@ This sample demonstrates:
 3. Create a .Net Core project and install the CpsExtension.Nuget package
 	* In the experimental hive launched at previous step, Create a new .Net Core Console App
 	* Right click on the project -> Manage Nuget Packages
-	* Add the location where `CpsExtension.Nuget.1.1.0.nupkg` was generated at step 1 as a [package source](https://docs.microsoft.com/en-us/nuget/tools/package-manager-ui#package-sources)
+	* Add the location where `CpsExtension.Nuget.1.1.0.nupkg` was generated at step 1 as a [package source](https://learn.microsoft.com/nuget/tools/package-manager-ui#package-sources)
 	* Install the `CpsExtension.Nuget.1.1.0.nupkg` package into your project
 4. See the results
 	* Once the nuget package was added to the project, you should notice a new debugger named `Custom Debugger` on the main tool bar on the start button

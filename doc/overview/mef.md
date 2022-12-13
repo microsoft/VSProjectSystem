@@ -1,9 +1,8 @@
-MEF
-===
+# MEF
 
-### Managed Extensibility Framework in the .NET Framework
+## Managed Extensibility Framework in the .NET Framework
 
-The Managed Extensibility Framework (MEF) has been introduced in the .NET
+The Managed Extensibility Framework (MEF) was introduced in .NET
 Framework 4 as a library for creating extensible applications. It allows
 application developers to discover and use extensions based on pre-defined
 contracts regardless of where they are implemented. Since MEF provides the
@@ -13,7 +12,7 @@ project system is basically providing a set of MEF components.
 
 The concept of MEF can be found at [Managed Extensibility Framework (MEF)][mef].
 
-[mef]:https://docs.microsoft.com/en-us/dotnet/framework/mef/index
+[mef]:https://learn.microsoft.com/dotnet/framework/mef/
 
 Through MEF, writing an extension to create a CPS based project system
 becomes a straightforward task, which starts creating extension classes 
@@ -64,7 +63,7 @@ There are a few important things to remember:
   wrong scope could bring down the entire project system. A specific section 
   is devoted to the discussion of scopes inside this document.
 
-### MEF inside Visual Studio
+## MEF inside Visual Studio
 
 MEF is a powerful platform that supports a lot of advanced features and
 dynamic compositions. Unfortunately, it is exactly these dynamic features
@@ -118,7 +117,7 @@ VS MEF does not support certain advanced features such as dynamic composition
 changes or generic type contracts, but most developers do not use them
 anyway.
 
-### CPS and MEF
+## CPS and MEF
 
 CPS, which uses MEF to construct project systems, is like a big cooperation
 system that combines MEF components implemented in both the core CPS and
@@ -196,3 +195,37 @@ without using the `OrderPrecedenceImportCollection`. These singleton services
 are provided by CPS and cannot be replaced by extensions. Such services
 include the `ConfiguredProject`, `UnconfiguredProject`, `IProjectLockService`,
 etc.
+
+## MEF and C# Nullable Reference Types
+
+When using the C# nullable feature in your code, you may need to tweak the above
+examples slightly.
+
+For example, NRT requires all non-nullable fields/properties be assigned by the end of the
+constructor, however MEF assigns the value of imports via reflection. To get around
+this you can use:
+
+```csharp
+[Import]
+public MyComponent Foo { get; private set; } = null!;
+```
+
+The `= null!` tells the compiler that this is initialized to a value, and the `!`
+suppresses a warning about it being assigned to null. This change has no runtime
+impact.
+
+Note that imports that allow defaults should be marked nullable, as MEF might not
+initialize them.
+
+For example:
+
+```csharp
+[Import(AllowDefault = true)]
+public MyComponent? Foo { get; private set; };
+
+[ImportingConstructor]
+public Bar([Import(AllowDefault = true) Baz? baz])
+{
+  // ...
+}
+```

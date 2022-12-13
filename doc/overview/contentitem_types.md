@@ -119,5 +119,5 @@ More details
 ------------
 - See also [Custom item types](../extensibility/custom_item_types.md)
 - More documentation about defining a .xaml rule file for your item type:
-  - [Platform Extensibility (Part 1)](https://docs.microsoft.com/en-us/visualstudio/extensibility/creating-a-basic-project-system-part-1?view=vs-2017)
-  - [Platform Extensibility (Part 2)](https://docs.microsoft.com/en-us/visualstudio/extensibility/creating-a-basic-project-system-part-2?view=vs-2017)
+  - [Platform Extensibility (Part 1)](https://learn.microsoft.com/visualstudio/extensibility/creating-a-basic-project-system-part-1)
+  - [Platform Extensibility (Part 2)](https://learn.microsoft.com/visualstudio/extensibility/creating-a-basic-project-system-part-2)
