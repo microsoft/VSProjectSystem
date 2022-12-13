@@ -20,7 +20,7 @@ IVsHierarchy hierarchy;
 bool match = hierarchy.IsCapabilityMatch("SomeCapability");
 ```
 
-Where [`IVsHierarchy.IsCapabilityMatch`](https://docs.microsoft.com/dotnet/api/microsoft.visualstudio.shell.packageutilities.iscapabilitymatch) is an extension method.
+Where [`IVsHierarchy.IsCapabilityMatch`](https://learn.microsoft.com/dotnet/api/microsoft.visualstudio.shell.packageutilities.iscapabilitymatch) is an extension method.
 
 Project capability expressions can also be passed to the `IsCapabilityMatch`
 method in order to test for combinations of capabilities (including

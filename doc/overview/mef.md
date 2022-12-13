@@ -12,7 +12,7 @@ project system is basically providing a set of MEF components.
 
 The concept of MEF can be found at [Managed Extensibility Framework (MEF)][mef].
 
-[mef]:https://docs.microsoft.com/dotnet/framework/mef/
+[mef]:https://learn.microsoft.com/dotnet/framework/mef/
 
 Through MEF, writing an extension to create a CPS based project system
 becomes a straightforward task, which starts creating extension classes 
