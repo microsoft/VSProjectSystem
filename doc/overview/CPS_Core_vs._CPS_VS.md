@@ -1,5 +1,5 @@
-CPS Core vs. CPS VS
-===================
+# CPS Core vs. CPS VS
+
 A well-designed project system can be used inside and outside the Visual Studio 
 IDE to enable increased productivity and flexibility. For example, a developer 
 may want to test their project system outside of the IDE or even host the 
@@ -23,7 +23,7 @@ the role each part plays in the system.
 Both pieces of CPS contain one or more contract assemblies, one or more 
 implementation assemblies, and possibly some utility assemblies.
 
-### CPS Core
+## CPS Core
 
 CPS Core contains such assemblies as:
 
@@ -42,7 +42,7 @@ CPS Core contains such assemblies as:
   - This assembly contains MEF components in the CPS Core system. It is not 
     expected to be directly referenced by an extension assembly.
     
-### CPS VS
+## CPS VS
 
 CPS VS contains such assemblies as:
 

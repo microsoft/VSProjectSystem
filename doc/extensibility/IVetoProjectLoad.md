@@ -1,5 +1,4 @@
-`IVetoProjectLoad`
-============================
+# `IVetoProjectLoad`
 
 **[Item template:](project_item_templates.md)** Project Load Veto extension
 
@@ -8,19 +7,17 @@ The difference is that `IVetoProjectPreLoad` is called with the configuration ab
 
 Example implementation:
 
-```CSharp
-    [Export(typeof(IVetoProjectLoad))]
-    [AppliesTo(MyCapability)]
-    internal class RandomVetoProjectLoad : IVetoProjectLoad
+```csharp
+[Export(typeof(IVetoProjectLoad))]
+[AppliesTo(MyCapability)]
+internal class RandomVetoProjectLoad : IVetoProjectLoad
+{
+    public Task<bool> AllowProjectLoadAsync(
+        bool isNewProject,
+        CancellationToken cancellationToken)
     {
-        public Task<bool> AllowProjectLoadAsync(
-            bool isNewProject,
-            CancellationToken cancellationToken)
-        {
-            // let fate decide
-            return Task.FromResult((new Random()).Next(2) == 0);
-        }
+        // let fate decide
+        return Task.FromResult((new Random()).Next(2) == 0);
     }
+}
 ```
-
-

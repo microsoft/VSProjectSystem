@@ -1,5 +1,4 @@
-The Project Lock
-================
+# The Project Lock
 
 You're only required to take your own project lock if you're accessing
 MSBuild objects directly. If you're going through a CPS service which
@@ -14,14 +13,14 @@ This will cause CPS to recognize the several items being added as a single
 batch and CPS will not process the changes you make until you release the
 lock.
 
-### Overview
+## Overview
 
 The project lock in CPS guards the MSBuild object model for thread-safe
 access. MSBuild itself is not thread-safe, so it is vitally important
 that you possess a CPS project lock whenever you access or have references
 to MSBuild objects.
 
-#### Concurrency / Isolation
+### Concurrency / Isolation
 
 The project lock is similar to the `ReaderWriterLockSlim` class, in that it
 allows many concurrent readers and exclusive access for writers. Someone
@@ -35,7 +34,7 @@ which point it reverts to an upgradeable read lock again.
 Nesting project locks is allowed, but remember that ordinary read locks
 are not upgradeable.
 
-#### Threading
+### Threading
 
 `IProjectThreadingService.JoinableTaskFactory`
 
@@ -57,12 +56,12 @@ required and should be avoided when possible. Do not reference MSBuild
 objects while on the UI thread. You may release your project lock from
 any thread.
 
-### How to obtain a project lock
+## How to obtain a project lock
 
 See [Obtaining the MSBuild.Project from CPS](../automation/obtaining_the_MSBuild.Project_from_CPS.md)
 for an example.
 
-### DO's and DON'Ts
+## DO's and DON'Ts
 
 - DO always take a project lock when accessing MSBuild objects.
 - DON'T ever retain a reference to an MSBuild object beyond the scope of 

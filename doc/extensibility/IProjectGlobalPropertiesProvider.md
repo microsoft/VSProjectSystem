@@ -1,5 +1,4 @@
-`IProjectGlobalPropertiesProvider`
-============================
+# `IProjectGlobalPropertiesProvider`
 
 Caution: Do **NOT** ever set global properties directly on the MSBuild Project
 object or its `ProjectCollection`.
@@ -25,106 +24,106 @@ class may return different properties even with this base class. By importing
 instance per-project and each instance can return a different set of properties.
 
 ```csharp
-    [Export(typeof(IProjectGlobalPropertiesProvider))]
-    [AppliesTo("YourUniqueCapability")]
-    internal class BuildPropertiesProvider : StaticGlobalPropertiesProviderBase
+[Export(typeof(IProjectGlobalPropertiesProvider))]
+[AppliesTo("YourUniqueCapability")]
+internal class BuildPropertiesProvider : StaticGlobalPropertiesProviderBase
+{
+    [ImportingConstructor]
+    internal BuildPropertiesProvider(IProjectCommonServices services)
+        : base(services)
     {
-        [ImportingConstructor]
-        internal BuildPropertiesProvider(IProjectCommonServices services)
-            : base(services)
-        {
-        }
- 
-        public override Task<IImmutableDictionary<string, string>> GetGlobalPropertiesAsync(CancellationToken cancellationToken)
-        {
-            IImmutableDictionary<string, string> properties = Empty.PropertiesMap
-                .SetItem("a", "b");
+    }
 
-            return Task.FromResult<IImmutableDictionary<string, string>>(properties);
-        }
-     }
+    public override Task<IImmutableDictionary<string, string>> GetGlobalPropertiesAsync(CancellationToken cancellationToken)
+    {
+        IImmutableDictionary<string, string> properties = Empty.PropertiesMap
+            .SetItem("a", "b");
+
+        return Task.FromResult<IImmutableDictionary<string, string>>(properties);
+    }
+}
 ```
 
 Otherwise if your global properties may change over time, you'll need to 
 derive from a different base class and implement more members.
 
 ```csharp
-    [Export(typeof(IProjectGlobalPropertiesProvider))]
-    [AppliesTo("YourUniqueCapability")]
-    internal class MyProjectGlobalPropertiesProvider :
-        ProjectValueDataSourceBase<IImmutableDictionary<string, string>>,
-        IProjectGlobalPropertiesProvider
+[Export(typeof(IProjectGlobalPropertiesProvider))]
+[AppliesTo("YourUniqueCapability")]
+internal class MyProjectGlobalPropertiesProvider :
+    ProjectValueDataSourceBase<IImmutableDictionary<string, string>>,
+    IProjectGlobalPropertiesProvider
+{
+    private static readonly IImmutableDictionary<string, string> MyProperties
+        = ImmutableDictionary<string, string>.Empty.Add("MyProperty", "MyValue");
+
+    /// <summary>
+    /// A value that increments with each new map of properties.
+    /// </summary>
+    private volatile IComparable version = 0L;
+
+    /// <summary>
+    /// The block to post to when publishing new values.
+    /// </summary>
+    private ITargetBlock<IProjectVersionedValue<IImmutableDictionary<string, string>>> targetBlock;
+
+    /// <summary>
+    /// The backing field for the <see cref="SourceBlock"/> property.
+    /// </summary>
+    private IReceivableSourceBlock<IProjectVersionedValue<IImmutableDictionary<string, string>>> publicBlock;
+
+    /// <summary>
+    /// Initializes a new instance of the <see cref="MyProjectGlobalPropertiesProvider"/> class.
+    /// </summary>
+    /// <param name="commonServices">The CPS common services.</param>
+    protected MyProjectGlobalPropertiesProvider(IProjectCommonServices commonServices)
+        : base(commonServices)
     {
-        private static readonly IImmutableDictionary<string, string> MyProperties
-            = ImmutableDictionary<string, string>.Empty.Add("MyProperty", "MyValue");
+    }
 
-        /// <summary>
-        /// A value that increments with each new map of properties.
-        /// </summary>
-        private volatile IComparable version = 0L;
+    /// <inheritdoc />
+    public override NamedIdentity DataSourceKey { get; } =  new NamedIdentity("MyProperties");
 
-        /// <summary>
-        /// The block to post to when publishing new values.
-        /// </summary>
-        private ITargetBlock<IProjectVersionedValue<IImmutableDictionary<string, string>>> targetBlock;
+    /// <inheritdoc />
+    public override IComparable DataSourceVersion => this.version;
 
-        /// <summary>
-        /// The backing field for the <see cref="SourceBlock"/> property.
-        /// </summary>
-        private IReceivableSourceBlock<IProjectVersionedValue<IImmutableDictionary<string, string>>> publicBlock;
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="MyProjectGlobalPropertiesProvider"/> class.
-        /// </summary>
-        /// <param name="commonServices">The CPS common services.</param>
-        protected MyProjectGlobalPropertiesProvider(IProjectCommonServices commonServices)
-            : base(commonServices)
+    /// <inheritdoc />
+    public override IReceivableSourceBlock<IProjectVersionedValue<IImmutableDictionary<string, string>>> SourceBlock
+    {
+        get
         {
-        }
-
-        /// <inheritdoc />
-        public override NamedIdentity DataSourceKey { get; } =  new NamedIdentity("MyProperties");
-
-        /// <inheritdoc />
-        public override IComparable DataSourceVersion => this.version;
-
-         /// <inheritdoc />
-        public override IReceivableSourceBlock<IProjectVersionedValue<IImmutableDictionary<string, string>>> SourceBlock
-        {
-            get
-            {
-                this.EnsureInitialized();
-                return this.publicBlock;
-            }
-        }
-
-        /// <summary>
-        /// See <see cref="IProjectGlobalPropertiesProvider"/>
-        /// </summary>
-        public Task<IImmutableDictionary<string, string>> GetGlobalPropertiesAsync(CancellationToken cancellationToken)
-        {
-            // Calculate the latest properties. This will be called when a user starts a build.
-            return Task.FromResult(MyProperties);
-        }
-
-        /// <inheritdoc />
-        protected override void Initialize()
-        {
-            base.Initialize();
-            var broadcastBlock = new BroadcastBlock<IProjectVersionedValue<IImmutableDictionary<string, string>>>(
-                null,
-                new DataflowBlockOptions() { NameFormat = "MyGlobalProperties: {1}" });
-
-            this.publicBlock = broadcastBlock.SafePublicize();
-            this.targetBlock = broadcastBlock;
-
-            // Hook up some events, or dependencies, that calculate new properties and post to the target block as needed.
-            // Posting to the target block with an incremented DataSourceVersion will trigger a new project evaluation with
-            // your new properties.
-            this.targetBlock.Post(
-                new ProjectVersionedValue<IImmutableDictionary<string, string>>(
-                    MyProperties,
-                    ImmutableDictionary<NamedIdentity, IComparable>.Empty.Add(this.DataSourceKey, this.DataSourceVersion)));
+            this.EnsureInitialized();
+            return this.publicBlock;
         }
     }
+
+    /// <summary>
+    /// See <see cref="IProjectGlobalPropertiesProvider"/>
+    /// </summary>
+    public Task<IImmutableDictionary<string, string>> GetGlobalPropertiesAsync(CancellationToken cancellationToken)
+    {
+        // Calculate the latest properties. This will be called when a user starts a build.
+        return Task.FromResult(MyProperties);
+    }
+
+    /// <inheritdoc />
+    protected override void Initialize()
+    {
+        base.Initialize();
+        var broadcastBlock = new BroadcastBlock<IProjectVersionedValue<IImmutableDictionary<string, string>>>(
+            null,
+            new DataflowBlockOptions() { NameFormat = "MyGlobalProperties: {1}" });
+
+        this.publicBlock = broadcastBlock.SafePublicize();
+        this.targetBlock = broadcastBlock;
+
+        // Hook up some events, or dependencies, that calculate new properties and post to the target block as needed.
+        // Posting to the target block with an incremented DataSourceVersion will trigger a new project evaluation with
+        // your new properties.
+        this.targetBlock.Post(
+            new ProjectVersionedValue<IImmutableDictionary<string, string>>(
+                MyProperties,
+                ImmutableDictionary<NamedIdentity, IComparable>.Empty.Add(this.DataSourceKey, this.DataSourceVersion)));
+    }
+}
 ```

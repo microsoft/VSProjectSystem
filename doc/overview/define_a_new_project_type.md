@@ -1,5 +1,4 @@
-Define a new project type
-=========================
+# Define a new project type
 
 ## When is it appropriate to define a new project type?
 
@@ -15,7 +14,7 @@ to [modify, enhance, or "flavor" an existing project type](extend_an_existing_pr
 ## How to define a new project type
 
 Prior to CPS, options for defining a project system mostly were focused
-on [MPFProj](http://mpfproj12.codeplex.com/). Project systems are quite often
+on [MPFProj](https://learn.microsoft.com/visualstudio/extensibility/internals/using-the-managed-package-framework-to-implement-a-project-type-csharp). Project systems are quite often
 100,000s of lines of code. The bugs never end, and each release requires a
 great deal of work merely to keep up with the new features of the IDE that
 require investment of each project system in order to keep a consistent

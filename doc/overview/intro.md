@@ -1,8 +1,6 @@
-Introductory Note to Project System Extensibility users
-=======================================================
+# Introductory Note to Project System Extensibility users
 
-Introduction
-------------
+## Introduction
 
 The Visual Studio Common Project System (CPS) is a unified, extensible,
 scalable, and performant project system that ships in the box with Visual
@@ -103,8 +101,6 @@ other project systems that may impact you or your customers.
 - `IVsHierarchy` `ItemID`s can change over time while a project is loaded 
   for a given item. Read more about [`ItemID`s](ItemIDs.md).
 
-Overview
---------
+## Overview
 
 Please visit our [Overview](index.md) page.
-

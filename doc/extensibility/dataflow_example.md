@@ -20,7 +20,7 @@ var actionBlock = DataflowBlockSlim.CreateActionBlock<IProjectVersionedValue<IPr
 
 ## Original Data Source
 
-``` Csharp
+```csharp
 /// <summary>
 /// An example of an original datasource.
 /// The goal is to listen to an original source and publish a new value whenever it changes.
@@ -108,7 +108,7 @@ private class MyOriginalDataSource : ProjectValueDataSourceBase<string>, IMyOrig
 
 ## Chained Data Source single source
 
-``` Csharp
+```csharp
 /// <summary>
 /// Links to a single upstream source and produces values based on it.
 /// Since this is chained, its versions are derived from the source versions
@@ -144,7 +144,7 @@ private class MyChainedDataSource : ChainedProjectValueDataSourceBase<string>, I
 
 ## Chained Data Source multiple sources
 
-``` Csharp
+```csharp
 /// <summary>
 /// Links to multiple upstream data sources and produces a single value from them.
 /// This is done using <see cref="ProjectDataSources.SyncLinkTo" />.
@@ -189,7 +189,7 @@ private class MyChainedDataSource2 : ChainedProjectValueDataSourceBase<string>, 
 ### `SyncLinkTo` Overloads
 
 1. Overloads for 2 - 6 inputs, all typed as `Typle<T1, ...T6>`.
-    ``` Csharp
+    ```csharp
     /// <summary>
     /// Links several source blocks carrying project versioned valued to a target block
     /// such that only consistently versioned tuples are posted to the target block.
@@ -218,7 +218,7 @@ private class MyChainedDataSource2 : ChainedProjectValueDataSourceBase<string>, 
 
 2. Another overload for immutable list of inputs and an immutable list input to the target. You will have to
    manually cast the inputs in the `target` block.
-    ``` Csharp
+    ```csharp
     /// <summary>
     /// Jointly links several source blocks to a target block, taking care to ensure
     /// that any message posted to the target block carries a set of messages from the

@@ -1,4 +1,3 @@
-Extend an existing project type
-===============================
+# Extend an existing project type
 
 TODO

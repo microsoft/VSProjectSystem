@@ -1,19 +1,19 @@
-Custom item types
-=================
+# Custom item types
+
 **[Item template:](project_item_templates.md)** Project Item Type
 
 **Tutorial:** - [Content/item types](../overview/contentitem_types.md)
 
 This page's contents apply to all CPS projects (VC++ and JavaScript).
 
-### Define a `.xaml` rule file for your item type
+## Define a `.xaml` rule file for your item type
 
 The documentation for this can be found here:
 
 1. [Platform Extensibility (Part 1)](https://learn.microsoft.com/visualstudio/extensibility/creating-a-basic-project-system-part-1)
 2. [Platform Extensibility (Part 2)](https://learn.microsoft.com/visualstudio/extensibility/creating-a-basic-project-system-part-2)
 
-### Defining a custom content/item type
+## Defining a custom content/item type
 
 CPS projects only recognize project items as source files when they have
 an item type that is within a recognized set of item types. This set of
@@ -41,7 +41,7 @@ such as:
 </ProjectSchemaDefinitions>
 ```
 
-### Associating a content type with a file extension
+## Associating a content type with a file extension
 
 To have files automatically assigned to your content type (and thus your
 item type) when added to the project based on file extension, you may add
@@ -63,7 +63,7 @@ project-relative path to your XAML file so that CPS can find it.
 <PropertyPageSchema Include="$(MSBuildThisFileDirectory)ProjectItemsSchema.xaml" />
 ```
 
-### CPS native `FileNameAndExtension` property
+## CPS native `FileNameAndExtension` property
 
 CPS has added support for a new property `FileNameAndExtension` that
 returns just the file name with extension included. This is something not

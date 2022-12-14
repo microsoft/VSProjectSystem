@@ -1,8 +1,6 @@
-﻿ItemIDs
-=======
+﻿# ItemIDs
 
-Background on `ItemID`s
----------------------
+## Background on `ItemID`s
 
 In many other project systems, `ItemID`s are actually raw memory pointers -- 
 opaque to the caller but meaningful within a project system, sort of like 
@@ -39,21 +37,21 @@ thread. For example, this code is always safe (when executed on the main
 thread):
 
 ```csharp
-    int rootFirstChildItemId;
+  int rootFirstChildItemId;
 
-    ErrorHandler.ThrowOnFailure(hierarchy.GetProperty(
-        VSConstants.VSITEMID_Root,
-        VSHPROPID_FirstChild,
-        out rootFirstChildItemId));
+  ErrorHandler.ThrowOnFailure(hierarchy.GetProperty(
+      VSConstants.VSITEMID_Root,
+      VSHPROPID_FirstChild,
+      out rootFirstChildItemId));
 
-    int nextSiblingItemId;
+  int nextSiblingItemId;
 
-    ErrorHandler.ThrowOnFailure(hierarchy.GetProperty(
-        rootFirstChildItemId,
-        VSHPROPID_NextSibling,
-        out nextSiblingItemId));
+  ErrorHandler.ThrowOnFailure(hierarchy.GetProperty(
+      rootFirstChildItemId,
+      VSHPROPID_NextSibling,
+      out nextSiblingItemId));
 
-    // ...
+  // ...
 ```
 
 The above code is safe because:
@@ -117,16 +115,14 @@ will happen:
     represent foo.cs?" 
 - **Then how can store state regarding an item without dealing with event 
   handlers?**
- - Instead of storing `ItemId`s, store the item moniker. Then, whenever you
-   need the `ItemId`, you obtain it using the moniker:
+  - Instead of storing `ItemId`s, store the item moniker. Then, whenever you
+    need the `ItemId`, you obtain it using the moniker:
+     ```csharp
+     IVsHierarchy::GetCanonicalName(itemid, out moniker)
+     IVsHierarchY::ParseCanonicalName(moniker, out itemid)
+     ```
 
-```csharp
-            IVsHierarchy::GetCanonicalName(itemid, out moniker)
-            IVsHierarchY::ParseCanonicalName(moniker, out itemid)
-```
-
-What is unique about CPS and `ItemID`s? 
---------------------------------------
+## What is unique about CPS and `ItemID`s?
 
 CPS isn't a project system written in native code, so we don't use pointers
 for our `ItemId`s. We just use an incrementing integer. Since `ItemId`s are

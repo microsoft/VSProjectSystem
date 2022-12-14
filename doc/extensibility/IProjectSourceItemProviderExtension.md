@@ -1,5 +1,4 @@
-`IProjectSourceItemProviderExtension`
-=====================================
+# `IProjectSourceItemProviderExtension`
 
 This interface may be exported at the `ConfiguredProject` scope to intercept
 project item manipulations. For example, if you want items to be added,
@@ -14,10 +13,10 @@ interface under an `AppliesTo` expression that evaluates to true when the
 For example:
 
 ```csharp
-    [Export(typeof(IProjectSourceItemProviderExtension))]
-    [AppliesTo("YourUniqueCapability")]
-    public class YourProjectSourceItemProviderExtension : IProjectSourceItemProviderExtension
-    {
-        // implement interface here
-    }
+[Export(typeof(IProjectSourceItemProviderExtension))]
+[AppliesTo("YourUniqueCapability")]
+public class YourProjectSourceItemProviderExtension : IProjectSourceItemProviderExtension
+{
+    // implement interface here
+}
 ```

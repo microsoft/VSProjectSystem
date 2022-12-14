@@ -1,5 +1,4 @@
-Reference Manager
-=================
+# Reference Manager
 
 ## Hide some of the tabs in the Reference Manager Dialog
 
@@ -17,15 +16,15 @@ disappear.
 2. Remove the capabilities that correspond to the tabs you would like 
    to remove (e.g., `WinRTReferences`)
 
-```xml
-        <ProjectCapability Include="
-            AssemblyReferences;
-            COMReferences;
-            ProjectReferences;
-            WinRTReferences;
-            SDKReferences;
-            " />
-```
+   ```xml
+   <ProjectCapability Include="
+      AssemblyReferences;
+      COMReferences;
+      ProjectReferences;
+      WinRTReferences;
+      SDKReferences;
+      " />
+   ```
 
 ## Add custom tabs to the Reference Manager
 
@@ -34,5 +33,4 @@ disappear.
 Define new class 
 
 - Implements `IVsReferenceManagerUserAsync`
-- tagged with the `ExportIVsReferenceManagerUserAsync` attribute
-
+- Tagged with the `ExportIVsReferenceManagerUserAsync` attribute

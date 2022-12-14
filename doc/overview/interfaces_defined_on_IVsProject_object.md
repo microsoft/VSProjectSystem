@@ -1,5 +1,4 @@
-Interfaces defined on `IVsProject` object
-=======================================
+# Interfaces defined on `IVsProject` object
 
 CPS's implementation of the `IVsProject` object is the main presentation of
 the project in the Visual Studio IDE, and also the main entry point for
@@ -11,7 +10,6 @@ the ones for internal usage. Hopefully, this will demonstrate what could
 be expected from the `IVsProject` object. Noting all the interfaces below are
 designed for other Visual Studio components to interact with the project.
 CPS extensions should use CPS APIs. 
-
 
 The Visual Studio COM interfaces that people would expect from the `IVsProject`
 object in general:

@@ -1,5 +1,6 @@
 # COM Aggregation
-#### Available: Visual Studio 2017
+
+Available since Visual Studio 2017.
 
 In Visual Studio 2017 a MEF-based extension for COM aggregation has been added to CPS.
 This extension point should be used only when all other CPS extension points are
@@ -29,13 +30,13 @@ below.
 
 ## Example
 
-``` CSharp
+```csharp
 [Export(ExportContractNames.VsTypes.ProjectNodeComExtension)]
 [AppliesTo(MyCapability)] // MUST be a static capability from the unconfigured scope
 [Order(1)] // Higher values win, but put yours low as possible
 [ComServiceIid(typeof(IVsComInterface))]
 internal class MyComImplementation : IVsComInterface
 {
-  // Implementation
+    // Implementation
 }
 ```

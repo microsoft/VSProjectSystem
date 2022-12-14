@@ -1,5 +1,4 @@
-﻿Automatic `DependentUpon` wire-up
-===============================
+﻿# Automatic `DependentUpon` wire-up
 
 Project systems can specify dependencies between items. For example, a `.xaml.cs` 
 file can be represented as dependent upon its `.xaml` file.
@@ -26,7 +25,8 @@ adding the child files automatically when user only selects and adds the
 parent file.
 
 ## Dynamic file dependency
-#### Available: Visual Studio 2017
+
+Available since Visual Studio 2017.
 
 Allows dynamic calculation of file dependencies without storing them in the project file.
 

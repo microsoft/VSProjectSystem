@@ -13,7 +13,7 @@ for information on how to implement context menus.
 
 ## Interface
 
-``` CSharp
+```csharp
 /// <summary>
 /// An extension component to provide context menu to be shown in the solution explorer for a specific project item.
 /// </summary>
@@ -54,7 +54,7 @@ special behavior.
 
 ## Example
 
-``` CSharp
+```csharp
 [Export(typeof(IProjectItemContextMenuProvider))]
 [AppliesTo(ProjectCapabilities.MyCapability)]
 [Order(MyOrder)] // higher values are processed first, choose yours accordingly

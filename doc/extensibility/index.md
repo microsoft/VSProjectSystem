@@ -1,28 +1,26 @@
-Extensibility points
-====================
+# Extensibility points
 
-General guidance for extension authors
---------------------------------------
+## General guidance for extension authors
 
-##### Understand the threading model
+### Understand the threading model
 
 CPS extensions are expected to conform to the [CPS/VS threading
 model](../overview/threading_model.md). Please become familiar with it 
 before writing CPS extensions. This will help avoid responsiveness 
 issues, deadlocks, and non-deterministic hangs in your scenarios.
 
-##### We promise we won't bite
+### We promise we won't bite
 
 Please send a code review to the CPSCR alias when introducing or significantly
 modifying CPS extensions, particularly for your first few extensions so
 we can help catch common mistakes.
 
-### `AppliesToAttribute`
+## `AppliesToAttribute`
 
 Every extension based on MEF exports must include an `[AppliesTo("...")]`
 attribute on the exported type or member. The string argument is
 an expression that evaluates to a boolean value, as [documented
-here](http://msdn.microsoft.com/en-us/library/microsoft.visualstudio.shell.interop.ivsbooleansymbolexpressionevaluator.evaluateexpression.aspx).
+here](https://learn.microsoft.com/dotnet/api/microsoft.visualstudio.shell.interop.ivsbooleansymbolexpressionevaluator.evaluateexpression).
 The terms that may be used are [project
 capabilities](../overview/about_project_capabilities.md).
 
@@ -39,7 +37,7 @@ your extension be loaded and initialized in the process. It is best to
 use the `AppliesTo` attribute effectively to prevent your assembly from even
 loading when it does not apply to a given project.
 
-### `OrderAttribute`
+## `OrderAttribute`
 
 When more than one extension applies to a given project, CPS may pick the
 "most preferred" extension to fulfill some requirement, or it may loop
@@ -67,9 +65,9 @@ supersede your extension.
 Typically you may omit this attribute from your exports until you discover
 a need to supersede behavior defined elsewhere. 
 
-### Troubleshooting
+## Troubleshooting
 
-#### When a CPS extension isn't invoked
+### When a CPS extension isn't invoked
 
 Following are some things to check for when you have a CPS extension that
 doesn't get invoked when you expect it to:
@@ -89,5 +87,6 @@ doesn't get invoked when you expect it to:
   method (that is also exported).
 - Verify that your MEF part isn't rejected due to some authoring error 
   by scanning for it in this file:
-
-        %localappdata%\microsoft\VisualStudio\14.0\ComponentModelCache\Microsoft.VisualStudio.Default.err
+   ```
+   %localappdata%\microsoft\VisualStudio\14.0\ComponentModelCache\Microsoft.VisualStudio.Default.err
+   ```

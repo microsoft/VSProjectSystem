@@ -1,10 +1,8 @@
-Content/item types
-==================
+# Content/item types
 
 **[Item template:](../extensibility/project_item_templates.md)** Project Item Type
 
-Introduction
-------------
+## Introduction
 
 Currently, only items in your project with recognized item types will appear
 in Solution Explorer or be available as project items via automation.
@@ -12,8 +10,7 @@ in Solution Explorer or be available as project items via automation.
 This page describes how to add support for a new item type using the
 built-in "Project Item Type" project [item template](../extensibility/project_item_templates.md).
 
-Tutorial
---------
+## Tutorial
 
 Let's suppose that you would like to add support to your project type for
 a new file that has the extension ".foo".
@@ -71,14 +68,14 @@ Here are some things to notice about the newly added file:
   - Right click on the project node in Solution Explorer -> Unload Project 
     (save changes)
   - Right click again on the project in Solution Explorer -> Edit ProjectType11.myproj
-
-```xml
-<FooCompile Include="Test.foo">
-    <MyProperty Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">abc</MyProperty>
-</FooCompile>
-```
+     ```xml
+     <FooCompile Include="Test.foo">
+         <MyProperty Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">abc</MyProperty>
+     </FooCompile>
+     ```
 
 #### Making the new item type available in the *add new item* dialog
+
 In order to and add new items of the newly created *item type* using the "Add -> New item..." dialog, you need to create a new item template.
 
 The following steps describe how to add a new item template for an item template with extension ".foo" to a ProjectType1
@@ -104,12 +101,12 @@ The following steps describe how to add a new item template for an item template
   - Update the .vstemplate file `FooItemTemplate.vstemplate`
     - Update the 2 places where the old file `Class.cs` is specified (`DefaultName` and `ProjectItem`) to `Class.foo`
     - Add an `AppliesTo` element under `TemplateData` that points to your project's unique capability. E.g:
-```xml
-<TemplateData>
-    ...
-    <AppliesTo>ProjectType1</AppliesTo>
-</TemplateData>
-```
+       ```xml
+       <TemplateData>
+           ...
+           <AppliesTo>ProjectType1</AppliesTo>
+       </TemplateData>
+       ```
 
 See https://msdn.microsoft.com/en-us/library/vstudio/tsyyf0yh.aspx for more information.
 For more information about what can be done through the *vsix manifest designer*, see:

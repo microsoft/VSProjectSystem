@@ -1,5 +1,4 @@
-Project Capabilities
-====================
+# Project Capabilities
 
 Project capabilities are the recommended way to determine the type, platform,
 and features of a project. Simply checking the language or the project
@@ -27,8 +26,7 @@ method in order to test for combinations of capabilities (including
 AND, OR, NOT logic). Read more about [the supported syntax and
 operators](https://msdn.microsoft.com/library/microsoft.visualstudio.shell.interop.ivsbooleansymbolexpressionevaluator.evaluateexpression.aspx).
 
-How to declare project capabilities in your project
----------------------------------------------------
+## How to declare project capabilities in your project
 
 Project capabilities can be declared in several ways, the easiest of which
 being to add this MSBuild item to your .targets file:
@@ -37,8 +35,7 @@ being to add this MSBuild item to your .targets file:
 <ProjectCapability Include="MyOwnCapability" />
 ```
 
-Common project capabilities and where they are defined
-------------------------------------------------------
+## Common project capabilities and where they are defined
 
 ### Existing project capabilities
 

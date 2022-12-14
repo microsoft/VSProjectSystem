@@ -1,5 +1,4 @@
-Your obligations as a project system extender
-=============================================
+# Your obligations as a project system extender
 
 **WARNING**: The project system extensibility APIs are not stable. 
 Any dependency you take on them means you will have to recompile 

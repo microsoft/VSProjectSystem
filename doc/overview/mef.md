@@ -20,24 +20,24 @@ through templates provided in the CPS SDK.  A typical CPS component looks
 like this:
 
 ```csharp
-    [Export(typeof(IProjectTreePropertiesProvider))]
-    [AppliesTo("MyProjectType")]
-    internal class ProjectTreeIconProvider : IProjectTreePropertiesProvider
-    {
-        /// <summary>
-        /// Gets the tree factory.
-        /// </summary>
-        [Import]
-        protected Lazy<IProjectTreeFactory> TreeFactory { get; private set; }
+[Export(typeof(IProjectTreePropertiesProvider))]
+[AppliesTo("MyProjectType")]
+internal class ProjectTreeIconProvider : IProjectTreePropertiesProvider
+{
+    /// <summary>
+    /// Gets the tree factory.
+    /// </summary>
+    [Import]
+    protected Lazy<IProjectTreeFactory> TreeFactory { get; private set; }
 
-        /// <summary>
-        /// Gets the unconfigured project.
-        /// </summary>
-        [Import]
-        protected UnconfiguredProject UnconfiguredProject { get; set; }
+    /// <summary>
+    /// Gets the unconfigured project.
+    /// </summary>
+    [Import]
+    protected UnconfiguredProject UnconfiguredProject { get; set; }
 
-        // ...
-    }
+    // ...
+}
 ```
 
 This extension implements the `IProjectTreePropertiesProvider` interface. Through the 
@@ -75,8 +75,8 @@ it could occasionally be out of sync with extensions. In this situation,
 running the following commands inside command-line window will reset the
 cache:
 
-    Devenv /UpdateConfiguration
-    Devenv /ClearCache
+    devenv /UpdateConfiguration
+    devenv /ClearCache
 
 VS MEF provides a detailed error report when it finds errors inside MEF
 compositions. It always tries to keep the rest of the components working by
@@ -154,29 +154,29 @@ context. For example, a component in the `unconfiguredProject` that imports
 `IVsHierarchy` looks like this:
 
 ```csharp
-    [Export]
-    public class MyClass
+[Export]
+public class MyClass
+{
+    [ImportMany(ExportContractNames.VsTypes.IVsHierarchy)]
+    private OrderPrecedenceImportCollection<IVsHierarchy> vsHierarchies;
+
+    private IVsHierarchy VsHierarchy
     {
-        [ImportMany(ExportContractNames.VsTypes.IVsHierarchy)]
-        private OrderPrecedenceImportCollection<IVsHierarchy> vsHierarchies;
-
-        private IVsHierarchy VsHierarchy
-        {
-            get { return this.vsHierarchies.First().Value; }
-        }
-    
-        [ImportingConstructor]
-        internal MyClass(UnconfiguredProject unconfiguredProject)
-        {
-            // MEF does not know how to construct one of these custom collection types,
-            // so we construct it here for MEF. After the MyClass constructor completes,
-            // MEF will proceed to call Add on this.vsHierarchies to fill it with exports.
-            this.vsHierarchies = new OrderPrecedenceImportCollection<IVsHierarchy>(
-                projectCapabilityCheckProvider: unconfiguredProject);
-        }
-
-        // ...
+        get { return this.vsHierarchies.First().Value; }
     }
+
+    [ImportingConstructor]
+    internal MyClass(UnconfiguredProject unconfiguredProject)
+    {
+        // MEF does not know how to construct one of these custom collection types,
+        // so we construct it here for MEF. After the MyClass constructor completes,
+        // MEF will proceed to call Add on this.vsHierarchies to fill it with exports.
+        this.vsHierarchies = new OrderPrecedenceImportCollection<IVsHierarchy>(
+            projectCapabilityCheckProvider: unconfiguredProject);
+    }
+
+    // ...
+}
 ```
 
 In this case, the code expects that one and only one `IVsHierarchy` is

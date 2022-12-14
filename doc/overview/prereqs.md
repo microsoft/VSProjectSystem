@@ -1,5 +1,4 @@
-Getting started
-===============
+# Getting started
 
 Install these prequisites before writing project system extensions:
 

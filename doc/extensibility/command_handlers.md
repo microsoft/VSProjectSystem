@@ -1,5 +1,4 @@
-Command handlers
-================
+# Command handlers
 
 **[Item template:](project_item_templates.md)** Command Group Handler extension
 
@@ -41,11 +40,11 @@ To add a command handler to a JavaScript project for example, you might
 code up something like this:
 
 ```csharp
-    [ExportCommandGroup("some-guid-here")]
-    [AppliesTo("your appliesTo expression")]
-    internal class MyOwnCommands : ICommandGroupHandler
-    {
-        public CommandStatusResult GetCommandStatus(...) { }
-        public bool TryHandleCommand(...) { }
-    }
+[ExportCommandGroup("some-guid-here")]
+[AppliesTo("your appliesTo expression")]
+internal class MyOwnCommands : ICommandGroupHandler
+{
+    public CommandStatusResult GetCommandStatus(...) { }
+    public bool TryHandleCommand(...) { }
+}
 ```

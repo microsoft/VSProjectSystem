@@ -9,7 +9,7 @@ or change properties to the existing rules.
 
 Example:
 
-``` xml
+```xml
 <Rule
   Name="RuleToExend"
   DisplayName="File Properties"

@@ -3,7 +3,7 @@ Changes
 **Visual Studio 2017**
 Download Location: [Visual Studio Project System Extensibility](https://visualstudiogallery.msdn.microsoft.com/43691584-1f0f-46da-adaf-a07c290c1e6e)
 
-Official NuGet packages: http://www.nuget.org
+Official NuGet packages: https://www.nuget.org
 
 Pre-release NuGet packages: https://vside.myget.org/gallery/devcore
 

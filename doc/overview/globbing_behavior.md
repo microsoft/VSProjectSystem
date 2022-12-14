@@ -1,8 +1,8 @@
 # CPS Globbing Behavior
-In the new version of CPS support for MSBuild globbing is being added. This document demonstrates the
-behavior CPS will have as a user interacts with a globbing-enabled project.
 
-# Use Case - ASP.net Core
+CPS supports MSBuild globbing. This document demonstrates the behavior CPS will have as a user interacts with a globbing-enabled project.
+
+# Use Case - ASP.NET Core
 
 This use case describes what happens to the users project file as it is interacted with via
 Solution and File Explorer.
@@ -13,7 +13,6 @@ Solution and File Explorer.
     to show separation of item groups.
 
 ## 1: Including/Excluding files and folders
----------------------------------------------------
 
 1. User creates a new ASP.net core, which includes these default globs.
 
@@ -84,8 +83,7 @@ Solution and File Explorer.
    <Content Include="script.js" /> <!-- explicit include added because no glob covers it -->
    ```
 
-6. User drags a new folder (described below) under project root in file explorerer,
-then Includes the folder through solution explorer.
+6. User drags a new folder (described below) under project root in file explorer, then Includes the folder through solution explorer.
     * CPS adds globs based on each extension found.
 
    Folder Contents:
@@ -198,7 +196,6 @@ then includes the folder.
    ```
 
 ## 2: Renaming and Changing ItemTypes of  Files and Folders
--------------------------------------------------------------------
 
 1. Again, start with a new ASP.NET Core project.
 
@@ -298,7 +295,6 @@ then includes the folder.
    ```
 
 ## 3: Metadata with Globbing
-------------------------------------
 
 1. Again, start with a new ASP.NET Core project.
 
@@ -361,8 +357,8 @@ then includes the folder.
 
 # General Behavior
 
-## Behavior at a glimpse
-------------------------
+## Behavior at a glance
+
 1. The focus of CPS is that actions via Solution Explorer will edit the project file, even if it
 ends up removing/changing some special globs. If a user wants to manipulate the folder structure
 without editing globs, then File Explorer can be used.
@@ -376,7 +372,7 @@ included.
 result in the same globs being added back.
 
 ## Exclude vs Remove
---------------------
+
 In MSBuild there is two ways to exclude an item from a glob. An *Exclude* is declared along with an
 include and will exclude it from only that include. A *Remove* will remove from all items logically
 declared before the remove. CPS will primarily use removes, but will respect excludes. CPS will only
@@ -387,31 +383,36 @@ CPS will be done via removes.
 of *Include*) then we can revisit which label CPS uses.
 
 ## Files
---------
+
 ### Including a File
+
 CPS scans the directory automatically, so if a file appears under the project directory it will be
 automatically included if it is covered by a glob. When manually including an excluded item CPS
 will first check for removals and exclusions, deleting those if possible. If that does not work an
 explicit include will be added for the item.
 
 ### Excluding a File
+
 To remove a single file from a project, CPS will delete any explicit includes and then add explicit
 removes for any globs that cover the file.
 
 ### Deleting a File
+
 If a file is included via a glob, then CPS will only delete the file off disk.
 
 ### Renaming a File
+
 A rename will consider globs. Renaming to something under globs will allow the item to be included
 via the glob. If the source include is an explicit include, then it will be removed in this case.
 
 ## Folders
-----------
+
 CPS will try to perform as many folder operations as possible via globbing. CPS will only edit globs
 that are determined to belong directly to that folder cone. IE: `<Content Include="Content\**"/>`
 belongs directly to the folder *Content* as it starts with that exact string and then a path separator.
 
 ### Including a Folder
+
 CPS will first delete removals and excludes that belong directly to the folder being including. Then
 globs for that folder will be added on a per-extension bases as needed. If an item is already covered
 by a glob, a new one will not be added.
@@ -421,6 +422,7 @@ an empty folder will never be included as part of a glob. Even using `<Folder In
 match files and not folders.
 
 ### Excluding a Folder
+
 CPS will delete any includes, literal or glob, that belong directly to the folder being excluded. Then 
 glob removals will be added for any remaining globs that cover the folder.
 
@@ -431,10 +433,12 @@ This means that a rename of a removed folder may include it back in the project.
 \* Excludes/Removes *may* be edited during operations on included items 
 
 ### Deleting a Folder
+
 Deleting an included folder will delete all globs directly belonging to that folder, and then any
 string literal items that fall under the folder are also deleted.
 
 ### Renaming a Folder
+
 Renaming a folder is perhaps the most complex scenario CPS can handle in regards to globs. This is
 because both the source name and target name can be a part of globs through a variety of ways. As a
 result CPS will have fairly limited logic in this scenario. A rename will rename any globs that
@@ -447,6 +451,7 @@ globbing a rename may cause duplicate includes or new items being included. Rena
 folder may cause the folder to become included.
 
 ### Drag/Drop & Copy/Cut/Paste
+
 A drag/drop and cut/paste, or a *move* operation will rename the sources when possible. This will 
 behave similarly to a rename in most common scenarios. When a rename is not possible it will perform
 a remove/include operation. A copy/paste, or *copy* operation will always behave as an add operation.

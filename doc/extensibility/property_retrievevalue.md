@@ -1,13 +1,12 @@
-How to retrieve the value of a property
-=======================================
+# How to retrieve the value of a property
 
-Properties defined in the xaml rule file get converted a build time into a set of .cs files that expose helpers to easily access their values.
+Properties defined in the XAML rule file get converted a build time into a set of `.cs` files that expose helpers to easily access their values.
 
 The following sample shows how to retrieve the value of the TargetFrameworkProperty.
 
 We used an [IDeployProvider](IDeployProvider.md) because it has a convenient way to output text. To see it in action, right click in the Solution Explorer on a project of your project type and select Deploy. 
 
-```CSharp
+```csharp
 [Export(typeof(IDeployProvider))]
 [AppliesTo(MyUnconfiguredProject.UniqueCapability)]
 internal class DeployProvider1 : IDeployProvider
@@ -25,10 +24,7 @@ internal class DeployProvider1 : IDeployProvider
         await outputPaneWriter.WriteAsync(targetFramework);
     }
 
-    public bool IsDeploySupported
-    {
-        get { return true; }
-    }
+    public bool IsDeploySupported => true;
 
     public void Commit()
     {

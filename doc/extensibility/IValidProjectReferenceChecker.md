@@ -1,4 +1,3 @@
-`IValidProjectReferenceChecker`
-===============================
+# `IValidProjectReferenceChecker`
 
 TODO

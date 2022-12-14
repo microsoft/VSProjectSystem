@@ -1,10 +1,9 @@
-Responsive design
-=================
+# Responsive design
 
 CPS has what we call a "responsive design." This isn't in reference to UI
 responsiveness, but rather a description of how much of CPS is architected.
 
-### A traditional project system
+## A traditional project system
 
 In a traditional project system, when code changes the project file, that
 same code is responsible for everything else the IDE expects, such as:
@@ -30,7 +29,7 @@ The object model is mutable and private, so clients that discover project
 system data always clone it into their own object models, resulting in
 project data replication and increased VM usage.
 
-### Responsive Design
+## Responsive Design
 
 In CPS, when code changes the project file, that's all it does. It's job
 is over. The rest of the steps that must accompany that change based on
@@ -48,7 +47,7 @@ of project data. This allows project mutations to occur on background
 threads without compromising backward compatibility with STA clients that
 expect the project to not change while they're on the UI thread.
 
-#### Why did we create this?
+### Why did we create this?
 
 We were actually somewhat driven into this design during the VS 2012 cycle
 while writing "CPS-VS" for JavaScript projects. The issue was we really
@@ -66,7 +65,7 @@ We have found that this design has some very unique pros and cons, the
 magnitude of some of them could not be appreciated until we'd implemented
 it.
 
-#### Advantages to Responsive Design:
+### Advantages to Responsive Design:
 
 1. The same code that performs project file changes is rehostable. It can 
    work equally well in VS as in Napa, or other hosts, regardless of their 
@@ -95,7 +94,7 @@ it.
    they can have confidence they don't have to clone all the data into 
    their own proprietary copy of the project object model.
 
-#### Disadvantages to Responsive Design:
+### Disadvantages to Responsive Design:
 
 1. Project snapshot diffs don't always capture important semantics of the 
    original changes. For example, a rename is significantly different from a 

@@ -22,12 +22,6 @@ Dataflow in CPS comes primarily in two types, an original source or a chained so
    * Carries all the versions of the dataflow it chains to.
      * More about versioning later
 
-### [Dataflow Examples](../extensibility/dataflow_example.md)
-
-### [Dataflow Sources](../extensibility/dataflow_sources.md)
-
-### [Dataflow Best Practices](../extensibility/dataflow_best_practices.md)
-
 ## Data Consistency Problem
 
 Dataflow is simple when you have a single line of dependencies, but in CPS it is much more complex.
@@ -82,3 +76,9 @@ processing. Unfortunately, there is no CPS base class equivalent to `ProjectValu
 `ChainedProjectValueDataSourceBase` for this scenario. You will have to manually link to your upstream
 sources and synchronizing between multiple sources publishing at once. For calculating the data versions
 to publish, use `ProjectDataSources.MergeDataSourceVersions`.
+
+## Further reading
+
+- [Dataflow Examples](../extensibility/dataflow_example.md)
+- [Dataflow Sources](../extensibility/dataflow_sources.md)
+- [Dataflow Best Practices](../extensibility/dataflow_best_practices.md)

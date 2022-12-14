@@ -1,5 +1,4 @@
-Reference implementations
-=========================
+# Reference implementations
 
 Open source project types and extensions based on Project System Extensibility
 may be listed here for reference. We do not endorse or warrant the quality or

@@ -1,7 +1,6 @@
-Scopes
-======
+# MEF Scopes
 
-### Introduction to scopes
+## Introduction to scopes
 
 A "scope" is a collection of MEF parts that are tied to the lifecycle of a specific object, or "context". When that object or context is torn down, so are the MEF parts that live in that scope. Scopes themselves can be nested so that parts that live in child scopes can "inherit" or import exports from parent scopes, but not vice versa.
 
@@ -54,7 +53,7 @@ container. `ProjectService` is a scope beneath the default container and must
 be obtained from the `IProjectServiceAccessor`, which itself is defined in 
 the VS default container.
 
-### Scopes at odds
+## Scopes at odds
 
 Because CPS projects are MSBuild based which has a project file format
 in which nearly everything can be an expression and therefore may vary by
@@ -76,7 +75,7 @@ synchronizes with the VS concept of active project configuration so that
 CPS always uses the active `ConfiguredProject` as its source for data when
 it is queried for it at the `UnconfiguredProject` scope.
 
-### Which scope should I operate at?
+## Which scope should I operate at?
 
 The short answer is that if your code operates at the project level (that
 is, you want one instance of your service per project) you should export
@@ -85,7 +84,7 @@ to have an instance for each individual configuration you should export
 it to the `ConfiguredProject` scope.
 
 
-### Controlling the MEF scope your MEF part is exported to
+## Controlling the MEF scope your MEF part is exported to
 
 MEF parts belong to the scope necessary to satisfy all of its imports. A MEF
 part that imports nothing belongs to the 'default' or global scope. A MEF part
@@ -100,7 +99,7 @@ that imports anything from the `ConfiguredProject` scope belongs to the
 | CPS UnconfiguredProject                                                                   | Y/N                  | Y/N            | Yes                 | No                |
 | CPS ConfiguredProject                                                                     | Y/N                  | Y/N            | Y/N                 | Yes               |
 
-### Importing ConfiguredProject MEF exports at the UnconfiguredProject level
+## Importing ConfiguredProject MEF exports at the UnconfiguredProject level
 
 This ability to 'lift' data upward from `ConfiguredProject` to `UnconfiguredProject`
 scope is exposed to you in at least two ways. If you simply want to access
@@ -121,15 +120,15 @@ import the `IBuildProject` service from the active configuration from your
 `UnconfiguredProject` MEF part, you can use this syntax:
 
 ```csharp
-    [Import]
-    ActiveConfiguredProject<IBuildProject> BuildProject { get; set; }
+[Import]
+ActiveConfiguredProject<IBuildProject> BuildProject { get; set; }
 ```
 
 Note that the generic type argument can even be `ConfiguredProject` itself:
 
 ```csharp
-    [Import]
-    ActiveConfiguredProject<ConfiguredProject> ActiveConfiguredProject { get; set; }
+[Import]
+ActiveConfiguredProject<ConfiguredProject> ActiveConfiguredProject { get; set; }
 ```
 
 Most commonly, it's useful to define your own private nested class that
@@ -137,23 +136,25 @@ imports everything you need from the `ConfiguredProject` scope, and then
 import that:
 
 ```csharp
+[Export]
+class MyUnconfiguredProjectPart
+{
+    [Import]
+    UnconfiguredProject Project { get; set; }
+
+    [Import]
+    ActiveConfiguredProject<ConfiguredProjectHelper> ActiveConfigurationExports { get; set; }
+
     [Export]
-    class MyUnconfiguredProjectPart {
+    class ConfiguredProjectHelper
+    {
         [Import]
-        UnconfiguredProject Project { get; set; }
+        internal ConfiguredProject ConfiguredProject { get; set; }
 
         [Import]
-        ActiveConfiguredProject<ConfiguredProjectHelper> ActiveConfigurationExports { get; set; }
-
-        [Export]
-        class ConfiguredProjectHelper {
-            [Import]
-            internal ConfiguredProject ConfiguredProject { get; set; }
-
-            [Import]
-            internal IBuildProject BuildProject { get; set; }
-        }
+        internal IBuildProject BuildProject { get; set; }
     }
+}
 ```
 
 Q: Is there a way to know which services belong to which scope (e.g., naming

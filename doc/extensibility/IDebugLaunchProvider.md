@@ -49,7 +49,7 @@ If you use Microsoft.VisualStudio.ProjectSystem.SDK.Tools to compile the above X
 
 
 ### The debugger launch provider
-``` CSharp
+```csharp
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.Composition;
@@ -104,7 +104,6 @@ namespace MyPackage
 
 ```
 
-
 ## Support for older versions of Visual Studio
 
 This particular extensibility point also exists as far back as Visual C++ 2010.
@@ -122,6 +121,6 @@ Consider renaming debugger class (or rule file) so they don't collide
 (namespace is the only distinguisher)
     
  [1]: https://visualstudiogallery.msdn.microsoft.com/7fe7f19f-ceb9-47e3-b440-c62df2b85281
- [2]: http://visualstudiogallery.msdn.microsoft.com/e831676e-9510-4651-b724-cf4299b220b5
- [3]: http://visualstudiogallery.msdn.microsoft.com/8d2faf2c-3937-489a-9e0a-c43ff26ca427
- [4]: http://visualstudiogallery.msdn.microsoft.com/f1e9c8b5-134e-4bb1-bd0e-37a220dae99e
+ [2]: https://visualstudiogallery.msdn.microsoft.com/e831676e-9510-4651-b724-cf4299b220b5
+ [3]: https://visualstudiogallery.msdn.microsoft.com/8d2faf2c-3937-489a-9e0a-c43ff26ca427
+ [4]: https://visualstudiogallery.msdn.microsoft.com/f1e9c8b5-134e-4bb1-bd0e-37a220dae99e

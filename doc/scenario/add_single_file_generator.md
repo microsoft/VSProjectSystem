@@ -14,7 +14,7 @@ The following steps explain how to create and use such a Single File Generator i
 1. Implement the single file generator
   - Add a new class to the project type (e.g. FooGenerator). Provide an implementation for it. Here is a simplified version, where we replace all "a" with "A".
 
-  ```CSharp
+  ```csharp
   [Guid("Your GUID here")]
   public class FooGenerator : IVsSingleFileGenerator
   {
@@ -39,11 +39,11 @@ The following steps explain how to create and use such a Single File Generator i
   ```
 2. Register the code generator for your project type
     - Add the following property to the VsPackage class
-  ```CSharp
+  ```csharp
   public const string GeneratorProjectTypeGuid = "{" + ProjectTypeGuid + "}";
   ```
     - Add the following attributes to the VsPackage class
-  ```CSharp
+  ```csharp
     [CodeGeneratorRegistration(typeof(FooGenerator), "FooGenerator", GeneratorProjectTypeGuid, GeneratesDesignTimeSource = true)]
     [ProvideObject(typeof(FooGenerator))]
     public sealed class VsPackage : Package

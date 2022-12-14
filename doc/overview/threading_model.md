@@ -1,5 +1,4 @@
-Threading model
-===============
+# Threading model
 
 CPS requires strict adherence to the rules and guidelines at [Threading
 Rules](threading_rules.md)

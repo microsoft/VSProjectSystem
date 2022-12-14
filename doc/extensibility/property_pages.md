@@ -1,7 +1,6 @@
-Property pages
-==============
+# Property pages
 
-**[Item template:](project_item_templates.md)** Xaml Rule
+**[Item template:](project_item_templates.md)** XAML Rule
 
 You can define your own custom property pages that can be displayed by
 Visual Studio for Projects, Project items, Debuggers, Compiler options,
@@ -25,7 +24,7 @@ Note: In Visual Studio, when you create a new XAML file, by default, it
 gets included into the project as "Page". You will need to change it to
 be custom property pages.
 
-#### TODO
+## TODO
 
 MSBuild "rules"
 

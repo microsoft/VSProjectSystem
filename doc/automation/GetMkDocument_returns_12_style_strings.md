@@ -2,7 +2,7 @@
 =========================================
 
 The [`GetMkDocument` method is
-documented](http://msdn.microsoft.com/en-us/library/microsoft.visualstudio.shell.interop.ivsproject.getmkdocument.aspx)
+documented](https://learn.microsoft.com/dotnet/api/microsoft.visualstudio.shell.interop.ivsproject.getmkdocument)
 as being required to return the full path to any item that represents a
 file on disk. In JavaScript projects, not all items represent files. For
 example, the References folder, and items within it, do not represent

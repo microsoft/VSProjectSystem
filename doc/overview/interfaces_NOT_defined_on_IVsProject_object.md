@@ -1,5 +1,4 @@
-Interfaces *not* defined on the `IVsProject` object
-===========================================
+# Interfaces *not* defined on the `IVsProject` object
 
 Comparing to the current VB/C# projects, you may find some interfaces are
 missing on CPS's implementation of the `IVsProject` object.

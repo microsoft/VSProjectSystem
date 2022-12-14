@@ -1,5 +1,4 @@
-Item Templates
-====================
+# Item Templates
 
 The [Project System Extensibility SDK](https://marketplace.visualstudio.com/items?itemName=VisualStudioProductTeam.VisualStudioProjectSystemExtensibilityPreview) offers several item templates.
 
@@ -21,7 +20,8 @@ Property Page Value Editor extension | Export that provides a custom property va
 Custom Icons | Adds a set of custom images that can be consumed by project type using an `IProjectTreePropertiesProvider`. | [Provide Custom Icons](../scenario/provide_custom_icons_for_the_project_or_item_type.md) [IProjectPropertiesProvider](IProjectPropertiesProvider.md)
 Dynamic Enum Values Provider | Export that provides a dynamic list of enum values | [IDynamicEnumValuesProvider](IDynamicEnumValuesProvider.md)
 
-### Future Item Templates
+## Future Item Templates
+
 Item Template | Description | More Info
 ------------ | ------------- | -------------
 

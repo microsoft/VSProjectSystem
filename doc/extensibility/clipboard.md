@@ -1,5 +1,3 @@
-Clipboard
-=========
+# Clipboard
 
 `ICopyPackager` / `IPasteProvider`
-

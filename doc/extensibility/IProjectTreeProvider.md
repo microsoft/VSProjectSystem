@@ -1,5 +1,4 @@
-`IProjectTreeProvider`
-=================================================
+# `IProjectTreeProvider`
 
 ## Special nodes under projects in Solution Explorer
 
@@ -8,13 +7,12 @@ CPS-based project, you must export an `IProjectTreeProvider` with a
 specific contract name, as shown here:
 
 ```csharp
-    [AppliesTo("Project capability expression here")]
-    [Export(ExportContractNames.ProjectTreeProviders.PhysicalViewRootGraft, typeof(IProjectTreeProvider))]
-    internal class YourSubtreeProvider : ProjectTreeProviderBase
-    {
-        // implementation goes here
-    }
+[AppliesTo("Project capability expression here")]
+[Export(ExportContractNames.ProjectTreeProviders.PhysicalViewRootGraft, typeof(IProjectTreeProvider))]
+internal class YourSubtreeProvider : ProjectTreeProviderBase
+{
+    // implementation goes here
+}
 ```
 
-For the capability expression, please see
-[Extensibility Points](index.md).
+For the capability expression, please see [Extensibility Points](index.md).

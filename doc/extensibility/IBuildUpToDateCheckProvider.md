@@ -1,5 +1,4 @@
-How to add a fast up-to-date check?
-===================================
+# How to add a fast up-to-date check?
 
 **[Item template:](project_item_templates.md)** Build Up-To-Date Check extension
 
@@ -13,7 +12,7 @@ draining of critical tasks.
 
 Example usage:
 
-```CSharp
+```csharp
 [Export(typeof(IBuildUpToDateCheckProvider))]
 [ExportMetadata("BeforeDrainCriticalTasks", true)] // Optional, default value is false
 [AppliesTo("MyCapability")]

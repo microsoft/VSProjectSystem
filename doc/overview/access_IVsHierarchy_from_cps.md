@@ -1,17 +1,16 @@
-Accessing `IVsHierarchy` from CPS
-===============================
+# Accessing `IVsHierarchy` from CPS
 
 The following sample uses an `IDeployProvider` to log the `Caption` property of the `IVsHierarchy`.
 
-Notes
+Notes:
 - You should avoid accessing `IVsHierarchy` properties and try to use CPS mechanisms instead if possible
 - You need to switch to the UI thread before calling any COM interfaces (e.g. IVsHierarchy) using
-```CSharp
-await ThreadHandling.SwitchToUIThread();
-```
+   ```csharp
+   await ThreadHandling.SwitchToUIThread();
+   ```
 - Additional information about [ItemIds](ItemIDs.md) in CPS
 
-```CSharp
+```csharp
 using System.ComponentModel.Composition;
 using System.IO;
 using System.Threading;
@@ -40,13 +39,7 @@ internal class DeployProvider1 : IDeployProvider
     /// <summary>
     /// Gets the IVsHierarchy instance for the project being built.
     /// </summary>
-    internal IVsHierarchy VsHierarchy
-    {
-        get
-        {
-            return this.IVsHierarchies.First().Value;
-        }
-    }
+    internal IVsHierarchy VsHierarchy => this.IVsHierarchies.First().Value;
 
     [Import]
     internal IProjectThreadingService ProjectThreadingService { get; private set; }
@@ -62,10 +55,7 @@ internal class DeployProvider1 : IDeployProvider
         }
     }
 
-    public bool IsDeploySupported
-    {
-        get { return true; }
-    }
+    public bool IsDeploySupported => true;
 
     public void Commit()
     {
