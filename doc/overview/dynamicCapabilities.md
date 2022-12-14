@@ -20,13 +20,13 @@ For code which only cares about the current status of the project, it can get th
 like this:
 
 ```csharp
-    project.Capabilities.Current.Value.IsProjectCapabilityPresent("SomeCapability");
+project.Capabilities.Current.Value.IsProjectCapabilityPresent("SomeCapability");
 ```
 
 Or use a built-in extension method in CPS, which is recommended over the previous method:
 
 ```csharp
-    project.Capabilities.Contains("SomeCapability");
+project.Capabilities.Contains("SomeCapability");
 ```
 
 To detect capability changes, you need to chain to the data source:
