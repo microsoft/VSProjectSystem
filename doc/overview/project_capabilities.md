@@ -10,6 +10,7 @@ known to declare the capability.
 | ------------------ | ----------- |
 | VisualC                              | Project may contain or compile C++ source files.
 | CSharp                               | Project may contain or compile C# source files.
+| FSharp                               | Project may contain or compile F# source files.
 | VB                                   | Project may contain or compile VB source files.
 | JavaScript                           | Project contains and handles JavaScript source files.
 | TypeScript                           | Indicates that the TypeScript build targets are imported into the project and the project is capable of compiling TypeScript source files into JavaScript.
