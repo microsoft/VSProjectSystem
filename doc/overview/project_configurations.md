@@ -73,21 +73,21 @@ strategy to read the project configurations from the project.json file.
 - Implement and export `IProjectConfigurationsServiceInternal` with the
   `AppliesTo()` being set to that capability. For example:
 
-```csharp    
-[Export(typeof(IProjectConfigurationsService))]
-[AppliesTo("ProjectConfigurationsFromProjectJson")]
-internal class ProjectJsonConfigurationsService : IProjectConfigurationsServiceInternal
-{
-}
-```
-        
+   ```csharp
+   [Export(typeof(IProjectConfigurationsService))]
+   [AppliesTo("ProjectConfigurationsFromProjectJson")]
+   internal class ProjectJsonConfigurationsService : IProjectConfigurationsServiceInternal
+   {
+   }
+   ```
+
 - Include that capability in the common targets file. For example:
 
-```xml
-<ItemGroup>
-  <ProjectCapability Include="ProjectConfigurationsFromProjectJson" />
-</ItemGroup>
-```
+   ```xml
+   <ItemGroup>
+     <ProjectCapability Include="ProjectConfigurationsFromProjectJson" />
+   </ItemGroup>
+   ```
     
 - Ensure the two built-in capabilities `ProjectConfigurationsDeclaredAsItems` 
   and `ProjectConfigurationsInferredFromUsage` are not defined in the common 
