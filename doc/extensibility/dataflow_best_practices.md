@@ -11,7 +11,7 @@ You should always use the Slim Dataflow blocks provided by CPS, unless you need 
 APIs should typically expose Broadcast blocks (`BroadcastBlockSlim` or `BroadcastBlock`) instead of other types of blocks (e.g. `TransformBlock`, etc)
   - Other blocks will retain data when there is no subscriber
   - If one subscriber picks a message from a block other than broadcast block, it won't be available to the next
-  - `BroadcastBlockSlim` is the only slim dataflow block that supports multiple subscribers. All other slim blocks support a single subscriber, which means any previous subscriber needs to be unliked before linking another one
+  - `BroadcastBlockSlim` is the only slim dataflow block that supports multiple subscribers. All other slim blocks support a single subscriber, which means any previous subscriber needs to be unlinked before linking another one
   - If you chain a block with a limited capacity to the dataflow, it will force the source to buffer extra data. Or worse, if the source block is a shared broadcast block, it will block other consumers to receive new events.
 
 ## Linking/disposing patterns
@@ -103,8 +103,9 @@ this.blockA = DataflowBlockSlim.CreateBroadcastBlock<...>(
 
 #### Consider specifying `skipIntermediateInputData`/`skipIntermediateOutputData = true` 
 
-This improves performance, but can be used only if the latest data is needed. 
-If the dataflow is passing change as a 'delta', skipping intermediate input will lose data.
+This improves performance, but can be used only if only the latest data is needed. 
+If the dataflow is pushing deltas, skipping intermediate inputs or outputs will cause data to be lost.
+In such cases all deltas are required in order for consumers to produce the correct state.
 
 #### DataFlow blocks should produce initial data
 
