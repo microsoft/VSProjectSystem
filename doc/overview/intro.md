@@ -67,7 +67,7 @@ yourself that these are acceptable before deciding to build on CPS:
 
 - CPS projects cannot be flavored via COM aggregation in the old sense. Instead,
   use MEF exports to tailor the experience of your projects to meet your requirements.
-- When a CPS _must_ be extended via COM aggregation, see [com_aggegation.md](../extensibility/com_aggegation.md).
+- When a CPS _must_ be extended via COM aggregation, see [com_aggregation.md](../extensibility/com_aggregation.md).
 - If we don't have an extensibility point where you need one, you're quite 
   likely out of luck until we have a chance to update CPS to add the 
   extensibility point you require. We have a bunch of [extensibility points](../extensibility/index.md) 
