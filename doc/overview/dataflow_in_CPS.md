@@ -1,7 +1,7 @@
 # Dataflow in CPS
 
 One of the main goals of CPS is to move the bulk of the project system work to background threads,
-while still maintaining data consistency. To accomplish this, CPS leverages the [TPL.Dataflow](https://msdn.microsoft.com/en-us/library/hh228603%28v=vs.110%29.aspx?f=255&MSPPError=-2147217396)
+while still maintaining data consistency. To accomplish this, CPS leverages the [TPL.Dataflow](https://learn.microsoft.com/dotnet/standard/parallel-programming/dataflow-task-parallel-library)
 library to produce a versioned, immutable, producer-consumer pattern to flow changes through the
 project system. Dataflow is not always easy, and if used wrong it can quickly lead to corrupt
 project states or deadlocks.
