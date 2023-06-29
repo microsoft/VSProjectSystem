@@ -22,7 +22,8 @@ VS Project System Documentation
     - [ItemIDs](overview/ItemIDs.md)
   - [Responsive design](overview/responsive_design.md)
   - [Globbing behavior](overview/globbing_behavior.md)
-  - [Dataflow in CPS](overview/dataflow_in_CPS.md)
+  - [Dataflow](overview/dataflow.md)
+    - [Dataflow in CPS](overview/dataflow_in_CPS.md)
     - [Dataflow source blocks](extensibility/dataflow_sources.md)
   - Diagnostics
     - [How to examine Visual Studio registry](overview/examine_registry.md)
