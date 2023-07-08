@@ -220,7 +220,7 @@ CPS has a few subclasses of `DataflowLinkOptions` that you can use in certain ci
 
 ## Slim blocks
 
-TPL's Dataflow blocks are general purpose and handle scenarios we don't need in CPS. Those additional features come at a cost in terms of memory. To improve the scale of CPS in large solutions, we have a parallel set of "slim" blocks that mirror many of the main behaviours of TPL's blocks, but with less overhead.
+TPL's Dataflow blocks are general purpose and have feautres that aren't used in CPS. Those unused features come with a performance/memory cost. To improve the scalability of CPS in large solutions, we have a replacement set of "slim" blocks that provide the required behaviours of TPL's blocks, but without the overhead associated with the unused features.
 
 | TPL Block                                 | CPS Slim Block                                                |
 |-------------------------------------------|---------------------------------------------------------------|
@@ -283,28 +283,267 @@ var transform = DataflowBlockSlim.CreateTransformBlock<IProjectVersionedValue<in
 
 ### SyncLink
 
-When joining versioned values, we use `SyncLink` to ensure versions are synchronised before values are joined.
+Dataflow graphs in CPS can become large and complex. Even if the number of blocks used within a component is small, it's likely that those blocks are producing data that is derived from upstream blocks. Similarly a component's outputs may feed into other Dataflow blocks.
 
-TODO complete this section
+Each source block in the graph produces increasing versions of its data, and those versions flow through the system with the value, and with values derived from it.
 
----
+Consider the following graph, where data from two source blocks is combined in multiple paths:
 
-- Dataflow in CPS
-  - Slim blocks
-  - Versions and versioned values
-    - SyncLink
-  - Project data subscriptions (IProjectSubscriptionService), snapshots and deltas, common sources
-  - Exporting and composing data sources via MEF
-  - ProjectValueDataSource blocks (as original data sources)
-  - Chained ProjectValueDataSource blocks (as derived data sources)
-  - UnwrapChainedProjectValueDataSource
-  - ConfiguredProjectDataSourceJoinBlock
-  - Working with slices
-  - Avoiding hangs (JoinUpstreamDataSources)
-  - Dataflow source registries
-  - GetLatestVersionAsync / GetSpecificVersionAsync
-  - Mixing dataflow and live project data
-  - Registering blocks for fault handling
-  - Skipping intermediate input/output data
-  - Operation progress and Dataflow
-  - Diagnosing issues / `!dumpdf` / nameFormat
+```mermaid
+flowchart LR
+    Source1 --> Join1 --> Join2
+    Source2 --> Join1
+    Source2 --> Join2
+```
+
+Notice how `Join2` receives data from `Source2` via two paths, both directly and via `Join1`. Remember that Dataflow processing is asynchronous. Updates may flow through the graph with different timings on different runs. Without any synchronization, `Join2` may receive data from `Join1` containing v1 from `Source2`, and data from `Source2` containing v2 from that source. This is a data race. It's most likely that `Join2` will produce invalid data when merging data from two different versions of project data.
+
+To address this problem in a clean way, we use `SyncLink`. This block observes the versions at its inputs, and only produces outputs when version numbers align.
+
+Here's a table showing a `SyncLink` block with two inputs and an output, with time running left-to-right and the versions of each input/output given. Notice that only when both input versions align is an output produced. Notice too that version 2 is never produced, as input 1 receives version 3 before input 2 receives version 2.
+
+```
+Input 1 |  1     2  3
+Input 2 |     1       2   3
+Output  |     1           3
+```
+
+> ⚠️ A `SyncLink` block that never sees synchronized input versions will never produce an output!
+
+> ⚠️ Upstream blocks that suppress version-only updates may cause downstream `SyncLink` blocks to drop messages.
+
+Recall that `IProjectVersionedValue<T>` may hold multiple versions, keyed by `NamedIdentity`. In our example above:
+
+- `Source1` produces values with a single `Source1` version
+- `Source2` produces values with a single `Source2` version
+- `Join1` produces values with both `Source1` and `Source2` versions
+- `Join2` produces values with both `Source1` and `Source2` versions
+
+In our example, `Join1` does not need to be a `SyncLink` as none of its inputs have versions in common, so there is nothing to join on. `SyncLink` will only join on the intersection of versions between its inputs. It makes sense for `Join2` to be a `SyncLink` as the `Source2` version is present at both of its inputs.
+
+You could construct the `SyncLink` for `Join2` as follows:
+
+```c#
+IDisposable link = ProjectDataSources.SyncLinkTo(
+    join1.SourceBlock.SyncLinkOptions(),
+    source2.SourceBlock.SyncLinkOptions(),
+    target: join2,
+    linkOptions: new DataflowLinkOptions { PropagateCompletion = true },
+    cancellationToken: cancellationToken),
+```
+
+The `SyncLinkOptions` extension method allows the data source to be configured. If the source contains rule-based data (discussed [below](#rule-sources)) 
+
+## Subscribing to project data
+
+One of the main use cases for Dataflow in CPS is the processing of project data. Unlike the legacy CSPROJ project system where updates were generally applied on a single thread (the main thread), CPS uses Dataflow to schedule updates asyncrhonously on the thread pool.
+
+The `IProjectSubscriptionService` interface provides data sources for the most commonly used kinds of project data. It's exported as a MEF component in `ConfiguredProject` scope. Every property on that interface is an `IProjectValueDataSource<T>` of a specific data type, where that data is an immutable snapshot of some state. The following table outlines the available sources:
+
+| Property                    | Data Type                    | Description |
+|-----------------------------|------------------------------|-------------|
+| `ProjectSource`             | `IProjectSnapshot`           | MSBuild `ProjectInstance` snapshot. |
+| `ProjectRuleSource`         | `IProjectSubscriptionUpdate` | Project evaluation data as both a snapshot and delta, according to rule schema. |
+| `ProjectBuildRuleSource`    | `IProjectSubscriptionUpdate` | Project (design-time) build data as both a snapshot and delta, according to rule schema. |
+| `JointRuleSource`           | `IProjectSubscriptionUpdate` | Synchronized project data from evaluation and build, both a snapshot and delta, according to rule schema. |
+| `SourceItemsRuleSource`     | `IProjectSubscriptionUpdate` | Project source item snapshot. |
+| `SourceItemRuleNamesSource` | `IImmutableSet<string>`      | The set of rule names that define project source items. |
+| `ImportTreeSource`          | `IProjectImportTreeSnapshot` | Tree of MSBuild files (e.g. props/targets) imported by the project. |
+| `SharedFolderSource`        | `IProjectSharedFoldersSnapshot` | Collection of shared folders imported by the project. |
+| `OutputGroupsSource`        | `IImmutableDictionary<string, IOutputGroup>` | Sets of project outputs keyed by category. |
+| `ProjectCatalogSource`      | `IProjectCatalogSnapshot`    | Project snapshot bundled with rules that interpret the data. |
+
+As with all Dataflow in CPS, the data produced by these sources are immutable snapshots of their respective data.
+
+All these sources are `IProjectValueDataSource<T>` and so the values produced have associated versions, as described [earlier](#versions-and-versioned-values).
+
+### Rule sources
+
+CPS uses rules to (among other things) specify the schema of MSBuild items and properties to be extracted from the project via Dataflow. The structure of the rule (the properties it defines and their data sources) control the shape of the snapshots produced by certain data sources in CPS, as we will see.
+
+Of the sources provided by `IProjectSubscriptionService`, the sources `ProjectRuleSource`, `ProjectBuildRuleSource` and `JointRuleSource` are treated specially. When subscribing to one of these sources, you must specify the set of rule names for the data in question. 
+
+> ℹ️ℹ️ Note that `IProjectSubscriptionService.SourceItemsRuleSource` does not require you to specify rule names, as those are defined elsewhere (and made available via `SourceItemRuleNamesSource`).
+
+For example, to subscribe to the set of `Compile` and `None` items in the project, you would pass the `SchemaName` of the rules that define these items when subscribing to the `ProjectRuleSource`:
+
+```c#
+IProjectSubscriptionService projectSubscriptionService = ...;
+
+IDisposable link = projectSubscriptionService.ProjectRuleSource.LinkTo(
+    target: targetBlock,
+    linkOptions: new DataflowLinkOptions { PropagateCompletion = true },
+    ruleNames: new[] { Compile.SchemaName, None.SchemaName });
+```
+
+That `LinkTo` method is an extension method provided by the `Microsoft.VisualStudio.ProjectSystem.DataflowExtensions` class, of which there are a few overloads. There are also some optional parameters such as `initialDataAsNew` and `suppressVersionOnlyUpdates`.
+
+When using a rule-based source in a `SyncLink` operation, you can declare the rule names by passing an instance of `StandardRuleDataflowLinkOptions` (a subclass of `DataflowLinkOptions`) on the given input's `SyncLinkOptions`:
+
+```c#
+IDisposable link = ProjectDataSources.SyncLinkTo(
+    projectSubscriptionService.ProjectRuleSource.SourceBlock.SyncLinkOptions(),
+    otherSource.SyncLinkOptions(
+        new StandardRuleDataflowLinkOptions
+        {
+            RuleNames = ImmutableHashSet.Create(Compile.SchemaName, None.SchemaName)
+        }),
+    target: targetBlock,
+    linkOptions: new DataflowLinkOptions { PropagateCompletion = true },
+    cancellationToken: cancellationToken),
+```
+
+When using `JointRuleSource`, you may use `JointRuleDataflowLinkOptions` rather than `StandardRuleDataflowLinkOptions`, which allows specifying the rules for evaluation/build separately. This avoids CPS having to determine these categorisations itself, which can save some time.
+
+### Project subscription updates
+
+Several project data sources produce data snapshots as instances of `IProjectSubscriptionUpdate`. These snapshots contain:
+
+1. The new state, for each included rule.
+1. The prior state, for each included rule.
+1. A delta between these two states.
+1. The project configuration the data applies to.
+
+The delta makes it easy to see what changed in the update (if anything), and to apply just the delta to your own state as required.
+
+Rather than explain `IProjectSubscriptionUpdate` in words, it's probably cleare to just look at the API:
+
+```c#
+public interface IProjectSubscriptionUpdate
+{
+    // Keyed by rule name
+    IImmutableDictionary<string, IProjectRuleSnapshot> CurrentState { get; }
+    
+    // Keyed by rule name
+    IImmutableDictionary<string, IProjectChangeDescription> ProjectChanges { get; }
+
+    ProjectConfiguration ProjectConfiguration { get; }
+}
+
+public interface IProjectChangeDescription
+{
+    IProjectRuleSnapshot Before { get; }
+    IProjectRuleSnapshot After { get; }
+    IProjectChangeDiff Difference { get; }
+}
+
+public interface IProjectRuleSnapshot
+{
+    string RuleName { get; }
+
+    // Key is item name, value is a dictionary of item metadata
+    IImmutableDictionary<string, IImmutableDictionary<string, string>> Items { get; }
+
+    // Key is property name, value is property value
+    IImmutableDictionary<string, string> Properties { get; }
+}
+
+public interface IProjectChangeDiff
+{
+    bool AnyChanges { get; }
+    IImmutableSet<string> AddedItems { get; }
+    IImmutableSet<string> RemovedItems { get; }
+    IImmutableSet<string> ChangedItems { get; }
+    IImmutableDictionary<string, string> RenamedItems { get; }
+    IImmutableSet<string> ChangedProperties { get; }
+}
+```
+
+## Creating `IProjectValueDataSource<T>` blocks
+
+CPS's `IProjectValueDataSource<T>` blocks extend Dataflow's regular source blocks to both:
+
+1. Ensure values are versioned and any version identity created by the block is knowable.
+1. Coordinates shared access to the UI thread to prevent deadlocks.
+
+See [Versions and versioned values](#versions-and-versioned-values) for more background on versions and identities.
+
+CPS provides access to several such `IProjectValueDataSource<T>` instances via `IProjectSubscriptionService` (as described in [Subscribing to project data](#subscribing-to-project-data)). In some cases you may need to create your own instances of this type, which we will discuss next.
+
+### Chained (derived) data sources
+
+Most `IProjectValueDataSource<T>` instances will produce data that was derived from other project value data sources. CPS provides the abstract base class `ChainedProjectValueDataSourceBase<T>`, which makes creating such a derived (chained) source easy.
+
+Let's look at an example of overriding this class to create a new data source that derives its data from one other source:
+
+```c#
+internal class MyProjectDataSource : ChainedProjectValueDataSourceBase<MyData>
+{
+    private readonly IProjectSubscriptionService _subscriptionService;
+
+    public SupportedTargetFrameworkAliasEnumProvider(
+        ConfiguredProject project,
+        IProjectSubscriptionService subscriptionService)
+        : base(project)
+    {
+        _subscriptionService = subscriptionService;
+    }
+
+    protected override IDisposable? LinkExternalInput(ITargetBlock<MyData> targetBlock)
+    {
+        IProjectValueDataSource<IProjectSubscriptionUpdate> source = _subscriptionService.ProjectRuleSource;
+
+        // ⚠️ You must join all upstream IProjectValueDataSource's to prevent deadlocks
+        JoinUpstreamDataSources(source);
+
+        var transformBlock = DataflowBlockSlim.CreateTransformBlock<
+            IProjectVersionedValue<IProjectSubscriptionUpdate>,
+            IProjectVersionedValue<MyData>>(
+                update => update.Derive(Transform));
+
+        transformBlock.LinkTo(targetBlock, DataflowOption.PropagateCompletion);
+
+        // Finally, create the first link and return it
+        return source.LinkTo(
+            transformBlock,
+            new DataflowLinkOptions { PropagateCompletion = true },
+            initialDataAsNew: true,
+            suppressVersionOnlyUpdates: false,
+            ruleNames: new[] { MyRule.SchemaName });
+
+        MyData Transform(IProjectSubscriptionUpdate update)
+        {
+            // TODO produce output based on received update
+        }
+    }
+}
+```
+
+The base class requires the project be passed to its constructor, and that the `LinkExternalInput` method be overriden. It will call that method when required, in order to set up the Dataflow chain. The method returns an `IDisposable` that, when disposed, must tear down the subscription. The base class handles all lifetime management.
+
+Within `LinkExternalInput` we must take care to join (in the JTF sense) all upstream project value data sources. This allows JTF to correctly track related work when scheduling work to the main thread, which can avoid deadlocks.
+
+`LinkExternalInput` accepts an `ITargetBlock<T>` to which we must publish our data source's output. Our inputs are typically accessed via the constructor, typically using a MEF `[ImportingConstructor]` when the class itself is exported for import elsewhere. The example above has omitted MEF concerns for simplicity.
+
+In this sample we create a slim transform block that produces the derived data. We use the `Derive` extension method to create a new data object having the same versions as the source. The block in the above example will always produce the same versions at its outputs as received on its input. This is generally what's needed when chaining blocks together, as no new data has been injected.
+
+### Original data sources
+
+## Exporting and composing data sources via MEF
+
+## UnwrapChainedProjectValueDataSource
+
+## ConfiguredProjectDataSourceJoinBlock
+
+## Working with slices
+
+## Avoiding hangs (JoinUpstreamDataSources)
+
+## Dataflow source registries
+
+## GetLatestVersionAsync / GetSpecificVersionAsync
+
+## Mixing dataflow and live project data
+
+## Registering blocks for fault handling
+
+## Skipping intermediate input/output data
+
+## Operation progress and Dataflow
+
+## Diagnosing issues / `!dumpdf` / nameFormat
+
+## Other data via Dataflow
+
+
+- Capabilities
