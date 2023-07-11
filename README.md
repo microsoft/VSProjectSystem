@@ -52,8 +52,6 @@ You may file doc bugs [here][docbugs].
 
 [![Join the chat at https://gitter.im/Microsoft/extendvs](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/Microsoft/extendvs?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
-For the latest features take a look at [Changes][changes].
-
 For further information about extending Visual Studio in other ways please check out
 [Visual Studio extensibility documentation][3].
 
@@ -66,6 +64,5 @@ This project has adopted the [Microsoft Open Source Code of Conduct](https://ope
  [VSSDK]: https://go.microsoft.com/?linkid=9877247
  [prereq]: doc/overview/prereqs.md
  [intro]: doc/overview/intro.md
- [changes]: CHANGES.md
  [docbugs]: https://github.com/Microsoft/VSProjectSystem/issues
  
