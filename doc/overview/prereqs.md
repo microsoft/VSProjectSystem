@@ -7,4 +7,4 @@ Install these prequisites before writing project system extensions:
    * .NET Desktop development
    * Visual Studio extension development
    * .NET Core and Docker - project system based on CPS
-3. Install [Visual Studio Project System Extensibility Preview](https://visualstudiogallery.msdn.microsoft.com/43691584-1f0f-46da-adaf-a07c290c1e6e)
+3. Install [Visual Studio Project System Extensibility Preview](https://marketplace.visualstudio.com/items?itemName=VisualStudioProductTeam.VisualStudioProjectSystemExtensibilityPreview-13433)

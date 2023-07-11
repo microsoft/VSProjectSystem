@@ -83,7 +83,6 @@ VS Project System Documentation
      - [Who holds a project lock?](scenario/who_holds_a_project_lock.md)
   - [Turn on CPS for a C#/VB project](scenario/turn_on_cps_for_csharp_vb_project.md)
   - [Add Single File Generator](scenario/add_single_file_generator.md)
-- [Changes](../CHANGES.md)
 - Breaking changes
   - [Breaking Changes in Visual Studio 2019](overview/breaking_changes_visual_studio_2019.md)
   - [Breaking Changes in Visual Studio 2017](overview/breaking_changes_visual_studio_2017.md)
