@@ -467,11 +467,11 @@ Most `IProjectValueDataSource<T>` instances will produce data that was derived f
 Let's look at an example of overriding this class to create a new data source that derives its data from one other source:
 
 ```c#
-internal class MyProjectDataSource : ChainedProjectValueDataSourceBase<MyData>
+internal class MyChainedProjectDataSource : ChainedProjectValueDataSourceBase<MyData>
 {
     private readonly IProjectSubscriptionService _subscriptionService;
 
-    public SupportedTargetFrameworkAliasEnumProvider(
+    public MyChainedProjectDataSource(
         ConfiguredProject project,
         IProjectSubscriptionService subscriptionService)
         : base(project)
@@ -519,9 +519,109 @@ In this sample we create a slim transform block that produces the derived data. 
 
 ### Original data sources
 
+When data originates from a location other than existing `ProjectValueDataSource`s, it is an _original_ data source. In most cases, data sources are [chained (derived) from other data sources](#chained-derived-data-sources). However sometimes you really do have an original source.
+
+Original sources produce `IProjectVersionedValue<T>` values that include a version unique to that source. Each must define their own `NamedIdentity` and track their own `IComparable` version. Typically the version is just an `int`.`
+
+Here's an example of such an original data source. Code that obtains and produces the data is omitted. That code would call the `PublishSnapshot` helper method when it has new data to produce.
+
+```c#
+internal sealed class MyOriginalProjectDataSource : ProjectValueDataSourceBase<MyData>
+{
+    private readonly DisposableBag _disposables = new();
+    private readonly UnconfiguredProject _project;
+
+    private IBroadcastBlock<IProjectVersionedValue<MyData>>? _broadcastBlock;
+    private IReceivableSourceBlock<IProjectVersionedValue<MyData>>? _publicBlock;
+
+    private MyData? _currentState;
+    private int _version;
+
+    [ImportingConstructor]
+    public MyOriginalProjectDataSource(
+        UnconfiguredProject project,
+        IUnconfiguredProjectServices unconfiguredProjectServices,
+        IProjectThreadingService threadingService)
+        : base(unconfiguredProjectServices)
+    {
+        _project = project;
+    }
+
+    public override NamedIdentity DataSourceKey { get; } = new NamedIdentity(nameof(MyOriginalProjectDataSource));
+
+    public override IComparable DataSourceVersion => _version;
+
+    public override IReceivableSourceBlock<IProjectVersionedValue<MyData>> SourceBlock
+    {
+        get
+        {
+            EnsureInitialized();
+            return _publicBlock!;
+        }
+    }
+
+    protected override void Initialize()
+    {
+        base.Initialize();
+
+        _broadcastBlock = DataflowBlockSlim.CreateBroadcastBlock<IProjectVersionedValue<MyData>>(nameFormat: nameof(MyOriginalProjectDataSource) + " Broadcast: {1}");
+        _publicBlock = _broadcastBlock.SafePublicize();
+
+        // TODO Any other configuration for this block, including establishing other dataflows
+        //      and joining upstream data sources. When data is available, it should either flow
+        //      to _broadcastBlock via a Dataflow link, or via Post as shown in PublishSnapshot below.
+        //      Add any disposable items to _disposables to be cleaned up along with the data source.
+    }
+
+    protected override void Dispose(bool disposing)
+    {
+        _disposables.Dispose();
+        base.Dispose(disposing);
+    }
+
+    private void PublishSnapshot(MyData snapshot)
+    {
+        _version++;
+        _broadcastBlock!.Post(new ProjectVersionedValue<MyData>(
+            snapshot,
+            Empty.ProjectValueVersions.Add(DataSourceKey, _version)));
+    }
+}
+```
+
+Notice that we store fields for two blocks. the `_broadcastBlock` is the block that we use to publish data. while we could expose this object via the `SourceBlock` property, that would allow external code to [complete or fault](#completing-and-faulting-blocks) the data source, stopping it working for all consumers. To prevent this, we use the `SafePublicize()` method to create a thin wrapper around `_broadcastBlock` that prevents external requests for completion or faults, and store the wrapper in `_publicBlock` to be handed out via the `SourceBlock` property.
+
 ## Exporting and composing data sources via MEF
 
-## UnwrapChainedProjectValueDataSource
+The composability of Dataflow blocks makes them very flexible and reusable. However, in order to compose blocks, you must first find them. Like most service discovery in CPS project systems, we use MEF.
+
+CPS exposes [project data sources](#subscribing-to-project-data) via `IProjectSubscriptionService`, which can be imported via MEF in `ConfiguredProject` scope. Project data (evaluation and build) generally comes from a configured project.
+
+There's nothing special to these kinds of imports and exports, and they follow general MEF conventions for CPS. You may, for example, define your own interface `IMyDataSource` and implement it with your `ProjectValueDataSourceBase<T>`/`ChainedProjectValueDataSourceBase<T>` implementation (as discussed above), with something like:
+
+```c#
+[ProjectSystemContract(/* specify scope, etc */)]
+interface IMyDataSource : IProjectValueDataSource<MyData>
+{}
+
+[Export(typeof(IMyDataSource))]
+internal sealed class MyDataSource : ChainedProjectValueDataSource<MyData>
+{
+    // [ImportingConstructor], LinkExternalInput, etc
+}
+```
+
+Then elsewhere you can import `IMyDataSource` and use its `SourceBlock` property. As with all MEF components, you need to be mindful of scopes.
+
+## Combining a dynamic number of data sources
+
+Sometimes you want to join data across a set sources that is only known at runtime. For example, there might be a data source in each `ConfiguredProject` and the set of `ConfiguredProject`s isn't know at compile time. What's more, the set of data sources can change during the lifetime of a project as configurations come and go. If you want to combine data across all configurations into a single snapshot, managing all those components by hand would be verbose and difficult to get right.
+
+The `UnwrapCollectionChainedProjectValueDataSource<TInput, TOutput>` block has been designed with this scenario in mind, and takes care of the tricky bookkeeping for you.
+
+- It's input `TInput` is a data type via which you can obtain the data sources you want to combine.
+- The block's constuctor accepts a delegate of type `Func<TInput, IEnumerable<IProjectValueDataSource<TOutput>>>`, and invokes this callback for each `TInput` to obtain the set of data sources to be combined.
+- Finally, the block outputs `SyncLink`'d values, one per input, in the output `IReadOnlyCollection<TOutput>`.
 
 ## ConfiguredProjectDataSourceJoinBlock
 
@@ -544,6 +644,5 @@ In this sample we create a slim transform block that produces the derived data. 
 ## Diagnosing issues / `!dumpdf` / nameFormat
 
 ## Other data via Dataflow
-
 
 - Capabilities
