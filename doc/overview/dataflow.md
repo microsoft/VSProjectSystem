@@ -2,9 +2,11 @@
 
 ## What is Dataflow?
 
-Dataflow is a set of programming patterns and APIs for .NET that support [actor-based programming](https://en.wikipedia.org/wiki/Actor_model), where blocks are linked together and messages flow between them. This programming model supports robust concurrent computation.
+Dataflow is a set of programming patterns and APIs for .NET that support [actor-based programming](https://en.wikipedia.org/wiki/Actor_model), where blocks are linked together and messages flow between them. This programming model supports robust concurrent computation, particularly for complex, stateful systems.
 
-By linking nodes together, a _dataflow graph_ is created. Some nodes function as data sources, other as data receivers, and others still as both receivers and providers. Here's a simple example:
+Dataflow blocks, which are akin to actors, are computational entities that operate on and produce messages that are exchanged with other blocks. Blocks may be stateful or stateless, but they always encapsulate their state such that modifying or querying that state occurs via messages. This encapsulation prevents common problems associated with concurrent processing, such as data races. Dataflow blocks, as units of computation, can be distributed across threads on the thread pool, making them scale well across hardware resources.
+
+By linking blocks together, a _dataflow graph_ is created, with blocks as the graph's nodes, and messages passing along the graph's edges. Some blocks function as data sources, other as data receivers, and others still as both receivers and providers. Here's a simple example:
 
 ```mermaid
 flowchart LR
@@ -21,7 +23,9 @@ flowchart LR
     Source --> Transform2 --> Join
 ```
 
-Dataflow originates from the [Task Parallel Library](https://learn.microsoft.com/dotnet/standard/parallel-programming/dataflow-task-parallel-library) (TPL). CPS extends TPL's Dataflow in several ways, which we will see later.
+Dataflow originates from the [Task Parallel Library](https://learn.microsoft.com/dotnet/standard/parallel-programming/dataflow-task-parallel-library) (TPL). CPS extends TPL's Dataflow in several ways, which we will see later ([Datflow in CPS](#dataflow-in-cps)).
+
+Dataflow's strengths are its support for concurrent processing, it's scalability, and its fault tolerance. The weaknesses of Dataflow are it's complexity and the overhead of message passing and scheduling.
 
 ## Snapshots
 
@@ -615,17 +619,79 @@ Then elsewhere you can import `IMyDataSource` and use its `SourceBlock` property
 
 ## Combining a dynamic number of data sources
 
-Sometimes you want to join data across a set sources that is only known at runtime. For example, there might be a data source in each `ConfiguredProject` and the set of `ConfiguredProject`s isn't know at compile time. What's more, the set of data sources can change during the lifetime of a project as configurations come and go. If you want to combine data across all configurations into a single snapshot, managing all those components by hand would be verbose and difficult to get right.
+Sometimes you want to join data across a set sources that is only known at runtime. For example, there might be a dynamic number of user-created objects in the project (such as debug launch profiles), each exposed as its own data source. In such a case, the set of data sources is not known at compile time. What's more, the set of data sources can change during the lifetime of a project in response to the user's changes. If you want to combine data across all configurations into a single snapshot, managing all those components by hand would be verbose and difficult to get right.
 
 The `UnwrapCollectionChainedProjectValueDataSource<TInput, TOutput>` block has been designed with this scenario in mind, and takes care of the tricky bookkeeping for you.
 
+- It is both an `ITargetBlock<TInput>` and a `ISourceBlock<IReadOnlyCollection<TOutput>>`
 - It's input `TInput` is a data type via which you can obtain the data sources you want to combine.
 - The block's constuctor accepts a delegate of type `Func<TInput, IEnumerable<IProjectValueDataSource<TOutput>>>`, and invokes this callback for each `TInput` to obtain the set of data sources to be combined.
 - Finally, the block outputs `SyncLink`'d values, one per input, in the output `IReadOnlyCollection<TOutput>`.
 
 ## ConfiguredProjectDataSourceJoinBlock
 
-## Working with slices
+In the previous section we discussed combining data from a dynamic number of data sources. One of the most common cases for this is the combining of data across the project's various configurations. This is so common in fact that CPS provides a dedicated class to help with this: `ConfiguredProjectDataSourceJoinBlock`.
+
+Here's an example that takes the `IMyConfiguredDataSource` (which is an `IProjectValueDataSource<MyConfiguredDataSnapshot>`) from each `ConfiguredProject` MEF scope and aggregates them:
+
+```c#
+var disposableBag = new DisposableBag();
+
+// Find the IMyConfiguredDataSource in each ConfiguredProject scope and produce a collection containing
+// the most recent value from each. The number of returned items reflects the number of configurations
+// and may change over time as configurations are added.
+ConfiguredProjectDataSourceJoinBlock<MyConfiguredDataSnapshot> configuredProjectJoinBlock = new(
+    configuredProject => configuredProject.Services.ExportProvider.GetExportedValue<IMyConfiguredDataSource>(),
+    joinableTaskFactory,
+    unconfiguredProject);
+
+disposableBag.AddDisposable(configuredProjectJoinBlock);
+
+// Takes the collection of values from each configuration's data source, and combines them into a
+// single snapshot.
+var mergeBlock = DataflowBlockSlim.CreateTransformBlock<IProjectVersionedValue<IReadOnlyCollection<MyConfiguredDataSnapshot>>, IProjectVersionedValue<MyMergedDataSnapshot>>(
+    messages => messages.Derive(MergeData),
+    nameFormat: "Merge configured data snapshots {1}",
+    skipIntermediateInputData: true); // skip data when we fall behind (might not be safe for your scenario!)
+
+mergeBlock.LinkTo(targetBlock, new DataflowLinkOptions() { PropagateCompletion = true });
+
+configuredProjectJoinBlock.LinkTo(mergeBlock, new DataflowLinkOptions() { PropagateCompletion = true });
+
+// Link a data source of active ConfiguredProjects into the join block.
+disposableBag.AddDisposable(
+    activeConfigurationGroupService.ActiveConfiguredProjectGroupSource.SourceBlock.LinkTo(
+        configuredProjectJoinBlock,
+        new DataflowLinkOptions() { PropagateCompletion = true }));
+
+// We must always join upstream data sources.
+disposableBag.AddDisposable(
+    JoinUpstreamDataSources(activeConfigurationGroupService.ActiveConfiguredProjectGroupSource));
+```
+
+## Consuming project data from the active configuration
+
+Consider a project with a single platform (`AnyCPU`) and single target framework (it doesn't matter which). The matrix of possible project configurations might resemble:
+
+Configuration | Platform
+--------------|---------
+Debug         | AnyCPU
+Release       | AnyCPU
+
+Visual Studio allows the user to select the current active configuration. For example, you can switch between _Debug_ and _Release_ via a drop down list in the standard tool bar. In our example, only one of those two configurations would be active at a given time.
+
+`IProjectSubscriptionService` (discussed above) provides a convenient way to access project data within a specific configuration. Unsubscribing and resubscribing every time the active configuration changes requires a moderate amount of tricky code that would be prone to errors and hangs. Thankfully it's possible to import `IActiveConfiguredProjectSubscriptionService` from the `UnconfiguredProject` scope, the implementation of which performs that work for you. That interface itself derives from `IProjectSubscriptionService`. Subscribing to data sources on that import will always produce data from the active configuration. When the user changes the active configuration, any delta in the data between configurations is published via the same dataflow, allowing the consumer to be unaware of the specific configuration involved.
+
+The downside is that this approach does not handle multi-targeting projects. When a project specifies multiple target frameworks, only one can be considered as active. The others are _implicitly_ active, but their data is not available via `IActiveConfiguredProjectSubscriptionService`. If you require data from all target frameworks, read the next section on _slices_.
+
+## Consuming project data from all implicitly active configurations (via slices)
+
+The concept of _slices_, and the APIs that support them, simplify the implementation of components that consume data from all _implicitly active configurations_ (generally, all target frameworks) of the _active_ project configuration.
+
+To understand this in more detail, let's first discuss some concepts around project configurations.
+
+
+
 
 ## Avoiding hangs (JoinUpstreamDataSources)
 
