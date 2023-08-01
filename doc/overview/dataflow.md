@@ -367,7 +367,7 @@ CPS uses rules to (among other things) specify the schema of MSBuild items and p
 
 Of the sources provided by `IProjectSubscriptionService`, the sources `ProjectRuleSource`, `ProjectBuildRuleSource` and `JointRuleSource` are treated specially. When subscribing to one of these sources, you must specify the set of rule names for the data in question. 
 
-> ℹ️ℹ️ Note that `IProjectSubscriptionService.SourceItemsRuleSource` does not require you to specify rule names, as those are defined elsewhere (and made available via `SourceItemRuleNamesSource`).
+> ℹ️ Note that `IProjectSubscriptionService.SourceItemsRuleSource` does not require you to specify rule names, as those are defined elsewhere (and made available via `SourceItemRuleNamesSource`).
 
 For example, to subscribe to the set of `Compile` and `None` items in the project, you would pass the `SchemaName` of the rules that define these items when subscribing to the `ProjectRuleSource`:
 
@@ -707,7 +707,35 @@ To understand this in more detail, let's first discuss some concepts around proj
 
 ## Operation progress and Dataflow
 
-## Diagnosing issues / `!dumpdf` / nameFormat
+## Diagnosing issues
+
+### `!dumpdf`
+
+### `NameFormat`
+
+Dataflow blocks can be given a `NameFormat` value, which provides a template to describe the purpose and identity of the block. This value is used in the block's `ToString` method.
+
+Here's an example of specifying such a value:
+
+```c#
+var block = DataflowBlockSlim.CreateBroadcastBlock<IProjectVersionedValue<ProjectBuildMessages>>(
+    nameFormat: "ProjectErrorList {1}");
+```
+
+All the `DataflowBlockSlim.Create*` methods allow passing a `nameFormat` argument.
+
+> ⚠️ Note that we pass `{1}` here, not `{0}`!
+
+The available format arguments are:
+
+- `{0}` &mdash; the type name of the block (e.g. `BroadcastBlockSlim`)
+- `{1}` &mdash; an integer that uniquely identifies the instance of the block, which can be helpful when the same block is constructed many times in different contexts in the process.
+
+The [Dataflow docs on `NameFormat`](https://learn.microsoft.com/en-au/dotnet/api/system.threading.tasks.dataflow.dataflowblockoptions.nameformat?view=net-7.0) state:
+
+> The name format may contain up to two format items. `{0}` will be substituted with the block's name. `{1}` will be substituted with the block's Id, as is returned from the block's `Completion.Id` property.
+
+However CPS's `DataflowBlockSlimBase.ToString()` uses the block's `GetHashCode` method rather than `Completion.Id`.
 
 ## Other data via Dataflow
 
