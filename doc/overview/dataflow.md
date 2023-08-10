@@ -55,7 +55,8 @@ The asynhronous nature of Dataflow also makes it possible to accidentally create
 
 A Dataflow graph will be comprised of blocks of various types, each with its own purpose and behaviour.
 
-> ℹ️ TPL's versions of Dataflow blocks have more features than CPS usually needs. We generally use CPS's "slim" versions of these blocks which come with fewer capabilities but demand fewer resources. We'll mention these briefly in each section below and in more detail later.
+> [!NOTE]
+> TPL's versions of Dataflow blocks have more features than CPS usually needs. We generally use CPS's "slim" versions of these blocks which come with fewer capabilities but demand fewer resources. We'll mention these briefly in each section below and in more detail later.
 
 ### Core interfaces
 
@@ -86,7 +87,8 @@ public interface IPropagatorBlock<in TInput, out TOutput> : ITargetBlock<TInput>
 }
 ```
 
-> ℹ️ For simplicity, a few internal-facing members of these interfaces have been omitted. They are only used when authoring your own block types, which is very rare, and are not necessary for this introduction.
+> [!NOTE]
+> For simplicity, a few internal-facing members of these interfaces have been omitted. They are only used when authoring your own block types, which is very rare, and are not necessary for this introduction.
 
 All blocks implement `IDataflowBlock`, though usually indirectly through a more specific interface, which we will discuss shortly. This interface defines some lifetime management for the block. The `Completion` property exposes a `Task` that can be used to wait on the block's _completion_. Completion can be either successful (by a call to `Complete()`), or erroneous (by a call to `Fault(Exception)`). Either way, at that point the block has processed all data and will perform no further work.
 
@@ -100,7 +102,8 @@ All blocks implement `IDataflowBlock`, though usually indirectly through a more 
 
 Perhaps the simplest block to reason about is the `ActionBlock<TInput>`. It is an `ITargetBlock<TInput>` that receives messages and invokes a callback action for each.
 
-> ⚠️ In CPS we use "slim" action blocks via the `DataflowBlockSlim.CreateActionBlock<TInput>` methods.
+> [!NOTE]
+> In CPS we use "slim" action blocks via the `DataflowBlockSlim.CreateActionBlock<TInput>` methods.
 
 The callback may be either a `System.Action<TInput>` for synchronous processing, or a `System.Func<TInput, Task>` for asynchronous processing.
 
@@ -110,7 +113,8 @@ The block ensures that processing for each message is completed (sync or async) 
 
 A `TransformBlock<TInput, TOutput>` is an `IPropagatorBlock<TInput, TOutput>` that receives a message, performs some computation with it, and produces an output.
 
-> ⚠️ In CPS we use "slim" action blocks via the `DataflowBlockSlim.CreateTransformBlock<TInput, TOutput>` methods.
+> [!NOTE]
+> In CPS we use "slim" action blocks via the `DataflowBlockSlim.CreateTransformBlock<TInput, TOutput>` methods.
 
 The transform function may be synchronous via `System.Func<TInput, TOutput>` or asynchronous via `System.Func<TInput, Task<TOutput>>`. 
 
@@ -122,7 +126,8 @@ Every input to the block produces one output.
 
 A `TransformManyBlock<TInput, TOutput>` is an `IPropagatorBlock<TInput, TOutput>` that receives a message, performs some computation with it, and produces an zero or more outputs.
 
-> ⚠️ In CPS we use "slim" action blocks via the `DataflowBlockSlim.CreateTransformManyBlock<TInput, TOutput>` methods.
+> [!NOTE]
+> In CPS we use "slim" action blocks via the `DataflowBlockSlim.CreateTransformManyBlock<TInput, TOutput>` methods.
 
 The transform function may be synchronous via `System.Func<TInput, IEnumerable<TOutput>>` or asynchronous via `System.Func<TInput, Task<IEnumerable<TOutput>>>`. 
 
@@ -137,7 +142,8 @@ Unlike `TransformBlock<TInput, TOutput>`, where every input to the block produce
 
 A `BroadcastBlock<T>` is an `IPropagatorBlock<T, T>` that stores the most recent value. Blocks that link to a `BroadcastBlock<T>` will receive that stored value immediately, rather than having to wait for the next value to be published.
 
-> ⚠️ In CPS we use "slim" action blocks via the `DataflowBlockSlim.CreateBroadcastBlock<T>` methods.
+> [!NOTE]
+> In CPS we use "slim" action blocks via the `DataflowBlockSlim.CreateBroadcastBlock<T>` methods.
 
 Broadcast blocks do not provide a callback for user code to run during their processing. They are fully self-contained.
 
@@ -145,7 +151,8 @@ Broadcast blocks do not provide a callback for user code to run during their pro
 
 `BufferBlock<T>` is an `IPropagatorBlock<T, T>` that maintains a queue (buffer) of values. If more messages are received than have been consumed, the pending messages are held. The queue length can be specified via `DataflowBlockOptions.BoundedCapacity`.
 
-> ⚠️ In CPS we use "slim" action blocks via the `DataflowBlockSlim.CreateSimpleBufferBlock<T>` methods.
+> [!NOTE]
+> In CPS we use "slim" action blocks via the `DataflowBlockSlim.CreateSimpleBufferBlock<T>` methods.
 
 Buffer blocks do not provide a callback for user code to run during their processing. They are fully self-contained.
 
@@ -312,9 +319,11 @@ Input 2 |     1       2   3
 Output  |     1           3
 ```
 
-> ⚠️ A `SyncLink` block that never sees synchronized input versions will never produce an output!
+> [!WARNING]
+> A `SyncLink` block that never sees synchronized input versions will never produce an output!
 
-> ⚠️ Upstream blocks that suppress version-only updates may cause downstream `SyncLink` blocks to drop messages.
+> [!WARNING]
+> Upstream blocks that suppress version-only updates may cause downstream `SyncLink` blocks to drop messages.
 
 Recall that `IProjectVersionedValue<T>` may hold multiple versions, keyed by `NamedIdentity`. In our example above:
 
@@ -367,7 +376,8 @@ CPS uses rules to (among other things) specify the schema of MSBuild items and p
 
 Of the sources provided by `IProjectSubscriptionService`, the sources `ProjectRuleSource`, `ProjectBuildRuleSource` and `JointRuleSource` are treated specially. When subscribing to one of these sources, you must specify the set of rule names for the data in question. 
 
-> ℹ️ Note that `IProjectSubscriptionService.SourceItemsRuleSource` does not require you to specify rule names, as those are defined elsewhere (and made available via `SourceItemRuleNamesSource`).
+> [!NOTE]
+> `IProjectSubscriptionService.SourceItemsRuleSource` does not require you to specify rule names, as those are defined elsewhere (and made available via `SourceItemRuleNamesSource`).
 
 For example, to subscribe to the set of `Compile` and `None` items in the project, you would pass the `SchemaName` of the rules that define these items when subscribing to the `ProjectRuleSource`:
 
@@ -724,7 +734,8 @@ var block = DataflowBlockSlim.CreateBroadcastBlock<IProjectVersionedValue<Projec
 
 All the `DataflowBlockSlim.Create*` methods allow passing a `nameFormat` argument.
 
-> ⚠️ Note that we pass `{1}` here, not `{0}`!
+> [!NOTE]
+> We pass `{1}` here, not `{0}`!
 
 The available format arguments are:
 
