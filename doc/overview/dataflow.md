@@ -696,10 +696,50 @@ The downside is that this approach does not handle multi-targeting projects. Whe
 
 ## Consuming project data from all implicitly active configurations (via slices)
 
-The concept of _slices_, and the APIs that support them, simplify the implementation of components that consume data from all _implicitly active configurations_ (generally, all target frameworks) of the _active_ project configuration.
+The concept of _slices_, and the APIs that support them, simplify the implementation of components that consume data from all _implicitly active configurations_ (commonly this can be read as: from all target frameworks) of the _active_ project configuration.
 
 To understand this in more detail, let's first discuss some concepts around project configurations.
 
+Consider a project having both `Debug` and `Release` configurations, a single `AnyCPU` platform, and two target frameworks, `net48` and `net8.0`. The full matrix of possible configurations would then be the cross product of those possibilities:
+
+Configuration | Platform | Target Framework
+--------------|----------|------------------
+Debug         | AnyCPU   | net48
+Debug         | AnyCPU   | net8.0
+Release       | AnyCPU   | net48
+Release       | AnyCPU   | net8.0
+
+In this matrix we say there are three _configuration dimensions_, namely _Configuration_, _Platform_ and _Target Framework_. CPS supports arbitrary numbers of configuration dimensions, though the first two (_Configuration_ and _Platform_) will always be present.
+
+> ![NOTE]
+> The term "configuration" has multiple meanings here unfortunately. It refers to both a single dimension (i.e. `Debug`/`Release`), and also to the full specification (i.e. `Debug|AnyCPU|net8.0`). Where possible we refer to the former as a configuration _dimension_, and the latter as a _project_ configuration. Often it's clear from the context which is being referred to.
+
+Outside of CPS, VS only understands the first two configuration dimensions, _Configuration_ and _Platform_. VS has the concept of an "active" configuration, such as `Debug|AnyCPU` or `Release|x64`. This leaves any additional configuration dimensions (such as _Target Framework_) out, yet a multi-targeted project must have one of these values specified. In order to achieve this, we have some additional concepts that bridge these two models.
+
+Continuing our example from above, if the user makes the `Debug|AnyCPU` configuration active in VS, then the _first_ target framework is used. Any other target frameworks are _implicitly active_. The resulting state is:
+
+Configuration | Platform | Target Framework | State
+--------------|----------|------------------|------------------
+Debug         | AnyCPU   | net48            | Active
+Debug         | AnyCPU   | net8.0           | Implicitly active
+
+If the user then toggles the active configuration in VS to `Release|AnyCPU` the matrix then becomes:
+
+Configuration | Platform | Target Framework | State
+--------------|----------|------------------|------------------
+Release       | AnyCPU   | net48            | Active
+Release       | AnyCPU   | net8.0           | Implicitly active
+
+In that action, the set of implicitly active project configurations has changed completely. For a software component that needs to aggregate data across all implicitly active configurations (such as the Roslyn IDE language service, or the dependencies tree), the concept of _slices_ makes it much easier to author such a component.
+
+Without slices, you'd need to unsubscribe and resubscribe every time the active configuration changes, which requires a moderate amount of tricky code that would be prone to errors and hangs.
+
+A _slice_ is a way of viewing project configurations without the first two dimensions. So our sample project has the following slices:
+
+| Slice  |
+|--------|
+| net48  |
+| net8.0 |
 
 
 
