@@ -741,25 +741,128 @@ A _slice_ is a way of viewing project configurations without the first two dimen
 | net48  |
 | net8.0 |
 
+A subsystem that wishes to track data from each slice in the active configuration can do so via the `IActiveConfigurationGroupSubscriptionService` interface, available via MEF in `UnconfiguredProject` scope. This interface extends `IProjectValueDataSource<ConfigurationSubscriptionSources>`, producing instances of `ConfigurationSubscriptionSources`.
 
+A `ConfigurationSubscriptionSources` object specifies a mapping between `ProjectConfigurationSlice` and `IActiveConfigurationSubscriptionSource`.
 
-## Avoiding hangs (JoinUpstreamDataSources)
+`ProjectConfigurationSlice` defines the set of dimensions within that slice, but no actual data from that slice. For a multi-target project, the target framework will be specified. For a single-target project, there will only be a single slice with no dimensions specified. Remember that any concept of active configuration is absent here, and the `Configuration` and `Platform` dimensions are omitted accordingly. Remember too that while target framework is the most common additional dimension here, there may be others in future.
+
+`IActiveConfigurationSubscriptionSource` provides dataflow-based access to the project data within a given slice. It extends `IProjectSubscriptionService`, so provides all the project data described in [Subscribing to Project Data](#subscribing-to-project-data) above. In addition, it defines a `ActiveConfiguredProjectSource` which can be used to obtain the current `ConfiguredProject` for the slice, taking the active configuration into account.
+
+Users of this API subscribe for `ConfigurationSubscriptionSources` updates. As the set of slices changes, consuming code must track which slices have been added (and create subscriptions within them) and which have been removed (and dispose of those subscriptions).
+
+## Avoiding hangs (`JoinUpstreamDataSources`)
+
+Within Visual Studio we use the `JoinableTaskFactory` and related APIs to allow related streams of work to access shared resources such as the UI thread. Dataflow introduces asynchrony between blocks, such that a message posted to an input block is decoupled from those at later output blocks.
+
+Without the ability to track related work across linked blocks, certain code patterns (such as `GetLatestValueAsync()`) can result in deadlocks.
+
+To address this, we use `IProjectValueDataSource<T>` instances as wrappers around blocks that, in part, allow work to be joined via their base interface `IJoinableProjectValueDataSource`.
+
+However it's still important that project value data sources declare their upstream data sources so that these relationships between blocks is known. An upstream data source is any project value data source that a block subscribes to and contributes to its output values.
+
+When deriving from `ProjectValueDataSourceBase<T>` or one of its subclasses (such as `ChainedProjectValueDataSourceBase<T>`) a block can simply call `JoinUpstreamDataSources` and pass in all upstream project value data sources.
+
+For example:
+
+```c#
+JoinUpstreamDataSources(projectValueDataSource1, projectValueDataSource2);
+```
+
+In other scenarios, you can use the static `ProjectDataSources.JoinUpstreamDataSources` method:
+
+```c#
+ProjectDataSources.JoinUpstreamDataSources(
+    _joinableTaskFactory,
+    _projectFaultHandler,
+    projectValueDataSource1,
+    projectValueDataSource2),
+```
 
 ## Dataflow source registries
 
+Earlier we talked about [versions and versioned values](#versions-and-versioned-values). Original data sources that produce such versioned values include their `NamedIdentity` along with a specific version value, allowing downstream observers and transformers to understand which data sources contributed to the values they see, and at what versions.
+
+Data sources that produce original values may also be registered with an instance of `IProjectDataSourceRegistry`. This registry then allows lookup of an `IProjectValueDataSource` by `NamedIdentity`.
+
+Instances of this registry exist in `ProjectService`, `UnconfiguredProject` and `ConfiguredProject` scopes.
+
+Not all data sources need to be registered. This facility is primarily intended for original data sources (data sources that produce values of their own, not derived from other sources).
+
+Code can use the registry to determine whether a given versioned value represents the latest value from each of its original data sources, and therefore whether it is the latest version available in the dataflow network. Methods like `GetLatestVersionAsync()` use this internally.
+
+In general this concept is hidden away, as the creation of original data sources is uncommon. One place where this concept does surface is when extending `ChainedProjectValueDataSourceBase<T>`, where the base constructor accepts a `registerDataSource` boolean. Most callers will want to pass `false` here.
+
 ## GetLatestVersionAsync / GetSpecificVersionAsync
+
+Dataflow networks can be thought of as nodes connected by queues through which messages flow. Data arriving at an input makes its way through the network asynchronously.
+
+Sometimes you need to know when a particular data source is up-to-date with respect to all of its ancestors. For this, you can use `GetLatestVersionAsync()`. This method observes the current versioned value of the data source, gathering each `NamedIdentity` and its corresponding version, and mapping those to original data sources via `IProjectDataSourceRegistry`. Then it asks those original data sources for their current versions. If those input versions are newer than those currently at the output, then we can assume that data is still flowing through the graph and the method will wait for it to arrive. Note that if newer values arrive at the input data sources after the call to `GetLatestVersionAsync()` starts, those values are not awaited &mdash; the version requirement does not change over time.
+
+Similarly, if you need a specific version from a data source, then `GetSpecificVersionAsync()` can be used.
+
+These methods must be used carefully as they can lead to deadlocks if versions are dropped within the chain, or if upstream data sources are not correctly joined. Any time you want to add one of these methods, you must carefully inspect the Dataflow chain leading up to the block being queried.
 
 ## Mixing dataflow and live project data
 
+There are ways to obtain project data from sources other than Dataflow, such as `ProjectProperties`. We refer to this as _live project data_.
+
+While this can be a fine thing to do, it's important that components do not mix such live project data with snapshot data obtained via Dataflow. It is not possible to synchronize these two types of data, and therefore it is not possible to avoid data races. Such races can lead to challenging, intermittent bugs.
+
 ## Registering blocks for fault handling
+
+CPS defines the `IProjectFaultHandlerService` interface for reporting faults (errors) in a standard way. It can be helpful to chain Dataflow blocks to this service, such that if they fault the error is reported via telemetry/Watson/etc.
+
+The .NET Project System (an open-source component built on top of CPS) provides a [convenient extension method](https://github.com/dotnet/project-system/blob/f61337bf09571f8392cdd2219a31f2238aa5aa1e/src/Microsoft.VisualStudio.ProjectSystem.Managed/ProjectSystem/FaultExtensions.cs#L176-L262) to achieve this with code resembling:
+
+```c#
+_faultHandlerService.RegisterFaultHandler(
+    block,
+    unconfiguredProject,
+    severity: ProjectFaultSeverity.Recoverable);
+```
+
+Pass:
+
+- `ProjectFaultSeverity.Recoverable` when the user should be able to continue working despite the fault.
+- `ProjectFaultSeverity.LimitedFunctionality` when the fault is expected to cause certain features to deactivate until the process is restarted or the project reloaded.
+- `ProjectFaultSeverity.NotRecoverable` when the fault is expected to reflect internal state has been corrupted, and that the user should save whatever possible and restart.
 
 ## Skipping intermediate input/output data
 
+Several of CPS's slim Dataflow block construction methods have a `bool skipIntermediateInputData` parameter.
+
+Some blocks also define a `bool skipIntermediateOutputData` parameter.
+
+When `true`, these parameters change the behaviour of blocks so that they can drop messages in some cases.
+
+Let's consider an example. Remember that blocks process messages in order, where the processing of one message completes before the next starts. If a block receives values `A`, `B` and `C` in quick succession, such that `B` and `C` arrive during the processing of `A`, then `B` is considered _intermediate_ and is eligible to be skipped if `skipIntermediateInputData` is `true`. The final value `C` will still be processed, so that the final state is always consistent.
+
+These options should be used carefully. If the data stream contains deltas, it is unlikely to be safe to skip messages, as doing so means the final state will vary based on the timing of messages.
+
+## Suppressing version-only updates
+
+When linking two `IProjectValueDataSource<T>` blocks, there is an option `bool suppressVersionOnlyUpdates`.
+
+When `true`, `IProjectVersionedValue<T>` values will be filtered such, when processing each message in a sequence, if the `IProjectVersionedValue<T>.Value` is identical to that of the prior message and only the `IProjectVersionedValue<T>.Versions` changed, then the update is skipped.
+
+As with the skipping of intermediate inputs/outputs, care must be used when suppressing version-only updates. If the data stream contains deltas, it is unlikely to be safe to skip messages, as doing so means the final state will vary based on the timing of messages.
+
 ## Operation progress and Dataflow
+
+CPS's Operation Progress is a facility for tracking asynchronous operations that occur within the project system that correlate with ongoing activities or phases of the project's lifecycle.
+
+For example, during solution load, we block various behaviours until IntelliSense is ready.
+
+It's possible to advertise Operation Progress state using Dataflow. In a similar way to [how `GetLatestVersionAsync` works](#getlatestversionasync--getspecificversionasync), it's possible to use the difference in version numbers between inputs and outputs of the Dataflow graph to determine when data is still in flight.
+
+To do this, we create a registration via `IDataProgressTrackerService.RegisterOutputDataSource`. This method accepts an `IProgressTrackerOutputDataSource` which is not actually a data source block. The method returns an `IDataProgressTrackerServiceRegistration` through which the owning component should call `NotifyOutputDataCalculated` to pass the versions that have been processed so far. When the registration is no longer needed it should be disposed.
 
 ## Diagnosing issues
 
 ### `!dumpdf`
+
+TODO
 
 ### `NameFormat`
 
@@ -789,5 +892,7 @@ The [Dataflow docs on `NameFormat`](https://learn.microsoft.com/en-au/dotnet/api
 However CPS's `DataflowBlockSlimBase.ToString()` uses the block's `GetHashCode` method rather than `Completion.Id`.
 
 ## Other data via Dataflow
+
+TODO
 
 - Capabilities
