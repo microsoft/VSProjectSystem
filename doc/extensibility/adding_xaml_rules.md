@@ -82,7 +82,7 @@ This method is recommended when your rule is "private" to your implementation, l
 `IDebugLaunchProvider`. With the MEF export method, CPS will handle adding/removing the rule
 the rule for you.
 
-1. Reference the ProjectSystem SDK Nuget: https://www.nuget.org/packages/Microsoft.VisualStudio.ProjectSystem.SDK.Tools/
+1. Reference the ProjectSystem SDK package: https://dev.azure.com/azure-public/vside/_artifacts/feed/vssdk/NuGet/Microsoft.VisualStudio.ProjectSystem.Sdk.Tools
 
 2. Include the rule as `XamlPropertyRule` in your project. This will embed the rule in your assembly (named `XamlRuleToCode:{rule_name}.xaml`)
 and optionaly generate a partial class for easy access to the rule.
