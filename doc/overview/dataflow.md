@@ -229,6 +229,8 @@ CPS has a few subclasses of `DataflowLinkOptions` that you can use in certain ci
 
 # Dataflow in CPS
 
+One of the main goals of CPS is to move the bulk of the project system work to background threads while still maintaining data consistency. To accomplish this, CPS leverages Dataflow to produce a versioned, immutable, producer-consumer pattern to flow changes through the project system. Dataflow is not always easy, and if used wrongly can lead to corrupt state and deadlocks.
+
 ## Slim blocks
 
 TPL's Dataflow blocks are general purpose and have feautres that aren't used in CPS. Those unused features come with a performance/memory cost. To improve the scalability of CPS in large solutions, we have a replacement set of "slim" blocks that provide the required behaviours of TPL's blocks, but without the overhead associated with the unused features.
@@ -245,7 +247,9 @@ TPL's Dataflow blocks are general purpose and have feautres that aren't used in 
 
 Dataflow graphs publish immutable snapshots of data between blocks, where updates are pushed through the graph in an asynchronous fashion. This gives the framework a lot of flexibility to schedule the work, but can make it difficult to know when a given input has made its way through the graph to the outputs.
 
-Another challenge with Dataflow graphs is joining data. Consider the following graph:
+Dataflow is simple when you have a single line of dependencies, but in CPS it is much more complex. It is common for a chained datasource to require input from multiple upstream sources. It is also common for those upstream sources to also have multiple inputs. This pattern introduces a data consistency problem.
+
+Consider the following Dataflow graph:
 
 ```mermaid
 flowchart LR
@@ -271,7 +275,7 @@ public interface IProjectValueVersions
 }
 ```
 
-And in fact, a versioned value can have _more than one version!_ This makes sense when you consider that a given node in the graph can have more than one source block feeding in to it. Each of those source blocks provides its own versioned value, and as messages are joined, the sets of versions are merged.
+And in fact, a versioned value can have _more than one version!_ This makes sense when you consider that a given node in the graph can have more than one source block feeding in to it. Each of those source blocks provides its own versioned value, and as messages are joined the sets of versions are merged.
 
 ```mermaid
 flowchart LR
@@ -346,6 +350,12 @@ IDisposable link = ProjectDataSources.SyncLinkTo(
 ```
 
 The `SyncLinkOptions` extension method allows the data source to be configured. If the source contains rule-based data (discussed [below](#rule-sources)) 
+
+### Allowing inconsistent versions
+
+In special cases that require it, it is possible to allow for inconsistent versions in your Dataflow. This is for when you depend on multiple upstream sources where one is drastically slower at producing values than others, but you want to be able to produce intermediate values while the slow one is still processing. An example of this is where you want data quickly from project evaluation, and also want the richer data that arrives later via design-time builds.
+
+Unfortunately, there is no built-in support for this scenario. You will have to manually link to your upstream sources and synchronize between them. When producing chained output, to calculate the data versions to publish you may be able to use `ProjectDataSources.MergeDataSourceVersions`.
 
 ## Subscribing to project data
 
@@ -476,7 +486,7 @@ CPS provides access to several such `IProjectValueDataSource<T>` instances via `
 
 ### Chained (derived) data sources
 
-Most `IProjectValueDataSource<T>` instances will produce data that was derived from other project value data sources. CPS provides the abstract base class `ChainedProjectValueDataSourceBase<T>`, which makes creating such a derived (chained) source easy.
+Most `IProjectValueDataSource<T>` instances will produce data that was derived from one or more other project value data sources. CPS provides the abstract base class `ChainedProjectValueDataSourceBase<T>`, which makes creating such a derived (chained) source easy.
 
 Let's look at an example of overriding this class to create a new data source that derives its data from one other source:
 
