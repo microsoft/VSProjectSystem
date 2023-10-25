@@ -1,3 +1,3 @@
 # Dataflow in CPS
 
-Moved to [Dataflow in CPS](dataflow#dataflow-in-cps).
+Moved to [Dataflow in CPS](dataflow.md#dataflow-in-cps).
