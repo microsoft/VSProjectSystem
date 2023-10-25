@@ -25,7 +25,7 @@ flowchart LR
 
 Dataflow originates from the [Task Parallel Library](https://learn.microsoft.com/dotnet/standard/parallel-programming/dataflow-task-parallel-library) (TPL). CPS extends TPL's Dataflow in several ways, which we will see later ([Datflow in CPS](#dataflow-in-cps)).
 
-Dataflow's strengths are its support for concurrent processing, it's scalability, and its fault tolerance. The weaknesses of Dataflow are it's complexity and the overhead of message passing and scheduling.
+Dataflow's strengths are its support for concurrent processing, its scalability, and its fault tolerance. The weaknesses of Dataflow are its complexity and the overhead of message passing and scheduling.
 
 ## Snapshots
 
