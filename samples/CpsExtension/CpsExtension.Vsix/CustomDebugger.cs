@@ -2,7 +2,7 @@
 {
     using System;
     using System.Collections.Generic;
-    using System.Composition;
+    using System.ComponentModel.Composition;
     using System.Threading.Tasks;
     using Microsoft.VisualStudio.ProjectSystem;
     using Microsoft.VisualStudio.ProjectSystem.Debug;
