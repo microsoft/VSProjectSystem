@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-VisualStudioVersion = 15.0.27829.1
+# Visual Studio Version 17
+VisualStudioVersion = 17.8.34316.72
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CpsExtension.Nuget", "CpsExtension.Nuget\CpsExtension.Nuget.csproj", "{9F9DD63D-AA68-4F9E-BE6C-88707A5BCD46}"
 EndProject
