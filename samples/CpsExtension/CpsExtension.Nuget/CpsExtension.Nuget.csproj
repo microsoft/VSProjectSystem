@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>net461</TargetFramework>
+    <TargetFramework>net472</TargetFramework>
     <IsTool>true</IsTool>
     <IncludeBuildOutput>false</IncludeBuildOutput>
     <Version>1.1.0</Version>

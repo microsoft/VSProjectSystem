@@ -9,6 +9,11 @@
     <PropertyPageSchema Include="$(CpsExtensionSchemaDirectory)CustomDebugger.xaml">
       <Context>Project</Context>
     </PropertyPageSchema>
+
+    <PropertyPageSchema Include="$(CpsExtensionSchemaDirectory)Compile.BrowseObject.xaml">
+       <Context>BrowseObject</Context>
+    </PropertyPageSchema>
+
   </ItemGroup>
 
 </Project>
