@@ -53,6 +53,26 @@ public MyComponent(ConfiguredProject configuredProject)
 The `DeployProviders` collection will contain a set of `IDeployProvider` filtered by the current capabilities
 of the configuredProject. The content of the collection can change over the time. 
 
+## Defining fixed capabilities for a project type
+
+Some capabilities are static/fixed for a given project type. These capabilities should be defined directly on the
+project type registration.
+
+For example:
+
+```c#
+[assembly: ProjectTypeRegistration(
+    projectTypeGuid: MyProjectType.Guid,
+    displayName: "#1",
+    displayProjectFileExtensions: "#2",
+    defaultProjectExtension: "myproj",
+    language: "MyLang",
+    resourcePackageGuid: MyPackage.PackageGuid,
+    Capabilities = "MyProject")]
+```
+
+Capabilities defined via the `ProjectTypeRegistrationAttribute.Capabilities` property are available on all projects loaded for that project type.
+
 ## Dynamically producing project capabilities
 
 Capabilities can be added to a project at run-time via code. To do so, export an instance of
@@ -81,6 +101,8 @@ internal class TuesdayProjectCapabilityProvider : ProjectCapabilitiesProviderBas
     }
 }
 ```
+
+Note there can be a chicken/egg problem here, where one capability enables a provider (via `AppliesTo`) that then adds another capability, and so on.
 
 ## How to prevent seeing capability changes in the middle of an execution
 
