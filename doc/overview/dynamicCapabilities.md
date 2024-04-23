@@ -10,7 +10,6 @@ a project to be adjusted dynamically based on features/NuGet packages being used
 For example, WPF features can be turned on, only because the project references WPF related packages,
 instead of depending on which template was used when the project was created.
  
-
 ## Capabilities are now coming from dataflows
 
 In both unconfigured project and configured project scopes, capabilities are no longer a fixed set of strings. 
@@ -53,6 +52,35 @@ public MyComponent(ConfiguredProject configuredProject)
 
 The `DeployProviders` collection will contain a set of `IDeployProvider` filtered by the current capabilities
 of the configuredProject. The content of the collection can change over the time. 
+
+## Dynamically producing project capabilities
+
+Capabilities can be added to a project at run-time via code. To do so, export an instance of
+`IProjectCapabilitiesProvider`. The easiest way to do this is to subclass `ProjectCapabilitiesProviderBase`
+and override the `GetCapabilitiesAsync` method.
+
+For example, if your project should only have a certain capability on Tuesday, you could use:
+
+```c#
+[Export(ExportContractNames.Scopes.UnconfiguredProject, typeof(IProjectCapabilitiesProvider))]
+[AppliesTo("MyProjectCapability")] // Replace with capabilities that define when your provider should be active
+internal class TuesdayProjectCapabilityProvider : ProjectCapabilitiesProviderBase
+{
+    [ImportingConstructor]
+    public TuesdayProjectCapabilityProvider(UnconfiguredProject project)
+        : base(nameof(TuesdayProjectCapabilityProvider), project.Services.ThreadingPolicy.JoinableTaskContext, project.Services.DataSourceRegistry, configuredProjectLevel: false)
+    {
+    }
+
+    protected override Task<ImmutableHashSet<string>> GetCapabilitiesAsync(CancellationToken cancellationToken)
+    {
+        // Replace this with whatever logic you require.
+        return DateTime.Now.DayOfWeek == DayOfWeek.Tuesday
+            ? Task.FromResult(Empty.CapabilitiesSet.Add("Tuesday"))
+            : Task.FromResult(Empty.CapabilitiesSet);
+    }
+}
+```
 
 ## How to prevent seeing capability changes in the middle of an execution
 

@@ -32,8 +32,22 @@ Project capabilities can be declared in several ways, the easiest of which
 being to add this MSBuild item to your .targets file:
 
 ```xml
-<ProjectCapability Include="MyOwnCapability" />
+<ItemGroup>
+  <ProjectCapability Include="MyOwnCapability" />
+</ItemGroup>
 ```
+
+## Viewing a project's capabilities
+
+To see the capabilities a CPS project defines, add the `DiagnoseCapabilities` project capability to turn on a tree in the VS Solution Explorer that lists all capabilities of the project:
+
+```xml
+<ItemGroup>
+  <ProjectCapability Include="DiagnoseCapabilities" />
+</ItemGroup>
+```
+
+![alt text](../Images/diagnose-capabilities-tree.png)
 
 ## Common project capabilities and where they are defined
 
