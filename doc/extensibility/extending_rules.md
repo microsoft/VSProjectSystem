@@ -7,6 +7,8 @@ existing rule of the same name.
 This is useful if you are building ontop of an existing project system and want to add
 or change properties to the existing rules.
 
+Please refer to the [CpsExtension sample](/samples/CpsExtension/) that shows adding a custom property to to a .cs file in an SDK-Style C# project.
+
 Example:
 
 ```xml
@@ -42,6 +44,8 @@ and extending rule. In the case of collisions, the value of the extending rule i
 The source of a rule affects which rules it can override/extend, and which rules can override/extend it. Here are the sources in decreasing priority order (i.e. rules from sources earlier in the list can override/extend those later in the list):
 
 1. MSBuild `PropertyPageSchema` items
+    * Note that in SDK-style projects, the order of these items can be difficult to control due to how the SDK props and targets are included implicitly.
+    * Using the default SDK-Style projects behavior, this mechanism works as expected if the `.targets` file defining the custom `PropertyPageSchema` items is imported via nuget package, but it doesn't work if it is imported from the project file directly.
 2. Rule _files_ added via `IAdditionalRuleDefinitionsService`
 3. Rule _objects_ added via `IAdditionalRuleDefinitionsService`
 4. Embedded `XAML` rules

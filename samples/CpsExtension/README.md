@@ -2,18 +2,17 @@
 This sample demonstrates:
 * Extending an existing project type in CPS
 * How to dynamically turn on or off a feature implemented in a vsix by adding and or removing a nuget package that defines a custom `ProjectCapability`
-* How to author vsix projects using an SDK-style project which is CPS based (keep in mind that this is not an oficially supported scenario currently)
+* How to author vsix projects using an SDK-style project which is CPS based (keep in mind that this is not an officially supported scenario currently)
 	* Custom rule delivered via a nuget package that provides custom properties for a xaml rule file (`XamlPropertyRule.xaml` defined in `Microsoft.VisualStudio.ProjectSystem.Sdk.Tools`)
 
 ## Instructions
-1. Generate the nuget package
-	* Open a developer command prompt
-	* Build the `Pack` target of the `CpsExtension.Nuget` project
-	msbuild /t:Pack CpsExtension.Nuget.csproj
+1. Open the solution in Visual Studio
+2. Create the nuget package
+	* In Visual Studio, right click on the `CpsExtension.Nuget` project and select `Pack`
 	* This will generate a nuget package: `CpsExtension.Nuget.1.1.0.nupkg` (located in the `bin\debug` subfolder)
 2. Build and run the CpsExtension vsix
-	* Open the solution in Visual Studio
-	* Build and run the soltution (Ctrl + F5) - this will build the vsix and launch the Visual Studio experimental hive with the vsix installed
+	* Right click on the `CpsExtension.Vsix` project and select `Set as StartUp Project`
+	* Build and run the solution (Ctrl + F5) - this will build the vsix and launch the Visual Studio experimental hive with the vsix installed
 3. Create a .Net Core project and install the CpsExtension.Nuget package
 	* In the experimental hive launched at previous step, Create a new .Net Core Console App
 	* Right click on the project -> Manage Nuget Packages
@@ -21,8 +20,10 @@ This sample demonstrates:
 	* Install the `CpsExtension.Nuget.1.1.0.nupkg` package into your project
 4. See the results
 	* Once the nuget package was added to the project, you should notice a new debugger named `Custom Debugger` on the main tool bar on the start button
-	* Note: the custom debugger is not implemented, so it will report an error if you try to run/debug the project using it
-	* If you uninstall the nuget package from the project, the `Custom Debugger` entry will be automatically removed
+		* Note: the custom debugger is not implemented, so it will report an error if you try to run/debug the project using it
+		* If you uninstall the nuget package from the project, the `Custom Debugger` entry will be automatically removed
+	* Select a .cs file in the solution explorer and you will see a custom property `Foo Property` available in the properties window
+		* Note: Currently, you need to close and reload the solution after adding or removing the nuget package in order to see the updates in the property window (due to a known limitation in CPS)
 
 ## Implementation notes
 This sample solution can be used as a starting point for extending an existing project type in CPS.
@@ -37,7 +38,9 @@ This project contains all the optional design-time functionality. This includes 
 
 The project itself is an sdk-style project changed to build vsix's. This is not an officially supported scenario, but it is possible to get it to work.
 
-The produced VSIX is an all-users vsix that installs the targets and xaml rules to the per-VS-instance MSBuild directory. When F5'ing the VSIX, an environment variable is set that overrides where the nuget package targets to pick up the design time targets from the bin directory. This way you can develop without affecting the MSBuild directory for your VS install.
+The produced VSIX is an all-users vsix that installs the targets and xaml rules to the per-VS-instance MSBuild directory.
+
+When F5'ing the VSIX, the `CpsExtensionDesignTimeTargetsPath` environment variable is set (specified in `launchSettings.json` under the `Properties folder`) that overrides where the targets file from the nuget package (`CpsExtension.Nuget.targets`) picks up the design time targets (`CpsExtension.DesignTime.targets`) from the bin directory. This way you can develop without affecting the MSBuild directory for your VS install.
 
 Because this is a CPS based project, you will notice the rich set of properties available when you select a xaml rule file in the solution explorer (`BuildSystem\Rules\CustomDebugger.xaml`). That is because the `Microsoft.VisualStudio.ProjectSystem.Sdk.Tools` package delivers a custom rule `XamlPropertyRule.xaml` that defines these properties. Simply installing and uninstalling the `Microsoft.VisualStudio.ProjectSystem.Sdk` package will turn on or off this behavior.
 

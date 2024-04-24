@@ -1,10 +1,22 @@
 ﻿{
-  "profiles": {
-    "CpsExtension": {
-      "commandName": "Executable",
-      "executablePath": "$(DevenvDir)devenv.exe",
-      "commandLineArgs": "/rootsuffix exp",
-      "environmentVariables": { "CpsExtensionDesignTimeTargetsPath": "$(OutputPath)BuildSystem\\CpsExtension.DesignTime.targets" }
+    "profiles": {
+        "CpsExtension": {
+            "commandName": "Executable",
+            "executablePath": "$(DevenvDir)devenv.exe",
+            "commandLineArgs": "/rootsuffix exp",
+            "environmentVariables": {
+                // Environment variable that overrides where `CpsExtension.Nuget.targets` imports `CpsExtension.DesignTime.targets` from. This way you can develop without affecting the MSBuild directory for your VS install.
+                "CpsExtensionDesignTimeTargetsPath": "$(OutputPath)BuildSystem\\CpsExtension.DesignTime.targets",
+
+                // When set to 1 it creates a new Output window pane called 'Project' that displays CPS diagnostics.
+                "CPS_DiagnosticRuntime": "1"
+
+                // Uncomment the following line to increase the verbosity of the CPS diagnostics.
+                // "CPS_DiagnosticRuntimeLevel": "Verbose"
+                // Uncomment the following two lines to capture binlogs of all builds, including design-time builds.
+                // "MSBuildDebugEngine": "1",
+                // "MSBUILDDEBUGPATH": "c:\\binlogs"
+            }
+        }
     }
-  }
 }
