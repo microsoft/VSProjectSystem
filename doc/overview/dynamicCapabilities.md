@@ -10,7 +10,6 @@ a project to be adjusted dynamically based on features/NuGet packages being used
 For example, WPF features can be turned on, only because the project references WPF related packages,
 instead of depending on which template was used when the project was created.
  
-
 ## Capabilities are now coming from dataflows
 
 In both unconfigured project and configured project scopes, capabilities are no longer a fixed set of strings. 

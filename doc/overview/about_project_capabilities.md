@@ -6,8 +6,10 @@ file extension does not help if you want to check for WPF vs. WinForms
 vs. Windows 8 XAML, for example. There are a great many different aspects
 to a project that may be present regardless of language. Do you want code
 that runs against any Windows 8 targeting project regardless of language?
-Do you want to target just Javascript Win8 projects but not LightSwitch
+Do you want to target just JavaScript Win8 projects but not LightSwitch
 JS projects? Project capability checks are the answer.
+
+## Checking capabilities
 
 The presence of some capability can be detected on a given project with
 code such as:
@@ -26,14 +28,53 @@ method in order to test for combinations of capabilities (including
 AND, OR, NOT logic). Read more about [the supported syntax and
 operators](https://msdn.microsoft.com/library/microsoft.visualstudio.shell.interop.ivsbooleansymbolexpressionevaluator.evaluateexpression.aspx).
 
-## How to declare project capabilities in your project
+## Filtering MEF parts via capabilities
+
+Classes exported via MEF can declare the project capabilities under which they apply. See [MEF](mef.md) for more information.
+
+## Defining capabilities via MSBuild
 
 Project capabilities can be declared in several ways, the easiest of which
-being to add this MSBuild item to your .targets file:
+being to add this MSBuild item to your `.targets` file:
 
 ```xml
-<ProjectCapability Include="MyOwnCapability" />
+<ItemGroup>
+  <ProjectCapability Include="MyOwnCapability" />
+</ItemGroup>
 ```
+
+## Defining fixed capabilities for a project type
+
+Some capabilities are static/fixed for a given project type. These capabilities should be defined directly on the project type registration.
+
+For example:
+
+```csharp
+[assembly: ProjectTypeRegistration(
+    projectTypeGuid: MyProjectType.Guid,
+    displayName: "#1",
+    displayProjectFileExtensions: "#2",
+    defaultProjectExtension: "myproj",
+    language: "MyLang",
+    resourcePackageGuid: MyPackage.PackageGuid,
+    Capabilities = "MyProject; AnotherCapability")] // Define capabilities here
+```
+
+Capabilities defined via the `ProjectTypeRegistrationAttribute.Capabilities` property are available on all projects loaded for that project type. Multiple values are separated by semicolon (`;`).
+
+Sometimes you'll need capabilities to be defined very early in a project's lifecycle. These fixed capabilities are available from
+
+## Viewing a project's capabilities
+
+To see the capabilities a CPS project defines, add the `DiagnoseCapabilities` project capability to turn on a tree in the VS Solution Explorer that lists all capabilities of the project:
+
+```xml
+<ItemGroup>
+  <ProjectCapability Include="DiagnoseCapabilities" />
+</ItemGroup>
+```
+
+![alt text](../Images/diagnose-capabilities-tree.png)
 
 ## Common project capabilities and where they are defined
 
@@ -82,7 +123,7 @@ It's very important that project capabilities you define fit this criteria:
   - Bad: `CS`
 - May include a version number, when necessary, but is usually discouraged.
 
-### Dynamic project capabilities
+## Dynamic project capabilities
 
 Capablities of a project can be changed without reloading the project.
 Read more about [dynamic project capabilities](dynamicCapabilities.md).
