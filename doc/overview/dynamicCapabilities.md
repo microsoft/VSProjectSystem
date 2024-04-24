@@ -53,57 +53,6 @@ public MyComponent(ConfiguredProject configuredProject)
 The `DeployProviders` collection will contain a set of `IDeployProvider` filtered by the current capabilities
 of the configuredProject. The content of the collection can change over the time. 
 
-## Defining fixed capabilities for a project type
-
-Some capabilities are static/fixed for a given project type. These capabilities should be defined directly on the
-project type registration.
-
-For example:
-
-```c#
-[assembly: ProjectTypeRegistration(
-    projectTypeGuid: MyProjectType.Guid,
-    displayName: "#1",
-    displayProjectFileExtensions: "#2",
-    defaultProjectExtension: "myproj",
-    language: "MyLang",
-    resourcePackageGuid: MyPackage.PackageGuid,
-    Capabilities = "MyProject")]
-```
-
-Capabilities defined via the `ProjectTypeRegistrationAttribute.Capabilities` property are available on all projects loaded for that project type.
-
-## Dynamically producing project capabilities
-
-Capabilities can be added to a project at run-time via code. To do so, export an instance of
-`IProjectCapabilitiesProvider`. The easiest way to do this is to subclass `ProjectCapabilitiesProviderBase`
-and override the `GetCapabilitiesAsync` method.
-
-For example, if your project should only have a certain capability on Tuesday, you could use:
-
-```c#
-[Export(ExportContractNames.Scopes.UnconfiguredProject, typeof(IProjectCapabilitiesProvider))]
-[AppliesTo("MyProjectCapability")] // Replace with capabilities that define when your provider should be active
-internal class TuesdayProjectCapabilityProvider : ProjectCapabilitiesProviderBase
-{
-    [ImportingConstructor]
-    public TuesdayProjectCapabilityProvider(UnconfiguredProject project)
-        : base(nameof(TuesdayProjectCapabilityProvider), project.Services.ThreadingPolicy.JoinableTaskContext, project.Services.DataSourceRegistry, configuredProjectLevel: false)
-    {
-    }
-
-    protected override Task<ImmutableHashSet<string>> GetCapabilitiesAsync(CancellationToken cancellationToken)
-    {
-        // Replace this with whatever logic you require.
-        return DateTime.Now.DayOfWeek == DayOfWeek.Tuesday
-            ? Task.FromResult(Empty.CapabilitiesSet.Add("Tuesday"))
-            : Task.FromResult(Empty.CapabilitiesSet);
-    }
-}
-```
-
-Note there can be a chicken/egg problem here, where one capability enables a provider (via `AppliesTo`) that then adds another capability, and so on.
-
 ## How to prevent seeing capability changes in the middle of an execution
 
 When changes are made to the project, just like other dataflows inside CPS, capabilites are being recalculated
