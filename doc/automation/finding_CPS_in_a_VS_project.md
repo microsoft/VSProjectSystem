@@ -1,11 +1,6 @@
 Finding CPS in a VS project
 ===========================
 
-**Caution: CPS has no stable public API of its own. Any references to CPS
-assemblies or types therein can be counted on to break with each successive
-release of Visual Studio until we can take time in our schedule to stabilize
-our API. Sorry.**
-
 [How to detect whether a project is a CPS project without risking being
 broken in the next version of VS.](detect_whether_a_project_is_a_CPS_project.md)
 
@@ -14,52 +9,66 @@ themselves.  MEF parts that need access to CPS APIs should simply `[Import]`
 the services they require.
 
 ```csharp
-    #ref Microsoft.VisualStudio.ProjectSystem.v14only.dll
-    #ref Microsoft.VisualStudio.ProjectSystem.VS.v14only.dll  // may be useful after acquiring CPS
-    #ref Microsoft.VisualStudio.ProjectSystem.Utilities.v14.0.dll // may be useful after acquiring CPS
+using Microsoft.VisualStudio.ProjectSystem.Properties;
+using Microsoft.VisualStudio.Shell.Interop;
 
-    using Microsoft.VisualStudio.ProjectSystem.Designers;
-
-    private UnconfiguredProject GetUnconfiguredProject(IVsProject project) {
-        IVsBrowseObjectContext context = project as IVsBrowseObjectContext;
-        if (context == null) { // VC implements this on their DTE.Project.Object
-            IVsHierarchy hierarchy = project as IVsHierarchy;
-            if (hierarchy != null) {
-                object extObject;
-                if (ErrorHandler.Succeeded(hierarchy.GetProperty((uint)VSConstants.VSITEMID.Root, (int)__VSHPROPID.VSHPROPID_ExtObject, out extObject))) {
-                    EnvDTE.Project dteProject = extObject as EnvDTE.Project;
-                    if (dteProject != null) {
-                        context = dteProject.Object as IVsBrowseObjectContext;
-                    }
-                }
-            }
-        }
-
-        return context != null ? context.UnconfiguredProject : null;
-    }
-
-    private UnconfiguredProject GetUnconfiguredProject(EnvDTE.Project project)
+private static UnconfiguredProject? GetUnconfiguredProject(EnvDTE.Project project)
+{
+    if (project is IVsBrowseObjectContext context1)
     {
-        IVsBrowseObjectContext context = project as IVsBrowseObjectContext;
-        if (context == null && project != null) { // VC implements this on their DTE.Project.Object
-            context = project.Object as IVsBrowseObjectContext;
-        }
-
-        return context != null ? context.UnconfiguredProject : null;
+        return context1.UnconfiguredProject;
     }
+
+    if (project.Object is IVsBrowseObjectContext context2)
+    {
+        // VC implements this on their DTE.Project.Object
+        return context2.UnconfiguredProject;
+    }
+
+    return null;
+}
+
+private static UnconfiguredProject? GetUnconfiguredProject(IVsHierarchy hierarchy)
+{
+    if (ErrorHandler.Succeeded(hierarchy.GetProperty((uint)VSConstants.VSITEMID.Root, (int)__VSHPROPID.VSHPROPID_ExtObject, out object extObject)))
+    {
+        if (extObject is EnvDTE.Project dteProject)
+        {
+            return GetUnconfiguredProject(dteProject);
+        }
+    }
+
+    return null;
+}
+
+private static UnconfiguredProject? GetUnconfiguredProject(IVsProject project)
+{
+    if (project is IVsBrowseObjectContext context)
+    {
+        return context.UnconfiguredProject;
+    }
+
+    if (project is IVsHierarchy hierarchy)
+    {
+        return GetUnconfiguredProject(hierarchy);
+    }
+
+    return null;
+}
 ```
 
 #### To obtain the `ConfiguredProject`
 
 ```csharp
-    UnconfiguredProject unconfiguredProject; // obtained from above
-    var configuredProject = await unconfiguredProject.GetSuggestedConfiguredProjectAsync()
+UnconfiguredProject unconfiguredProject; // obtained from above
+
+ConfiguredProject configuredProject = await unconfiguredProject.GetSuggestedConfiguredProjectAsync()
 ```
 
 #### Obtain CPS services
 
 The easiest way to obtain CPS services from an `UnconfiguredProject` or a
-`ConfiguredProject` instance is to use either of these interfaces' Services
+`ConfiguredProject` instance is to use either of these interfaces' `Services`
 property, which provides access to the common CPS services for either of
 these scopes. 
 
@@ -67,12 +76,13 @@ If the service you want isn't exposed on the `Services` property directly,
 you can obtain arbitrary exports using the `Services.ExportProvider` property:
 
 ```csharp
-    ConfiguredProject cp;
-    IOutputGroupsProvider ogp = cp.Services.ExportProvider.GetExportedValue<IOutputGroupsProvider>();
+ConfiguredProject configuredProject; // obtained from above
+
+IOutputGroupsProvider ogp = configuredProject.Services.ExportProvider.GetExportedValue<IOutputGroupsProvider>();
 ```
 
-To test for whether a given project is a WWA project
+#### Testing a project's type
 
 Rather than using `ProjectTypeGuid`, please use the above method to detect
 CPS, then check the `UnconfiguredProject.Capabilities` property for the
-presence of the `Javascript` and `WindowsAppContainer` capabilities.
+presence of specific capabilities.
