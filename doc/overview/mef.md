@@ -228,7 +228,7 @@ IMyConfiguredComponent c2 = configuredProject.Services.ExportProvider.GetExporte
 ```
 
 For details on obtaining an instance of `UnconfiguredProject` or `ConfiguredProject`,
-see [Finding CPS in a VS project](..\automation\finding_CPS_in_a_VS_project.md)
+see [Finding CPS in a VS project](../automation/finding_CPS_in_a_VS_project.md)
 
 ## MEF and C# Nullable Reference Types
 
