@@ -75,8 +75,10 @@ it could occasionally be out of sync with extensions. In this situation,
 running the following commands inside command-line window will reset the
 cache:
 
-    devenv /UpdateConfiguration
-    devenv /ClearCache
+```
+devenv /UpdateConfiguration
+devenv /ClearCache
+```
 
 VS MEF provides a detailed error report when it finds errors inside MEF
 compositions. It always tries to keep the rest of the components working by
@@ -86,7 +88,9 @@ error report file will help to diagnose issues such as the reason why a
 certain component is never being loaded into VS. The error report file
 can be found at 
 
-    [User]\AppData\Local\Microsoft\VisualStudio\[Version]\ComponentModelCache\Microsoft.VisualStudio.Default.err
+```
+%LOCALAPPDATA%\Microsoft\VisualStudio\[Version]\ComponentModelCache\Microsoft.VisualStudio.Default.err
+```
 
 Because a MEF error may cause chains of errors in other components, one
 should always start with investigating level 1 composition errors.
@@ -138,10 +142,10 @@ fact that the component carries the correct `AppliesTo` metadata.  It is
 important to use the correct `AppliesTo` metadata when defining a component.
 Normally, the `AppliesTo` metadata is the new project type the component
 supports; in the advanced scenario, `AppliesTo` metadata can be an expression
-like this --
+like this:
 
 ```csharp
-[AppliesTo("MyLanaguageProject + DeviceProject")]
+[AppliesTo("MyLanaguageProject & DeviceProject")]
 ```
 
 Also, when a component exports additional properties or methods, the
@@ -195,6 +199,36 @@ without using the `OrderPrecedenceImportCollection`. These singleton services
 are provided by CPS and cannot be replaced by extensions. Such services
 include the `ConfiguredProject`, `UnconfiguredProject`, `IProjectLockService`,
 etc.
+
+### Obtaining MEF components in project scopes
+
+As described in [scopes](scopes.md), MEF project-specific components instances
+can exist in the scope of an `UnconfiguredProject` or a `ConfiguredProject`.
+
+If your component is a MEF part and in a compatible scope, then the best way
+to obtain an instance is just to import it using a standard MEF import.
+
+However, if your component is not participating in MEF, or is in the global
+or `ProjectService` scopes, then you can obtain project-scoped components
+via the relevant instance of `UnconfiguredProject` or `ConfiguredProject`.
+
+Note that several key CPS services are available directly on via the project's
+`Services` property. However if you need a MEF component that is not already
+exposed this way, you can use the project's `ExportProvider` as follows.
+
+For example:
+
+```csharp
+UnconfiguredProject unconfiguredProject = ...;
+ConfiguredProject configuredProject = ...;
+
+IMyUnconfiguredComponent c1 = unconfiguredProject.Services.ExportProvider.GetExportedValue<IMyUnconfiguredComponent>();
+
+IMyConfiguredComponent c2 = configuredProject.Services.ExportProvider.GetExportedValue<IMyConfiguredComponent>();
+```
+
+For details on obtaining an instance of `UnconfiguredProject` or `ConfiguredProject`,
+see [Finding CPS in a VS project](../automation/finding_CPS_in_a_VS_project.md)
 
 ## MEF and C# Nullable Reference Types
 

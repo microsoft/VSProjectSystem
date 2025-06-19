@@ -1,6 +1,6 @@
 ﻿# The 3 Threading Rules
 
-The 3 Threading Rules can now be found at [Microsoft/vs-threading/doc/threading_rules.md](https://github.com/Microsoft/vs-threading/blob/master/doc/threading_rules.md)
+The 3 Threading Rules can now be found in the [microsoft/vs-threading repo](https://github.com/microsoft/vs-threading/blob/main/docfx/docs/threading_rules.md).
 
 # CPS Threading
 

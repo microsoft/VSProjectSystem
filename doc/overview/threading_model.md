@@ -6,7 +6,7 @@ Rules](threading_rules.md)
 Important: 
 
 **Do not call Task.Wait() or Task.Result in your code because these
-violate [threading rule #2](https://github.com/Microsoft/vs-threading/blob/master/doc/threading_rules.md#2-when-an-implementation-of-an-already-shipped-public-api-must-call) and will often lead
+violate [threading rule #2](https://github.com/microsoft/vs-threading/blob/main/docfx/docs/threading_rules.md#-rule-2-use-jtfrun) and will often lead
 to deadlocks.**
 
 Avoid use of `ThreadHelper.JoinableTaskFactory` as that does not have the intelligence
