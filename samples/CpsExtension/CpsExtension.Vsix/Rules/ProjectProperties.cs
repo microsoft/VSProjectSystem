@@ -1,6 +1,6 @@
 namespace CpsExtension.Rules
 {
-    using System.Composition;
+    using System.ComponentModel.Composition;
     using Microsoft.VisualStudio.ProjectSystem;
     using Microsoft.VisualStudio.ProjectSystem.Properties;
 
