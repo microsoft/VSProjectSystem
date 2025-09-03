@@ -43,6 +43,9 @@ being to add this MSBuild item to your `.targets` file:
 </ItemGroup>
 ```
 
+> [!IMPORTANT]
+> Project capabilites cannot be added during design-time builds. They must be added via evaluation, or via code.
+
 ## Defining fixed capabilities for a project type
 
 Some capabilities are static/fixed for a given project type. These capabilities should be defined directly on the project type registration.
